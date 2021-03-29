@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Province index{% endblock %}
+
+{% block body %}
+    <h1>Province index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Image</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for province in provinces %}
+            <tr>
+                <td>{{ province.id }}</td>
+                <td>{{ province.name }}</td>
+                <td>{{ province.image }}</td>
+                <td>
+                    <a href="{{ path('province_show', {'id': province.id}) }}">show</a>
+                    <a href="{{ path('province_edit', {'id': province.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('province_new') }}">Create new</a>
+{% endblock %}
