@@ -19,12 +19,6 @@ class TournamentType extends AbstractType
             ->add('endDate')
             ->add('prizePoints')
             ->add('videogame')
-            ->add('creatorUser')
-            ->add('firstPlace')
-            ->add('secondPlace')
-            ->add('thirdPlace')
-            ->add('fourthPlace')
-            ->add('players')
         ;
     }
 

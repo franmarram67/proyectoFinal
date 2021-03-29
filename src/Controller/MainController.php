@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 class MainController extends AbstractController
 {
     #[Route('/', name: 'main')]
@@ -15,4 +17,5 @@ class MainController extends AbstractController
             'controller_name' => 'MainController',
         ]);
     }
+
 }

@@ -10,12 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
 #[Route('/tournament')]
-/**
- * @IsGranted("ROLE_ADMIN")
- */
 class TournamentController extends AbstractController
 {
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/', name: 'tournament_index', methods: ['GET'])]
     public function index(TournamentRepository $tournamentRepository): Response
     {
@@ -24,6 +26,9 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_USER")
+     */
     #[Route('/new', name: 'tournament_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
@@ -45,6 +50,9 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/{id}', name: 'tournament_show', methods: ['GET'])]
     public function show(Tournament $tournament): Response
     {
@@ -53,6 +61,9 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/{id}/edit', name: 'tournament_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tournament $tournament): Response
     {
@@ -71,6 +82,9 @@ class TournamentController extends AbstractController
         ]);
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/{id}', name: 'tournament_delete', methods: ['POST'])]
     public function delete(Request $request, Tournament $tournament): Response
     {
