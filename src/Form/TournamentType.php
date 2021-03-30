@@ -17,7 +17,6 @@ class TournamentType extends AbstractType
             ->add('startDate')
             ->add('link')
             ->add('endDate')
-            ->add('prizePoints')
             ->add('videogame')
         ;
     }

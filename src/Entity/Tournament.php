@@ -77,11 +77,6 @@ class Tournament
     private $endDate;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $prizePoints;
-
-    /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="playedTournaments")
      */
     private $players;
@@ -230,18 +225,6 @@ class Tournament
     public function setEndDate(?\DateTimeInterface $endDate): self
     {
         $this->endDate = $endDate;
-
-        return $this;
-    }
-
-    public function getPrizePoints(): ?int
-    {
-        return $this->prizePoints;
-    }
-
-    public function setPrizePoints(int $prizePoints): self
-    {
-        $this->prizePoints = $prizePoints;
 
         return $this;
     }

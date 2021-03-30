@@ -4,6 +4,7 @@
 
 {% block body %}
 
+<h1>Tournament Master</h1>
 {% if is_granted("ROLE_USER") %}
     Hello, {{app.user.email}} - <a href="/logout">Logout</a>
 {% else %}
@@ -14,8 +15,10 @@
     <a href="/user">Verificar usuarios</a>
 {% endif %}
 <hr>
-{% if app.user.verified == true %}
-    <a href="/tournament/new">Crear Nuevo Torneo</a>
+{% if is_granted("ROLE_USER") %}
+    {% if app.user.verified == true %}
+        <a href="/tournament/new">Crear Nuevo Torneo</a>
+    {% endif %}
 {% endif %}
 
 {% endblock %}

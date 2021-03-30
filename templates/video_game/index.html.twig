@@ -22,13 +22,14 @@
             <tr>
                 <td>{{ video_game.id }}</td>
                 <td>{{ video_game.title }}</td>
-                <td>{{ video_game.image }}</td>
+                <td><img src="/img/{{ video_game.image }}" width="100px"/></td>
                 <td>{{ video_game.description }}</td>
                 <td>{{ video_game.link }}</td>
                 <td>{{ video_game.ageRating }}</td>
                 <td>
                     <a href="{{ path('video_game_show', {'id': video_game.id}) }}">show</a>
                     <a href="{{ path('video_game_edit', {'id': video_game.id}) }}">edit</a>
+                    <a href="{{ path('video_game_delete', {'id': video_game.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}

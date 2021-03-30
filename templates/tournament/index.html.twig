@@ -14,7 +14,6 @@
                 <th>StartDate</th>
                 <th>Link</th>
                 <th>EndDate</th>
-                <th>PrizePoints</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -27,7 +26,6 @@
                 <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ tournament.link }}</td>
                 <td>{{ tournament.endDate ? tournament.endDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tournament.prizePoints }}</td>
                 <td>
                     <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
                     <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
