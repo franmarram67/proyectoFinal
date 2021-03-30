@@ -67,11 +67,6 @@ class Tournament
     private $fourthPlace;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $link;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
@@ -201,18 +196,6 @@ class Tournament
     public function setFourthPlace(?User $fourthPlace): self
     {
         $this->fourthPlace = $fourthPlace;
-
-        return $this;
-    }
-
-    public function getLink(): ?string
-    {
-        return $this->link;
-    }
-
-    public function setLink(?string $link): self
-    {
-        $this->link = $link;
 
         return $this;
     }

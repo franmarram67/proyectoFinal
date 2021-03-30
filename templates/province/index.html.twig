@@ -19,7 +19,7 @@
             <tr>
                 <td>{{ province.id }}</td>
                 <td>{{ province.name }}</td>
-                <td>{{ province.image }}</td>
+                <td><img src="/img/{{ province.image }}" width="100px" /></td>
                 <td>
                     <a href="{{ path('province_show', {'id': province.id}) }}">show</a>
                     <a href="{{ path('province_edit', {'id': province.id}) }}">edit</a>
