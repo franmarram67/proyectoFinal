@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h1>Tournament Master</h1>
+{% if is_granted("ROLE_USER") %}
+    Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
+{% else %}
+    <a href="/register">Register</a> or <a href="/login">Login</a>
+{% endif %}
+<hr>
+<h2>{{tournament.title}} - by {{tournament.creatorUser.username}}</h2>
+<p>{{ tournament.description }}</p>
+<h4>{{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
+{% if is_granted("ROLE_USER") %}
+    {% if app.user.verified == true %}
+        <a href="#">Sign Up</a>
+    {% endif %}
+{% endif %}
+
+{% endblock %}

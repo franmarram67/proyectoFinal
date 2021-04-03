@@ -40,11 +40,12 @@ class TournamentController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             $tournament->setCreatorUser($this->getUser());
+            $tournament->setFinished(false);
 
             $entityManager->persist($tournament);
             $entityManager->flush();
 
-            return $this->redirectToRoute('tournament_index');
+            return $this->redirectToRoute('main');
         }
 
         return $this->render('tournament/new.html.twig', [

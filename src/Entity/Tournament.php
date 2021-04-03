@@ -67,11 +67,6 @@ class Tournament
     private $fourthPlace;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $endDate;
-
-    /**
      * @ORM\ManyToMany(targetEntity=User::class, inversedBy="playedTournaments")
      */
     private $players;
@@ -80,6 +75,12 @@ class Tournament
      * @ORM\OneToMany(targetEntity=Points::class, mappedBy="tournament")
      */
     private $points;
+
+    /**
+     * @ORM\Column(type="boolean")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $finished;
 
     public function __construct()
     {
@@ -200,18 +201,6 @@ class Tournament
         return $this;
     }
 
-    public function getEndDate(): ?\DateTimeInterface
-    {
-        return $this->endDate;
-    }
-
-    public function setEndDate(?\DateTimeInterface $endDate): self
-    {
-        $this->endDate = $endDate;
-
-        return $this;
-    }
-
     /**
      * @return Collection|User[]
      */
@@ -262,6 +251,18 @@ class Tournament
                 $point->setTournament(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFinished(): ?bool
+    {
+        return $this->finished;
+    }
+
+    public function setFinished(bool $finished): self
+    {
+        $this->finished = $finished;
 
         return $this;
     }

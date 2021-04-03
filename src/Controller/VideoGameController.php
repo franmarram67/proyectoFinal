@@ -91,7 +91,7 @@ class VideoGameController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'video_game_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, VideoGame $videoGame): Response
+    public function edit(Request $request, VideoGame $videoGame, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(VideoGameType::class, $videoGame);
         $form->handleRequest($request);
@@ -126,7 +126,7 @@ class VideoGameController extends AbstractController
             }
 
             // ... persist the $article variable or any other work y código que estaba
-            
+
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('video_game_index');

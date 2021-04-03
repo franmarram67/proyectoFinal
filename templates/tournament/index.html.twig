@@ -12,7 +12,6 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>StartDate</th>
-                <th>EndDate</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -23,10 +22,10 @@
                 <td>{{ tournament.title }}</td>
                 <td>{{ tournament.description }}</td>
                 <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tournament.endDate ? tournament.endDate|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
                     <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
+                    <a href="{{ path('tournament_delete', {'id': tournament.id}) }}">delete</a>
                 </td>
             </tr>
         {% else %}

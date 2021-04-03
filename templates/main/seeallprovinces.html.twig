@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h1>Tournament Master</h1>
+{% if is_granted("ROLE_USER") %}
+    Hello, {{app.user.email}} - <a href="/logout">Logout</a>
+{% else %}
+    <a href="/register">Register</a> or <a href="/login">Login</a>
+{% endif %}
+<br>
+
+<hr>
+
+<h2>All Provinces</h2>
+<ul>
+{% for province in provinces %}
+    <li>
+        <h3><a href="/seeprovince/{{province.id}}">{{province.name}}</a></h3>
+        <img src="/img/{{province.image}}" width="300px"/>
+        <p>{{province.description}}</p>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

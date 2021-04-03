@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h1>Tournament Master</h1>
+{% if is_granted("ROLE_USER") %}
+    Hello, {{app.user.email}} - <a href="/logout">Logout</a>
+{% else %}
+    <a href="/register">Register</a> or <a href="/login">Login</a>
+{% endif %}
+<br>
+
+<hr>
+
+<h2>Profile</h2>
+<h3>{{app.user.email}}</h3>
+<p>{{app.user.verified ? "Your account is verified." : "Your account hasn't been verified yet." }}</p>
+{% if app.user.profilePicture == null %}
+    <img src="/img/default.jpg" width="200px"/> 
+{% else %}
+    <img src="/img/{{app.user.profilePicture}}" width="200px"/>
+{% endif %}
+<p>{{app.user.dni != null ? app.user.dni : "You haven't introduced your DNI yet." }}</p>
+<p>Name: {{app.user.name}}</p>
+<p>Surname: {{app.user.surname}}</p>
+<p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</p>
+
+
+{% endblock %}

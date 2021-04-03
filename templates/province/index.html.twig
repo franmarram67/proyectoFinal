@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Description</th>
                 <th>Image</th>
                 <th>actions</th>
             </tr>
@@ -19,6 +20,7 @@
             <tr>
                 <td>{{ province.id }}</td>
                 <td>{{ province.name }}</td>
+                <td>{{ province.description }}</td>
                 <td><img src="/img/{{ province.image }}" width="100px" /></td>
                 <td>
                     <a href="{{ path('province_show', {'id': province.id}) }}">show</a>

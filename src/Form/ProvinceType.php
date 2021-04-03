@@ -19,6 +19,7 @@ class ProvinceType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('description')
             ->add('image', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,

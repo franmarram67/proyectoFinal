@@ -6,19 +6,51 @@
 
 <h1>Tournament Master</h1>
 {% if is_granted("ROLE_USER") %}
-    Hello, {{app.user.email}} - <a href="/logout">Logout</a>
+    Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
+    <a href="/myprofile">My profile</a>
 {% else %}
     <a href="/register">Register</a> or <a href="/login">Login</a>
 {% endif %}
 <br>
+<a href="/seeallprovinces">See All Provinces</a>
+<br>
 {% if is_granted("ROLE_ADMIN") %}
-    <a href="/user">Verificar usuarios</a>
+    <a href="/verifyusers">Verify users</a>
 {% endif %}
 <hr>
 {% if is_granted("ROLE_USER") %}
     {% if app.user.verified == true %}
-        <a href="/tournament/new">Crear Nuevo Torneo</a>
+        <a href="/tournament/new">Create New Tournament</a>
     {% endif %}
 {% endif %}
+<h2>Tournaments</h2>
+<ul>
+{% for tournament in tournaments %}
+    <li>
+        <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
+        <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
+        <p>Places: {{tournament.players|length}}/20</p>
+        <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
+        {% if is_granted("ROLE_USER") %}
+            {% if app.user.verified == true %}
+                {% if date() < date(tournament.startDate) %}
+                    {% if tournament.players|length < 20 %}
+                        <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+                    {% else %}
+                        You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
+                    {% endif %}
+                {% else %}
+                    You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
+                {% endif %}
+            {% else %}
+                You can't Sign Up to this Tournament because you're not a verified user.
+            {% endif %}
+        {% else %}
+            Login to be able to Sign Up to this Tournament.
+        {% endif %}
+        
+    </li>
+{% endfor %}
+</ul>
 
 {% endblock %}
