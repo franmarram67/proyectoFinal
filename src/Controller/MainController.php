@@ -29,7 +29,8 @@ class MainController extends AbstractController
      */
     public function verifyUsers(): Response
     {
-        $allusers=$this->getDoctrine()->getRepository(User::class)->findAll();
+        $allusers=$this->getDoctrine()->getRepository(User::class)->findByVerified(false);
+        //$allusers=$this->getDoctrine()->getRepository(User::class)->findAll();
         return $this->render('main/verifyusers.html.twig', [
             'allusers' => $allusers,
         ]);

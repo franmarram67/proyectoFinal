@@ -64,4 +64,19 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     */
+
+    // Finds All Users That Are Verified
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function findByVerfied($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.verified = :val')
+            ->setParameter('val', $value)
+            ->orderBy('u.id', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

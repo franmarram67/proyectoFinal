@@ -15,14 +15,16 @@
 <hr>
 
 <h2>Unverified Users</h2>
-<ul>
-{% for user in allusers %}
-    {% if user.verified == false %}
+{% if allusers != null %}
+    <ul>
+    {% for user in allusers %}
         <li>
             <p>{{user.email}} - <a href="/verify/{{user.id}}">verify</a></p>
         </li>
-    {% endif %}
-{% endfor %}
-</ul>
+    {% endfor %}
+    </ul>
+{% else %}
+    There isn't any unverified users.
+{% endif %}
 
 {% endblock %}
