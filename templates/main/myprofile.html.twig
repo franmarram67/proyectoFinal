@@ -14,8 +14,8 @@
 
 <hr>
 
-<h2>Profile</h2>
-<h3>{{app.user.email}}</h3>
+<h2>My Profile</h2>
+{#<h3>{{app.user.email}}</h3>
 <p>{{app.user.verified ? "Your account is verified." : "Your account hasn't been verified yet." }}</p>
 {% if app.user.profilePicture == null %}
     <img src="/img/default.jpg" width="200px"/> 
@@ -25,11 +25,66 @@
 <p>{{app.user.dni != null ? app.user.dni : "You haven't introduced your DNI yet." }}</p>
 <p>Name: {{app.user.name}}</p>
 <p>Surname: {{app.user.surname}}</p>
-<p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>
+<p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>#}
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <h3>{{app.user.name}} {{app.user.surname}}</h3>
+    <div class="hideshow name">
+        <div>
+            {{ form_row(form.name) }}
+        </div>
+        <a href="#">Change Name</a>
+    </div>
+    <div class="hideshow surname">
+        <div>
+            {{ form_row(form.surname) }}
+        </div>
+        <a href="#">Change Surname</a>
+    </div>
+    <p>{{app.user.verified ? "Your account is verified." : "Your account hasn't been verified yet." }}</p>
+    {% if app.user.profilePicture == null %}
+        <img src="/img/default.jpg" width="200px"/> 
+    {% else %}
+        <img src="/img/{{app.user.profilePicture}}" width="200px"/>
+    {% endif %}
+    <div class="hideshow picture">
+        <div>
+            {{ form_row(form.profilePicture) }}
+        </div>
+        <a href="#">Change Picture</a>
+    </div>
+    <p>Email: {{app.user.email}}</p>
+    <div class="hideshow email">
+        <div>
+            {{ form_row(form.email) }}
+        </div>
+        <a href="#">Change Email</a>
+    </div>
+    <div class="hideshow password">
+        <div>
+            {{ form_row(form.plainPassword) }}
+        </div>
+        <a href="#">Change Password</a>
+    </div>
+    <p>DNI: {{app.user.dni != null ? app.user.dni : "You haven't introduced your DNI yet." }}</p>
+    <div class="hideshow dni">
+        <div>
+            {{ form_row(form.dni) }}
+        </div>
+        <a href="#">Change DNI</a>
+    </div>
+    <p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>
+    <div class="hideshow province">
+        <div>
+            {{ form_row(form.province) }}
+        </div>
+        <a href="#">Change Province</a>
+    </div>
+    <button class="btn">{{ button_label|default('Save Changes') }}</button>
 {{ form_end(form) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/profile.js"></script>
 {% endblock %}

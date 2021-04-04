@@ -15,6 +15,8 @@ use App\Form\ProfileType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -76,13 +78,23 @@ class MainController extends AbstractController
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function myProfile(Request $request, SluggerInterface $slugger): Response
+    public function myProfile(Request $request, SluggerInterface $slugger, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            var_dump($form->get('plainPassword')->getData());
+            exit;
+            // encode the plain password
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
 
             // Código cargar imagen
             /** @var UploadedFile $img */
