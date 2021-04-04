@@ -25,7 +25,11 @@
 <p>{{app.user.dni != null ? app.user.dni : "You haven't introduced your DNI yet." }}</p>
 <p>Name: {{app.user.name}}</p>
 <p>Surname: {{app.user.surname}}</p>
-<p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</p>
+<p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>
 
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
 
 {% endblock %}

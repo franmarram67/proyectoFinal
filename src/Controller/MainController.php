@@ -5,12 +5,20 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\User;
 use App\Entity\Tournament;
 use App\Entity\Province;
 
+use App\Form\ProfileType;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+// Cargar imagen
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MainController extends AbstractController
 {
@@ -68,11 +76,52 @@ class MainController extends AbstractController
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function myProfile(): Response
+    public function myProfile(Request $request, SluggerInterface $slugger): Response
     {
+        $user = $this->getUser();
+        $form = $this->createForm(ProfileType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            // Código cargar imagen
+            /** @var UploadedFile $img */
+            $img = $form->get('profilePicture')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($img) {
+                $originalFilename = pathinfo($img->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'.'.$img->guessExtension();
+
+                // Move the file to the directory where img are stored
+                try {
+                    $img->move(
+                        'img/',
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    throw $e;
+                }
+
+                // updates the 'img' property to store the PDF file name
+                // instead of its contents
+                $user->setProfilePicture($newFilename);
+            }
+
+            // ... persist the $article variable or any other work y código que estaba
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('myprofile');
+        }
+
         $userpoints = 0;
         return $this->render('main/myprofile.html.twig', [
             'userpoints' => $userpoints,
+            'form' => $form->createView(),
         ]);
     }
 

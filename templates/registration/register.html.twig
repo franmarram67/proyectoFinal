@@ -11,10 +11,8 @@
 
     {{ form_start(registrationForm) }}
         {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.username) }}
         {{ form_row(registrationForm.name) }}
-        {{ form_row(registrationForm.firstSurname) }}
-        {{ form_row(registrationForm.secondSurname) }}
+        {{ form_row(registrationForm.surname) }}
         {{ form_row(registrationForm.province) }}
         {{ form_row(registrationForm.plainPassword, {
             label: 'Password'
