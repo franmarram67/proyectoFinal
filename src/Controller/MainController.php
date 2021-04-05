@@ -86,15 +86,17 @@ class MainController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            var_dump($form->get('plainPassword')->getData());
-            exit;
+            /*var_dump($form->get('plainPassword')->getData());
+            exit;*/
             // encode the plain password
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
+            if($form->get('plainPassword')->getData()!=null) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
 
             // Código cargar imagen
             /** @var UploadedFile $img */
@@ -124,6 +126,28 @@ class MainController extends AbstractController
             }
 
             // ... persist the $article variable or any other work y código que estaba
+
+            $email = $form->get('email')->getData();
+            $dni = $form->get('dni')->getData();
+            $name = $form->get('name')->getData();
+            $surname = $form->get('surname')->getData();
+            $province = $form->get('province')->getData();
+
+            if($email) {
+                $user->setEmail($email);
+            }
+            if($dni) {
+                $user->setDni($dni);
+            }
+            if($name) {
+                $user->setName($name);
+            }
+            if($surname) {
+                $user->setSurname($surname);
+            }
+            if($province) {
+                $user->setProvince($province);
+            }
 
             $this->getDoctrine()->getManager()->flush();
 
