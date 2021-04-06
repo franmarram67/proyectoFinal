@@ -11,6 +11,8 @@
                 <th>Id</th>
                 <th>Amount</th>
                 <th>Datetime</th>
+                <th>Tournament</th>
+                <th>User</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -20,6 +22,8 @@
                 <td>{{ point.id }}</td>
                 <td>{{ point.amount }}</td>
                 <td>{{ point.datetime ? point.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ point.tournament }}</td>
+                <td>{{ point.user }}</td>
                 <td>
                     <a href="{{ path('points_show', {'id': point.id}) }}">show</a>
                     <a href="{{ path('points_edit', {'id': point.id}) }}">edit</a>

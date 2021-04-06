@@ -19,7 +19,7 @@
     <ul>
     {% for user in allusers %}
         <li>
-            <p>{{user.email}} - <a href="/verify/{{user.id}}">verify</a></p>
+            <p>{{user.email}} - <a href="/verify/{{user.id}}">verify</a> <a href="/user/{{user.id}}">show</a></p>
         </li>
     {% endfor %}
     </ul>

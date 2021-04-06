@@ -12,6 +12,13 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>StartDate</th>
+                <th>VideoGame</th>
+                <th>CreatorUser</th>
+                <th>FirstPlace</th>
+                <th>SecondPlace</th>
+                <th>ThirdPlace</th>
+                <th>FourthPlace</th>
+                <th>Finished</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,6 +29,13 @@
                 <td>{{ tournament.title }}</td>
                 <td>{{ tournament.description }}</td>
                 <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ tournament.videogame }}</td>
+                <td>{{ tournament.creatorUser }}</td>
+                <td>{{ tournament.firstPlace }}</td>
+                <td>{{ tournament.secondPlace }}</td>
+                <td>{{ tournament.thirdPlace }}</td>
+                <td>{{ tournament.fourthPlace }}</td>
+                <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
                     <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>

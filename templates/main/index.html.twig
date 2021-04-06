@@ -15,7 +15,8 @@
 <a href="/seeallprovinces">See All Provinces</a>
 <br>
 {% if is_granted("ROLE_ADMIN") %}
-    <a href="/verifyusers">Verify users</a>
+    <a href="/verifyusers">Verify users</a><br>
+    <a href="/adminpage">Admin Page</a>
 {% endif %}
 <hr>
 {% if is_granted("ROLE_USER") %}
@@ -33,14 +34,18 @@
         <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
         {% if is_granted("ROLE_USER") %}
             {% if app.user.verified == true %}
-                {% if date() < date(tournament.startDate) %}
-                    {% if tournament.players|length < 20 %}
-                        <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+                {% if app.user.id != tournament.creatorUser.id %}
+                    {% if date() < date(tournament.startDate) %}
+                        {% if tournament.players|length < 20 %}
+                            <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+                        {% else %}
+                            You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
+                        {% endif %}
                     {% else %}
-                        You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
+                        You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
                     {% endif %}
                 {% else %}
-                    You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
+                    You can't Sign Up to your own Tournament.
                 {% endif %}
             {% else %}
                 You can't Sign Up to this Tournament because you're not a verified user.

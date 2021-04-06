@@ -24,16 +24,32 @@
                 <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Link</th>
-                <td>{{ tournament.link }}</td>
+                <th>VideoGame</th>
+                <td>{{ tournament.videogame }}</td>
             </tr>
             <tr>
-                <th>EndDate</th>
-                <td>{{ tournament.endDate ? tournament.endDate|date('Y-m-d H:i:s') : '' }}</td>
+                <th>CreatorUser</th>
+                <td>{{ tournament.creatorUser }}</td>
             </tr>
             <tr>
-                <th>PrizePoints</th>
-                <td>{{ tournament.prizePoints }}</td>
+                <th>FirstPlace</th>
+                <td>{{ tournament.firstPlace }}</td>
+            </tr>
+            <tr>
+                <th>SecondPlace</th>
+                <td>{{ tournament.secondPlace }}</td>
+            </tr>
+            <tr>
+                <th>ThirdPlace</th>
+                <td>{{ tournament.thirdPlace }}</td>
+            </tr>
+            <tr>
+                <th>FourthPlace</th>
+                <td>{{ tournament.fourthPlace }}</td>
+            </tr>
+            <tr>
+                <th>Finished</th>
+                <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
             </tr>
         </tbody>
     </table>

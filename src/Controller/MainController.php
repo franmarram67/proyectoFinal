@@ -17,6 +17,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -46,6 +48,16 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/adminpage', name: 'adminpage')]
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function adminPage(): Response
+    {
+        return $this->render('main/adminpage.html.twig', [
+        ]);
+    }
+
     #[Route('/verify/{id}', name: 'verify')]
     /**
      * @IsGranted("ROLE_ADMIN")
@@ -66,12 +78,37 @@ class MainController extends AbstractController
      */
     public function signUpToTournament($id): Response
     {
-        $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
-        $entityManager = $this->getDoctrine()->getManager();
-        $tournament->addPlayer($this->getUser());
-        $entityManager->flush();
+        try {
+            $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
+            if($this->getUser()) {
+                if($this->getUser()->getVerified() == true) {
+                    if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
+                        if(date() < $tournament->getStartDate()) {
+                            if(count($tournament->getPlayers()) < 20) {
+                                $entityManager = $this->getDoctrine()->getManager();
+                                $tournament->addPlayer($this->getUser());
+                                $entityManager->flush();
+                                return $this->redirectToRoute('main');
+                            } else {
+                                throw new Exception("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
+                            }
+                        } else {
+                            throw new Exception("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
+                        }
+                    } else {
+                        throw new Exception("You can't Sign Up to your own Tournament.");
+                    }
+                } else {
+                    throw new Exception("You can't Sign Up to this Tournament because you're not a verified user.");
+                }
+            } else {
+                throw new Exception("Login to be able to Sign Up to this Tournament.");
+            }
 
-        return $this->redirectToRoute('main');
+        } catch (Exception $e) {
+            return new Response($e->getMessage());
+        }
+        
     }
 
     #[Route('/myprofile', name: 'myprofile')]

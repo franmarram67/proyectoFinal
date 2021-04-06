@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 #[Route('/tournament')]
 class TournamentController extends AbstractController
 {
@@ -32,26 +34,36 @@ class TournamentController extends AbstractController
     #[Route('/new', name: 'tournament_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        $tournament = new Tournament();
-        $form = $this->createForm(TournamentType::class, $tournament);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $tournament->setCreatorUser($this->getUser());
-            $tournament->setFinished(false);
-
-            $entityManager->persist($tournament);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('main');
+        try {
+            if($this->getUser()->getVerified() == true) {
+                $tournament = new Tournament();
+                $form = $this->createForm(TournamentType::class, $tournament);
+                $form->handleRequest($request);
+    
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+    
+                    $tournament->setCreatorUser($this->getUser());
+                    $tournament->setFinished(false);
+    
+                    $entityManager->persist($tournament);
+                    $entityManager->flush();
+    
+                    return $this->redirectToRoute('main');
+                }
+    
+                return $this->render('tournament/new.html.twig', [
+                    'tournament' => $tournament,
+                    'form' => $form->createView(),
+                ]);
+            } else {
+                throw new Exception("You have to be a verified user to create a Tournament.");
+            }
+        } catch (Exception $e) {
+            return new Response($e->getMessage());
         }
-
-        return $this->render('tournament/new.html.twig', [
-            'tournament' => $tournament,
-            'form' => $form->createView(),
-        ]);
+        
+        
     }
 
     /**

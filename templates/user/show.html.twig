@@ -15,21 +15,17 @@
                 <th>Email</th>
                 <td>{{ user.email }}</td>
             </tr>
-            <tr>
+            {#<tr>
                 <th>Roles</th>
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
+            </tr>#}
             <tr>
                 <th>Verified</th>
                 <td>{{ user.verified ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>ProfilePicture</th>
-                <td>{{ user.profilePicture }}</td>
+                <td><img src="/img/{{ user.profilePicture }}" width="100px" /></td>
             </tr>
             <tr>
                 <th>Dni</th>
@@ -40,16 +36,12 @@
                 <td>{{ user.name }}</td>
             </tr>
             <tr>
-                <th>FirstSurname</th>
-                <td>{{ user.firstSurname }}</td>
+                <th>Surname</th>
+                <td>{{ user.surname }}</td>
             </tr>
             <tr>
-                <th>SecondSurname</th>
-                <td>{{ user.secondSurname }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
+                <th>Province</th>
+                <td>{{ user.province }}</td>
             </tr>
         </tbody>
     </table>
@@ -57,6 +49,7 @@
     <a href="{{ path('user_index') }}">back to list</a>
 
     <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+    <a href="{{ path('user_verify', {'id': user.id}) }}">verify</a>
 
     {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
