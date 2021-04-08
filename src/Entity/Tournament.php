@@ -82,6 +82,16 @@ class Tournament
      */
     private $finished;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $hidden;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -270,5 +280,29 @@ class Tournament
     public function __toString() 
     {
         return $this->id.". ".$this->title." - by ".$this->creatorUser;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getHidden(): ?bool
+    {
+        return $this->hidden;
+    }
+
+    public function setHidden(bool $hidden): self
+    {
+        $this->hidden = $hidden;
+
+        return $this;
     }
 }

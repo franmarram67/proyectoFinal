@@ -45,6 +45,8 @@ class TournamentController extends AbstractController
     
                     $tournament->setCreatorUser($this->getUser());
                     $tournament->setFinished(false);
+                    $tournament->setCreationDate(new \DateTime);
+                    $tournament->setHidden(false);
     
                     $entityManager->persist($tournament);
                     $entityManager->flush();

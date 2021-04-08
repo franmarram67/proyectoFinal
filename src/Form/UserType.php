@@ -13,11 +13,6 @@ class UserType extends AbstractType
     {
         $builder
             ->add('verified')
-            ->add('profilePicture')
-            ->add('dni')
-            ->add('name')
-            ->add('surname')
-            ->add('province')
         ;
     }
 

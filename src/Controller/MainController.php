@@ -83,12 +83,16 @@ class MainController extends AbstractController
             if($this->getUser()) {
                 if($this->getUser()->getVerified() == true) {
                     if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
-                        if(date() < $tournament->getStartDate()) {
+                        if(date("now") < $tournament->getStartDate()) {
                             if(count($tournament->getPlayers()) < 20) {
-                                $entityManager = $this->getDoctrine()->getManager();
-                                $tournament->addPlayer($this->getUser());
-                                $entityManager->flush();
-                                return $this->redirectToRoute('main');
+                                if($tournament->getPlayers()->find($this->getUser())) {
+                                    $entityManager = $this->getDoctrine()->getManager();
+                                    $tournament->addPlayer($this->getUser());
+                                    $entityManager->flush();
+                                    return $this->redirectToRoute('main');
+                                } else {
+                                    throw new Exception("You already Signed Up to this Tournament.");
+                                }
                             } else {
                                 throw new Exception("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
                             }
@@ -222,6 +226,29 @@ class MainController extends AbstractController
         $provinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
         return $this->render('main/seeallprovinces.html.twig', [
             'provinces' => $provinces,
+        ]);
+    }
+
+    #[Route('/mytournaments', name: 'mytournaments')]
+    public function myTournaments(): Response
+    {
+        $tournaments=$this->getUser()->getPlayedTournaments();
+        $pending = [];
+        $inprogress = [];
+        $finished = [];
+        foreach($tournaments as $tournament) {
+            if($tournament->getFinished()==true) {
+                array_push($finished,$tournament);
+            }else if(date("now") < $tournament->getStartDate()) {
+                array_push($pending,$tournament);
+            }else if(date("now") > $tournament->getStartDate()) {
+                array_push($inprogress,$tournament);
+            }
+        }
+        return $this->render('main/mytournaments.html.twig', [
+            'pending' => $pending,
+            'inprogress' => $inprogress,
+            'finished' => $finished,
         ]);
     }
 

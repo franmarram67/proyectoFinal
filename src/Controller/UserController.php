@@ -73,6 +73,7 @@ class UserController extends AbstractController
         ]);
     }
 
+    /*
     #[Route('/{id}', name: 'user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user): Response
     {
@@ -83,7 +84,7 @@ class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('user_index');
-    }
+    }*/
 
     #[Route('/verify/{id}', name: 'user_verify', methods: ['GET', 'POST'])]
     public function verify(Request $request, $id): Response

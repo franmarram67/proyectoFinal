@@ -13,6 +13,9 @@
 {% endif %}
 <br>
 <a href="/seeallprovinces">See All Provinces</a>
+{% if is_granted("ROLE_USER") %}
+    <br><a href="/mytournaments">My Tournaments</a>
+{% endif %}
 <br>
 {% if is_granted("ROLE_ADMIN") %}
     <a href="/verifyusers">Verify users</a><br>
@@ -37,7 +40,11 @@
                 {% if app.user.id != tournament.creatorUser.id %}
                     {% if date() < date(tournament.startDate) %}
                         {% if tournament.players|length < 20 %}
-                            <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+                            {% if app.user not in tournament.players %}
+                                <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+                            {% else %}
+                                You already Signed Up to this Tournament.
+                            {% endif %}
                         {% else %}
                             You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
                         {% endif %}
@@ -45,7 +52,10 @@
                         You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
                     {% endif %}
                 {% else %}
-                    You can't Sign Up to your own Tournament.
+                    You can't Sign Up to your own Tournament.<br><br>
+                    {% if date() > date(tournament.startDate) %}
+                        <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
+                    {% endif %}
                 {% endif %}
             {% else %}
                 You can't Sign Up to this Tournament because you're not a verified user.
