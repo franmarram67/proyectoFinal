@@ -27,17 +27,17 @@
 <p>Surname: {{app.user.surname}}</p>
 <p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>#}
 
-{{ form_start(form) }}
+{{ form_start(profileForm) }}
     <h3>{{app.user.name}} {{app.user.surname}}</h3>
     <div class="hideshow name">
         <div>
-            {{ form_row(form.name) }}
+            {{ form_row(profileForm.name) }}
         </div>
         <a href="#">Change Name</a>
     </div>
     <div class="hideshow surname">
         <div>
-            {{ form_row(form.surname) }}
+            {{ form_row(profileForm.surname) }}
         </div>
         <a href="#">Change Surname</a>
     </div>
@@ -49,39 +49,52 @@
     {% endif %}
     <div class="hideshow picture">
         <div>
-            {{ form_row(form.profilePicture) }}
+            {{ form_row(profileForm.profilePicture) }}
         </div>
         <a href="#">Change Picture</a>
-    </div>
-    <p>Email: {{app.user.email}}</p>
-    <div class="hideshow email">
-        <div>
-            {{ form_row(form.email) }}
-        </div>
-        <a href="#">Change Email</a>
-    </div>
-    <div class="hideshow password">
-        <div>
-            {{ form_row(form.plainPassword) }}
-        </div>
-        <a href="#">Change Password</a>
     </div>
     <p>DNI: {{app.user.dni != null ? app.user.dni : "You haven't introduced your DNI yet." }}</p>
     <div class="hideshow dni">
         <div>
-            {{ form_row(form.dni) }}
+            {{ form_row(profileForm.dni) }}
         </div>
         <a href="#">Change DNI</a>
     </div>
     <p>Province: <a href="/seeprovince/{{app.user.province.id}}">{{app.user.province}}</a></p>
     <div class="hideshow province">
         <div>
-            {{ form_row(form.province) }}
+            {{ form_row(profileForm.province) }}
         </div>
         <a href="#">Change Province</a>
     </div>
     <button class="btn">{{ button_label|default('Save Changes') }}</button>
-{{ form_end(form) }}
+{{ form_end(profileForm) }}
+
+{{ form_start(emailForm) }}
+    <p>Email: {{app.user.email}}</p>
+    <div class="hideshow email">
+        <div>
+            {{ form_row(emailForm.oldEmail) }}
+            {{ form_row(emailForm.newEmail) }}
+            <button class="btn">{{ button_label|default('Change Email') }}</button>
+        </div>
+        <a href="#">Change Email</a>
+    </div>
+{{ form_end(emailForm) }}
+
+{{ form_start(passwordForm) }}
+    <div class="hideshow password">
+        <div>
+            {{ form_row(passwordForm.oldPassword) }}
+            {{ form_row(passwordForm.newPassword) }}
+            <button class="btn">{{ button_label|default('Change Password') }}</button>
+        </div>
+        <a href="#">Change Password</a>
+    </div>
+{{ form_end(passwordForm) }}
+    
+    
+
 
 {% endblock %}
 

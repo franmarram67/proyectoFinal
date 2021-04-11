@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tournament;
 use App\Form\TournamentType;
+use App\Form\AdminTournamentType;
 use App\Repository\TournamentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,6 +72,41 @@ class TournamentController extends AbstractController
     /**
      * @IsGranted("ROLE_ADMIN")
      */
+    #[Route('/adminnew', name: 'admin_tournament_new', methods: ['GET', 'POST'])]
+    public function adminNew(Request $request): Response
+    {
+        try {
+            if($this->getUser()->getVerified() == true) {
+                $tournament = new Tournament();
+                $form = $this->createForm(AdminTournamentType::class, $tournament);
+                $form->handleRequest($request);
+    
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $entityManager = $this->getDoctrine()->getManager();
+    
+                    $entityManager->persist($tournament);
+                    $entityManager->flush();
+    
+                    return $this->redirectToRoute('main');
+                }
+    
+                return $this->render('tournament/new.html.twig', [
+                    'tournament' => $tournament,
+                    'form' => $form->createView(),
+                ]);
+            } else {
+                throw new Exception("You have to be a verified user to create a Tournament.");
+            }
+        } catch (Exception $e) {
+            return new Response($e->getMessage());
+        }
+        
+        
+    }
+
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/{id}', name: 'tournament_show', methods: ['GET'])]
     public function show(Tournament $tournament): Response
     {
@@ -85,7 +121,7 @@ class TournamentController extends AbstractController
     #[Route('/{id}/edit', name: 'tournament_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Tournament $tournament): Response
     {
-        $form = $this->createForm(TournamentType::class, $tournament);
+        $form = $this->createForm(AdminTournamentType::class, $tournament);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -12,6 +12,8 @@ use App\Entity\Tournament;
 use App\Entity\Province;
 
 use App\Form\ProfileType;
+use App\Form\ChangePasswordType;
+use App\Form\ChangeEmailType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -81,29 +83,31 @@ class MainController extends AbstractController
         try {
             $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
             if($this->getUser()) {
-                if($this->getUser()->getVerified() == true) {
-                    if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
-                        if(date("now") < $tournament->getStartDate()) {
-                            if(count($tournament->getPlayers()) < 20) {
-                                if($tournament->getPlayers()->find($this->getUser())) {
-                                    $entityManager = $this->getDoctrine()->getManager();
-                                    $tournament->addPlayer($this->getUser());
-                                    $entityManager->flush();
-                                    return $this->redirectToRoute('main');
+                if(!$tournament->getPlayers()->contains($this->getUser())) { //Comprobar que el usuario no está apuntado en el torneo
+                    if($this->getUser()->getVerified() == true) {
+                        if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
+                            if(date("now") < $tournament->getStartDate()) {
+                                if(count($tournament->getPlayers()) < 20) {
+                                    
+                                        $entityManager = $this->getDoctrine()->getManager();
+                                        $tournament->addPlayer($this->getUser());
+                                        $entityManager->flush();
+                                        return $this->redirectToRoute('main');
+                                    
                                 } else {
-                                    throw new Exception("You already Signed Up to this Tournament.");
+                                    throw new Exception("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
                                 }
                             } else {
-                                throw new Exception("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
+                                throw new Exception("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
                             }
                         } else {
-                            throw new Exception("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
+                            throw new Exception("You can't Sign Up to your own Tournament.");
                         }
                     } else {
-                        throw new Exception("You can't Sign Up to your own Tournament.");
+                        throw new Exception("You can't Sign Up to this Tournament because you're not a verified user.");
                     }
                 } else {
-                    throw new Exception("You can't Sign Up to this Tournament because you're not a verified user.");
+                    throw new Exception("You already Signed Up to this Tournament.");
                 }
             } else {
                 throw new Exception("Login to be able to Sign Up to this Tournament.");
@@ -122,26 +126,16 @@ class MainController extends AbstractController
     public function myProfile(Request $request, SluggerInterface $slugger, UserPasswordEncoderInterface $passwordEncoder): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(ProfileType::class, $user);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        //Edit Profile
+        $profileForm = $this->createForm(ProfileType::class, $user);
+        $profileForm->handleRequest($request);
 
-            /*var_dump($form->get('plainPassword')->getData());
-            exit;*/
-            // encode the plain password
-            if($form->get('plainPassword')->getData()!=null) {
-                $user->setPassword(
-                    $passwordEncoder->encodePassword(
-                        $user,
-                        $form->get('plainPassword')->getData()
-                    )
-                );
-            }
+        if ($profileForm->isSubmitted() && $profileForm->isValid()) {
 
             // Código cargar imagen
             /** @var UploadedFile $img */
-            $img = $form->get('profilePicture')->getData();
+            $img = $profileForm->get('profilePicture')->getData();
 
             // this condition is needed because the 'brochure' field is not required
             // so the PDF file must be processed only when a file is uploaded
@@ -168,15 +162,11 @@ class MainController extends AbstractController
 
             // ... persist the $article variable or any other work y código que estaba
 
-            $email = $form->get('email')->getData();
-            $dni = $form->get('dni')->getData();
-            $name = $form->get('name')->getData();
-            $surname = $form->get('surname')->getData();
-            $province = $form->get('province')->getData();
+            $dni = $profileForm->get('dni')->getData();
+            $name = $profileForm->get('name')->getData();
+            $surname = $profileForm->get('surname')->getData();
+            $province = $profileForm->get('province')->getData();
 
-            if($email) {
-                $user->setEmail($email);
-            }
             if($dni) {
                 $user->setDni($dni);
             }
@@ -195,10 +185,52 @@ class MainController extends AbstractController
             return $this->redirectToRoute('myprofile');
         }
 
+        //Change Password
+        $passwordForm = $this->createForm(ChangePasswordType::class, $user);
+        $passwordForm->handleRequest($request);
+
+        if ($passwordForm->isSubmitted() && $passwordForm->isValid()) {
+
+            /*var_dump($passwordForm->get('plainPassword')->getData());
+            exit;*/
+            // encode the plain password
+            if($passwordForm->get('newPassword')->getData()!=null) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $passwordForm->get('newPassword')->getData()
+                    )
+                );
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('myprofile');
+        }
+
+        //Change Email
+        $emailForm = $this->createForm(ChangeEmailType::class, $user);
+        $emailForm->handleRequest($request);
+
+        if ($emailForm->isSubmitted() && $emailForm->isValid()) {
+
+            $email = $emailForm->get('newEmail')->getData();
+
+            if($email) {
+                $user->setEmail($email);
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('myprofile');
+        }
+
         $userpoints = 0;
         return $this->render('main/myprofile.html.twig', [
             'userpoints' => $userpoints,
-            'form' => $form->createView(),
+            'profileForm' => $profileForm->createView(),
+            'passwordForm' => $passwordForm->createView(),
+            'emailForm' => $emailForm->createView(),
         ]);
     }
 
