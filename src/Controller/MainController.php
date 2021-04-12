@@ -14,6 +14,7 @@ use App\Entity\Province;
 use App\Form\ProfileType;
 use App\Form\ChangePasswordType;
 use App\Form\ChangeEmailType;
+use App\Form\FinishTournamentType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -78,7 +79,7 @@ class MainController extends AbstractController
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function signUpToTournament($id): Response
+    public function signUpToTournament($id, Request $request): Response
     {
         try {
             $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
@@ -89,10 +90,15 @@ class MainController extends AbstractController
                             if(date("now") < $tournament->getStartDate()) {
                                 if(count($tournament->getPlayers()) < 20) {
                                     
-                                        $entityManager = $this->getDoctrine()->getManager();
-                                        $tournament->addPlayer($this->getUser());
-                                        $entityManager->flush();
-                                        return $this->redirectToRoute('main');
+                                    $entityManager = $this->getDoctrine()->getManager();
+                                    $tournament->addPlayer($this->getUser());
+                                    $entityManager->flush();
+                                    //return $this->redirectToRoute('main');
+
+                                    $request->getSession()->getFlashBag()->add('notice','success');
+                                    $referer = $request->headers->get('referer');
+                                    return $this->redirect($referer);
+                                   
                                     
                                 } else {
                                     throw new Exception("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
@@ -281,6 +287,26 @@ class MainController extends AbstractController
             'pending' => $pending,
             'inprogress' => $inprogress,
             'finished' => $finished,
+        ]);
+    }
+
+    #[Route('/finishtournament/{id}', name: 'finishtournament')]
+    public function finishTournament(Request $request, $id): Response
+    {
+        $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
+        $form = $this->createForm(FinishTournamentType::class, $tournament);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('main');
+        }
+        
+        return $this->render('main/finishtournament.html.twig', [
+            'tournament' => $tournament,
+            'form' => $form->createView(),
         ]);
     }
 

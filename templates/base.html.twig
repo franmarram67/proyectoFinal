@@ -13,6 +13,25 @@
         
     </head>
     <body>
+        <h1>Tournament Master</h1>
+        {% if is_granted("ROLE_USER") %}
+            Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
+            <a href="/myprofile">My profile</a>
+        {% else %}
+            <a href="/register">Register</a> or <a href="/login">Login</a>
+        {% endif %}
+        <br>
+        <a href="/">Home Page</a><br>
+        <a href="/seeallprovinces">See All Provinces</a>
+        {% if is_granted("ROLE_USER") %}
+            <br><a href="/mytournaments">My Tournaments</a>
+        {% endif %}
+        <br>
+        {% if is_granted("ROLE_ADMIN") %}
+            <a href="/verifyusers">Verify users</a><br>
+            <a href="/adminpage">Admin Page</a>
+        {% endif %}
+        <hr>
         {% block body %}{% endblock %}
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}

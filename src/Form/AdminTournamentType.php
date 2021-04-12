@@ -16,15 +16,8 @@ class AdminTournamentType extends AbstractType
             ->add('description')
             ->add('startDate')
             ->add('finished')
-            ->add('creationDate')
             ->add('hidden')
             ->add('videogame')
-            ->add('creatorUser')
-            ->add('firstPlace')
-            ->add('secondPlace')
-            ->add('thirdPlace')
-            ->add('fourthPlace')
-            ->add('players')
         ;
     }
 

@@ -4,15 +4,7 @@
 
 {% block body %}
 
-<h1>Tournament Master</h1>
-{% if is_granted("ROLE_USER") %}
-    Hello, {{app.user.email}} - <a href="/logout">Logout</a>
-{% else %}
-    <a href="/register">Register</a> or <a href="/login">Login</a>
-{% endif %}
-<br>
 
-<hr>
 
 <h2>{{province.name}}</h2>
 <img src="/img/{{province.image}}" width="500px"/>

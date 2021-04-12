@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h2> Finish Tournament </h2>
+
+<h3>{{tournament.title}} - by {{tournament.creatorUser.username}}</h3>
+<p>{{ tournament.description }}</p>
+<p>VideoGame: {{ tournament.videogame }}</p>
+<p>Places: {{tournament.players|length}}/20</p>
+<h4>{{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
+
+<hr>
+
+<h3>Select Winners</h3>
+{{ form_start(form) }}
+    {{ form_row(form.firstPlace) }}
+    {{ form_row(form.secondPlace) }}
+    {{ form_row(form.thirdPlace) }}
+    {{ form_row(form.fourthPlace) }}
+    <button class="btn">{{ button_label|default('Finish Tournament') }}</button>
+{{ form_end(form) }}
+
+
+{% endblock %}

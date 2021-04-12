@@ -4,24 +4,7 @@
 
 {% block body %}
 
-<h1>Tournament Master</h1>
-{% if is_granted("ROLE_USER") %}
-    Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
-    <a href="/myprofile">My profile</a>
-{% else %}
-    <a href="/register">Register</a> or <a href="/login">Login</a>
-{% endif %}
-<br>
-<a href="/seeallprovinces">See All Provinces</a>
-{% if is_granted("ROLE_USER") %}
-    <br><a href="/mytournaments">My Tournaments</a>
-{% endif %}
-<br>
-{% if is_granted("ROLE_ADMIN") %}
-    <a href="/verifyusers">Verify users</a><br>
-    <a href="/adminpage">Admin Page</a>
-{% endif %}
-<hr>
+
 {% if is_granted("ROLE_USER") %}
     {% if app.user.verified == true %}
         <a href="/tournament/new">Create New Tournament</a>
@@ -33,6 +16,7 @@
     <li>
         <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
         <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
+        <p>VideoGame: {{ tournament.videogame }}</p>
         <p>Places: {{tournament.players|length}}/20</p>
         <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
         {% if is_granted("ROLE_USER") %}

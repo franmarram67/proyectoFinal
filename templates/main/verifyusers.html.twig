@@ -4,15 +4,6 @@
 
 {% block body %}
 
-<h1>Tournament Master</h1>
-{% if is_granted("ROLE_USER") %}
-    Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
-{% else %}
-    <a href="/register">Register</a> or <a href="/login">Login</a>
-{% endif %}
-<br>
-
-<hr>
 
 <h2>Unverified Users</h2>
 {% if allusers != null %}
