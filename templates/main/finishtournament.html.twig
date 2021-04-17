@@ -2,6 +2,10 @@
 
 {% block title %}Tournament Master{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="/css/finishtournament.css">
+{% endblock %}
+
 {% block body %}
 
 <h2> Finish Tournament </h2>
@@ -15,13 +19,41 @@
 <hr>
 
 <h3>Select Winners</h3>
-{{ form_start(form) }}
-    {{ form_row(form.firstPlace) }}
-    {{ form_row(form.secondPlace) }}
-    {{ form_row(form.thirdPlace) }}
-    {{ form_row(form.fourthPlace) }}
-    <button class="btn">{{ button_label|default('Finish Tournament') }}</button>
-{{ form_end(form) }}
+<h4>First Place</h4>
+<select id="firstPlace" name="firstPlace">
+    {% for player in tournament.players %}
+        <option value="{{player.id}}">{{player.email}}</option>
+    {% endfor %}
+</select>
+
+<h4>Second Place</h4>
+<select id="secondPlace" name="secondPlace">
+    {% for player in tournament.players %}
+        <option value="{{player.id}}">{{player.email}}</option>
+    {% endfor %}
+</select>
+
+<h4>Third Place</h4>
+<select id="thirdPlace" name="thirdPlace">
+    {% for player in tournament.players %}
+        <option value="{{player.id}}">{{player.email}}</option>
+    {% endfor %}
+</select>
+
+<h4>Fourth Place</h4>
+<select id="fourthPlace" name="fourthPlace">
+    {% for player in tournament.players %}
+        <option value="{{player.id}}">{{player.email}}</option>
+    {% endfor %}
+</select>
+
+<input type="hidden" id="tournamentId" value="{{tournament.id}}">
+
+<br><br><a class="finishtournament">Finish Tournament</a>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="/js/finishtournamentajax.js"></script>
 {% endblock %}

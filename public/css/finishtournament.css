@@ -1,0 +1,8 @@
+.finishtournament {
+    color: blue;
+    text-decoration: underline;
+}
+
+.finishtournament:hover {
+    cursor: pointer;
+}

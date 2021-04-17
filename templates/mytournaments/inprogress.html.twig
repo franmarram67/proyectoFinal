@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h2>Tournaments In Progress</h2>
+{% for t in inprogress %}
+    <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
+    <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
+    <p>VideoGame: {{ t.videogame }}</p>
+    <p>Places: {{t.players|length}}/20</p>
+    <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+{% endfor %}
+
+{% endblock %}
