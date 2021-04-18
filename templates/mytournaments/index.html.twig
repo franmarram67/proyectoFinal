@@ -5,43 +5,59 @@
 {% block body %}
 
 <h2>Created Tournaments</h2>
+<ul>
 {% for t in app.user.createdTournaments|slice(0, 10) %}
-    <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-    <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-    <p>VideoGame: {{ t.videogame }}</p>
-    <p>Places: {{t.players|length}}/20</p>
-    <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    <li>
+        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
+        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
+        <p>VideoGame: {{ t.videogame }}</p>
+        <p>Places: {{t.players|length}}/20</p>
+        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    </li>
 {% endfor %}
+</ul>
 <a href="/mytournaments/created">See All Created Tournaments</a>
 
 <h2>Pending Tournaments</h2>
+<ul>
 {% for t in pending|slice(0, 10) %}
-    <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-    <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-    <p>VideoGame: {{ t.videogame }}</p>
-    <p>Places: {{t.players|length}}/20</p>
-    <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    <li>
+        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
+        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
+        <p>VideoGame: {{ t.videogame }}</p>
+        <p>Places: {{t.players|length}}/20</p>
+        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    </li>
 {% endfor %}
+</ul>
 <a href="/mytournaments/pending">See All Pending Tournaments</a>
 
 <h2>Tournaments In Progress</h2>
+<ul>
 {% for t in inprogress|slice(0, 10) %}
-    <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-    <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-    <p>VideoGame: {{ t.videogame }}</p>
-    <p>Places: {{t.players|length}}/20</p>
-    <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    <li>
+        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
+        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
+        <p>VideoGame: {{ t.videogame }}</p>
+        <p>Places: {{t.players|length}}/20</p>
+        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    </li>
 {% endfor %}
+</ul>
 <a href="/mytournaments/inprogress">See All Tournaments In Progress</a>
 
 <h2>Finished Tournaments</h2>
+<ul>
 {% for t in finished|slice(0, 10) %}
-    <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-    <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-    <p>VideoGame: {{ t.videogame }}</p>
-    <p>Places: {{t.players|length}}/20</p>
-    <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    <li>
+        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
+        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
+        <p>VideoGame: {{ t.videogame }}</p>
+        <p>Places: {{t.players|length}}/20</p>
+        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
+    </li>
 {% endfor %}
+</ul>
 <a href="/mytournaments/finished">See All Finished Tournaments</a>
 
 {% endblock %}

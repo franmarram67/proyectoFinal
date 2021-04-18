@@ -81,37 +81,42 @@ class MainController extends AbstractController
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
-            if(!$tournament->getPlayers()->contains($this->getUser())) { //Comprobar que el usuario no está apuntado en el torneo
-                if($this->getUser()->getVerified() == true) {
-                    if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
-                        if(date("now") < $tournament->getStartDate()) {
-                            if(count($tournament->getPlayers()) < 20) {
-                                
-                                $entityManager = $this->getDoctrine()->getManager();
-                                $tournament->addPlayer($this->getUser());
-                                $entityManager->flush();
-                                //return $this->redirectToRoute('main');
-
-                                $request->getSession()->getFlashBag()->add('notice','success');
-                                $referer = $request->headers->get('referer');
-                                return $this->redirect($referer);
-                                
-                                
+            if($tournament->getFinished()==false) {
+                if(!$tournament->getPlayers()->contains($this->getUser())) { //Comprobar que el usuario no está apuntado en el torneo
+                    if($this->getUser()->getVerified() == true) {
+                        if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
+                            if(date("now") < $tournament->getStartDate()) {
+                                if(count($tournament->getPlayers()) < 20) {
+                                    
+                                    $entityManager = $this->getDoctrine()->getManager();
+                                    $tournament->addPlayer($this->getUser());
+                                    $entityManager->flush();
+                                    //return $this->redirectToRoute('main');
+    
+                                    $request->getSession()->getFlashBag()->add('notice','success');
+                                    $referer = $request->headers->get('referer');
+                                    return $this->redirect($referer);
+                                    
+                                    
+                                } else {
+                                    return new Response("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
+                                }
                             } else {
-                                return new Response("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
+                                return new Response("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
                             }
                         } else {
-                            return new Response("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
+                            return new Response("You can't Sign Up to your own Tournament.");
                         }
                     } else {
-                        return new Response("You can't Sign Up to your own Tournament.");
+                        return new Response("You can't Sign Up to this Tournament because you're not a verified user.");
                     }
                 } else {
-                    return new Response("You can't Sign Up to this Tournament because you're not a verified user.");
+                    return new Response("You already Signed Up to this Tournament.");
                 }
             } else {
-                return new Response("You already Signed Up to this Tournament.");
+                return new Response("You can't Sign Up to a finished Tournament.");
             }
+            
         } else {
             return new Response("You can't sign up to a deleted Tournament");
         }
@@ -132,7 +137,7 @@ class MainController extends AbstractController
         $profileForm->handleRequest($request);
 
         if ($profileForm->isSubmitted() && $profileForm->isValid()) {
-
+            
             // Código cargar imagen
             /** @var UploadedFile $img */
             $img = $profileForm->get('profilePicture')->getData();
@@ -274,19 +279,26 @@ class MainController extends AbstractController
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);    
         if($tournament->getHidden()==false) {
-            if(date("now") > $tournament->getStartDate()) {
-                return $this->render('main/finishtournament.html.twig', [
-                    'tournament' => $tournament,
-                ]);
+            if($tournament->getFinished()==false) {
+                if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                    if(date("now") < $tournament->getStartDate()) {
+                        return $this->render('main/finishtournament.html.twig', [
+                            'tournament' => $tournament,
+                        ]);
+                    } else {
+                        return new Response("You can't finish a tournament before the start date.");
+                    }
+                } else {
+                    return new Response("You have to be the tournament creator to finish it.");
+                }
             } else {
-                return new Response("You can't finish a tournament before the start date.");
+                return new Response("You can't finish an already finished Tournament.");
             }
+            
         } else {
             return new Response("You can't finish a deleted Tournament.");
         }
         
-            
-      
     }
 
     #[Route('/finishtournamentajax/{id}', name: 'finishtournamentajax', methods: ['GET'])]
@@ -298,42 +310,67 @@ class MainController extends AbstractController
         //Continuar por aquí...
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id); 
         if($tournament->getHidden()==false) {
-            if(date("now") > $tournament->getStartDate()) {
-                $firstPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('firstPlace'));
-                $secondPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('secondPlace'));
-                $thirdPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('thirdPlace'));
-                $fourthPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('fourthPlace'));
-            
-                if ( !$firstPlace || !$secondPlace || !$thirdPlace || !$fourthPlace ) {
-                    return new Response("Error");
-                }
-    
-                if($firstPlace!=$secondPlace&&$firstPlace!=$thirdPlace&&$firstPlace!=$fourthPlace && $secondPlace!=$thirdPlace&&$secondPlace!=$fourthPlace && $thirdPlace!=$fourthPlace) {
+            if($tournament->getFinished()==false) {
+                if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                    if(date("now") < $tournament->getStartDate()) {
+                        $firstPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('firstPlace'));
+                        $secondPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('secondPlace'));
+                        $thirdPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('thirdPlace'));
+                        $fourthPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('fourthPlace'));
                     
-                    $tournament->setFirstPlace($firstPlace);
-                    $tournament->setSecondPlace($secondPlace);
-                    $tournament->setThirdPlace($thirdPlace);
-                    $tournament->setFourthPlace($fourthPlace);
-    
-                    $tournament->setFinished(true);
+                        if ( !$firstPlace || !$secondPlace || !$thirdPlace || !$fourthPlace ) {
+                            return new Response("Error");
+                        }
+            
+                        if($tournament->getPlayers()->contains($firstPlace)&&$tournament->getPlayers()->contains($secondPlace)&&$tournament->getPlayers()->contains($thirdPlace)&&$tournament->getPlayers()->contains($fourthPlace)) {
+                            if($firstPlace!=$secondPlace&&$firstPlace!=$thirdPlace&&$firstPlace!=$fourthPlace && $secondPlace!=$thirdPlace&&$secondPlace!=$fourthPlace && $thirdPlace!=$fourthPlace) {
+                            
+                                $tournament->setFirstPlace($firstPlace);
+                                $tournament->setSecondPlace($secondPlace);
+                                $tournament->setThirdPlace($thirdPlace);
+                                $tournament->setFourthPlace($fourthPlace);
                 
-                    $em = $this->getDoctrine()->getManager();
-                    $em->flush();
+                                $tournament->setFinished(true);
+                            
+                                $em = $this->getDoctrine()->getManager();
+                                $em->flush();
+                                    
+                                return $this->redirect("/seetournament/".$id);
+                            }else{
+                                return new Response("The same user can't be in two or more different places at the same time.");
+                            }
+                        } else {
+                            return new Response("You can't add a user to a place if the user is not a tournament player.");
+                        }
                         
-                    return $this->redirect("/seetournament/".$id);
-                }else{
-                    return new Response("The same user can't be in two or more different places at the same time.");
+                    } else {
+                        return new Response("You can't finish a tournament before the start date.");
+                    }
+                } else {
+                    return new Response("You have to be the tournament creator to finish it.");
                 }
             } else {
-                return new Response("You can't finish a tournament before the start date.");
+                return new Response("You can't finish an already finished Tournament.");
             }
+            
         } else {
             return new Response("You can't finish a deleted Tournament.");
         }
         
-        
-        
-
     }
+
+    #[Route('/deletetournament/{id}', name: 'deletetournament')]
+    /**
+     * @IsGranted("ROLE_USER")
+     */
+    public function deleteTournament($id): Response
+    {
+        $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
+        return $this->render('main/deletetournament.html.twig', [
+            'tournament' => $tournament,
+        ]);
+    }
+
+    
 
 }
