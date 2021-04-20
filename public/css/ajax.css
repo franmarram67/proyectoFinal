@@ -1,8 +1,8 @@
-.finishtournament {
+.fakelink {
     color: blue;
     text-decoration: underline;
 }
 
-.finishtournament:hover {
+.fakelink:hover {
     cursor: pointer;
 }

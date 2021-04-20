@@ -22,11 +22,11 @@ $(document).ready(function() {
         });
     }
 
-    $(".finishtournament").mousedown(function(){
+    $(".fakelink").mousedown(function(){
         $(this).css("color","red");
     });
 
-    $(".finishtournament").mouseup(function(){
+    $(".fakelink").mouseup(function(){
         $(this).css("color","purple");
     });
     
@@ -48,6 +48,36 @@ $(document).ready(function() {
             finishTournament(id1,id2,id3,id4,idT);
         } else {
             window.alert("The same user can't be in two or more different places at the same time.")
+        }
+        
+    });
+
+    function deleteTournament(idT) {
+        $.ajax({
+            type: "GET",
+            url: "/deletetournamentajax/"+idT,
+            data: { 
+
+            },
+    
+            // ------v-------use it as the callback function
+            success: function(data) {
+                //console.log(data);
+                window.location.replace("/");
+            },
+            error: function(request, error) {
+                console.log(request, error);
+            }
+        });
+    }
+
+    $(".deletetournament").on("click",function(){
+        var idT=$("#tournamentId").val();
+        console.log("tournamentId: "+idT);
+        console.log("----");
+        var c = confirm("Are you sure you want to delete this Tournament?");4
+        if(c) {
+            deleteTournament(idT);
         }
         
     });

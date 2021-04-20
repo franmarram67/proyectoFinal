@@ -47,4 +47,19 @@ class TournamentRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+     * @return Tournament[] Returns an array of Tournament objects
+     */
+    public function findByHidden($value)
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.hidden = :val')
+            ->setParameter('val', $value)
+            ->orderBy('t.creationDate', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 }

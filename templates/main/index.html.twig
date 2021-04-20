@@ -15,15 +15,16 @@
 {% for tournament in tournaments %}
     <li>
         <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
+        {{ tournament.finished == true ? "<i><u>This tournament has finished.</i></u><br>" : "" }}
         <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
         <p>VideoGame: {{ tournament.videogame }}</p>
         <p>Places: {{tournament.players|length}}/20</p>
         <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
         {% if is_granted("ROLE_USER") %}
-            {% if tournament.finished == false %}
-                {% if app.user not in tournament.players %}
-                    {% if app.user.verified == true %}
-                        {% if app.user.id != tournament.creatorUser.id %}
+            {% if app.user.id != tournament.creatorUser.id %}
+                {% if tournament.finished == false %}
+                    {% if app.user not in tournament.players %}
+                        {% if app.user.verified == true %}
                             {% if date() < date(tournament.startDate) %}
                                 {% if tournament.players|length < 20 %}
                                     <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
@@ -34,21 +35,24 @@
                                 You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
                             {% endif %}
                         {% else %}
-                            You can't Sign Up to your own Tournament.<br><br>
-                            {% if date() > date(tournament.startDate) %}
-                                <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
-                            {% else if date() > date(tournament.startDate) %}  
-                                <a href="/deletetournament/{{tournament.id}}">Delete Tournament</a>  
-                            {% endif %}
+                            You can't Sign Up to this Tournament because you're not a verified user.
                         {% endif %}
                     {% else %}
-                        You can't Sign Up to this Tournament because you're not a verified user.
+                        You already Signed Up to this Tournament.
                     {% endif %}
                 {% else %}
-                    You already Signed Up to this Tournament.
+                    You can't Sign Up to a finished Tournament.
                 {% endif %}
             {% else %}
-                You can't Sign Up to a finished Tournament.
+                {% if tournament.finished == true %}
+                    Your tournament has finished, you can't finish it or delete it.<br><br>
+                {% elseif date() > date(tournament.startDate) %}
+                    You can't Sign Up to your own Tournament.<br><br>
+                    <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
+                {% elseif date() < date(tournament.startDate) %}  
+                    You can't Sign Up to your own Tournament.<br><br>
+                    <a href="/deletetournament/{{tournament.id}}">Delete Tournament</a>  
+                {% endif %}
             {% endif %}
         {% else %}
             Login to be able to Sign Up to this Tournament.

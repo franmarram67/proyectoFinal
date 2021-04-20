@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Entity\Tournament;
 use App\Entity\Province;
+use App\Entity\Notification;
+use App\Entity\Points;
 
 use App\Form\ProfileType;
 use App\Form\ChangePasswordType;
@@ -30,7 +32,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(): Response
     {
-        $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findAll();
+        $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findByHidden(false);
         return $this->render('main/index.html.twig', [
             'tournaments' => $tournaments,
         ]);
@@ -81,10 +83,11 @@ class MainController extends AbstractController
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
-            if($tournament->getFinished()==false) {
-                if(!$tournament->getPlayers()->contains($this->getUser())) { //Comprobar que el usuario no está apuntado en el torneo
-                    if($this->getUser()->getVerified() == true) {
-                        if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
+            if($this->getUser()->getId() != $tournament->getCreatorUser()->getId()) {
+                if($tournament->getFinished()==false) {
+                    if(!$tournament->getPlayers()->contains($this->getUser())) { //Comprobar que el usuario no está apuntado en el torneo
+                        if($this->getUser()->getVerified() == true) {
+                            
                             if(date("now") < $tournament->getStartDate()) {
                                 if(count($tournament->getPlayers()) < 20) {
                                     
@@ -92,7 +95,7 @@ class MainController extends AbstractController
                                     $tournament->addPlayer($this->getUser());
                                     $entityManager->flush();
                                     //return $this->redirectToRoute('main');
-    
+
                                     $request->getSession()->getFlashBag()->add('notice','success');
                                     $referer = $request->headers->get('referer');
                                     return $this->redirect($referer);
@@ -104,17 +107,18 @@ class MainController extends AbstractController
                             } else {
                                 return new Response("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
                             }
+                            
                         } else {
-                            return new Response("You can't Sign Up to your own Tournament.");
+                            return new Response("You can't Sign Up to this Tournament because you're not a verified user.");
                         }
                     } else {
-                        return new Response("You can't Sign Up to this Tournament because you're not a verified user.");
+                        return new Response("You already Signed Up to this Tournament.");
                     }
                 } else {
-                    return new Response("You already Signed Up to this Tournament.");
+                    return new Response("You can't Sign Up to a finished Tournament.");
                 }
             } else {
-                return new Response("You can't Sign Up to a finished Tournament.");
+                return new Response("You can't Sign Up to your own Tournament.");
             }
             
         } else {
@@ -262,6 +266,30 @@ class MainController extends AbstractController
         ]);
     }
 
+    #[Route('/mypoints', name: 'mypoints')]
+    /**
+     * @IsGranted("ROLE_USER")
+     */
+    public function myPoints(): Response
+    {
+        $points=$this->getUser()->getPoints();
+        return $this->render('main/mypoints.html.twig', [
+            'points' => $points,
+        ]);
+    }
+
+    #[Route('/mynotifications', name: 'mynotifications')]
+    /**
+     * @IsGranted("ROLE_USER")
+     */
+    public function myNotifications(): Response
+    {
+        $notifications=$this->getUser()->getNotifications();
+        return $this->render('main/mynotifications.html.twig', [
+            'notifications' => $notifications,
+        ]);
+    }
+
     #[Route('/seeallprovinces', name: 'seeallprovinces')]
     public function seeAllProvinces(): Response
     {
@@ -279,8 +307,8 @@ class MainController extends AbstractController
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);    
         if($tournament->getHidden()==false) {
-            if($tournament->getFinished()==false) {
-                if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+            if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                if($tournament->getFinished()==false) {
                     if(date("now") < $tournament->getStartDate()) {
                         return $this->render('main/finishtournament.html.twig', [
                             'tournament' => $tournament,
@@ -289,10 +317,10 @@ class MainController extends AbstractController
                         return new Response("You can't finish a tournament before the start date.");
                     }
                 } else {
-                    return new Response("You have to be the tournament creator to finish it.");
+                    return new Response("You can't finish an already finished Tournament.");
                 }
             } else {
-                return new Response("You can't finish an already finished Tournament.");
+                return new Response("You have to be the tournament creator to finish it.");
             }
             
         } else {
@@ -310,8 +338,8 @@ class MainController extends AbstractController
         //Continuar por aquí...
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id); 
         if($tournament->getHidden()==false) {
-            if($tournament->getFinished()==false) {
-                if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+            if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                if($tournament->getFinished()==false) {
                     if(date("now") < $tournament->getStartDate()) {
                         $firstPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('firstPlace'));
                         $secondPlace = $this->getDoctrine()->getRepository(User::class)->find($request->query->get('secondPlace'));
@@ -324,15 +352,68 @@ class MainController extends AbstractController
             
                         if($tournament->getPlayers()->contains($firstPlace)&&$tournament->getPlayers()->contains($secondPlace)&&$tournament->getPlayers()->contains($thirdPlace)&&$tournament->getPlayers()->contains($fourthPlace)) {
                             if($firstPlace!=$secondPlace&&$firstPlace!=$thirdPlace&&$firstPlace!=$fourthPlace && $secondPlace!=$thirdPlace&&$secondPlace!=$fourthPlace && $thirdPlace!=$fourthPlace) {
-                            
+                                
+                                $em = $this->getDoctrine()->getManager();
+
+                                //Set Places
                                 $tournament->setFirstPlace($firstPlace);
                                 $tournament->setSecondPlace($secondPlace);
                                 $tournament->setThirdPlace($thirdPlace);
                                 $tournament->setFourthPlace($fourthPlace);
                 
+                                //Finish Tournaments
                                 $tournament->setFinished(true);
-                            
-                                $em = $this->getDoctrine()->getManager();
+
+                                //Create Points
+                                $pointsFirst = new Points();
+                                $pointsSecond = new Points();
+                                $pointsThird = new Points();
+                                $pointsFourth = new Points();
+
+                                $pointsFirst->setUser($firstPlace);
+                                $pointsFirst->setDatetime(new \DateTime);
+                                $pointsFirst->setAmount(500);
+                                $pointsFirst->setTournament($tournament);
+
+                                $pointsSecond->setUser($secondPlace);
+                                $pointsSecond->setDatetime(new \DateTime);
+                                $pointsSecond->setAmount(350);
+                                $pointsSecond->setTournament($tournament);
+
+                                $pointsThird->setUser($thirdPlace);
+                                $pointsThird->setDatetime(new \DateTime);
+                                $pointsThird->setAmount(200);
+                                $pointsThird->setTournament($tournament);
+
+                                $pointsFourth->setUser($fourthPlace);
+                                $pointsFourth->setDatetime(new \DateTime);
+                                $pointsFourth->setAmount(100);
+                                $pointsFourth->setTournament($tournament);
+
+                                $em->persist($pointsFirst);
+                                $em->persist($pointsSecond);
+                                $em->persist($pointsThird);
+                                $em->persist($pointsFourth);
+
+                                //Send Notifications
+                                foreach($tournament->getPlayers() as $player) {
+                                    $notification = new Notification();
+                                    $notification->setUser($player);
+                                    $notification->setTournament($tournament);
+                                    $notification->setSeen(false);
+                                    if($player->getId()==$firstPlace->getId()) {
+                                        $notification->setText("You won the first place!!! You are rewarded 500 points.");
+                                    } else if($player->getId()==$secondPlace->getId()) {
+                                        $notification->setText("You won the second place!!! You are rewarded 350 points.");
+                                    } else if($player->getId()==$thirdPlace->getId()) {
+                                        $notification->setText("You won the third place!!! You are rewarded 200 points.");
+                                    } else if($player->getId()==$fourthPlace->getId()) {
+                                        $notification->setText("You won the fourth place!!! You are rewarded 100 points.");
+                                    } else {
+                                        $notification->setText("You didn't win this time... ;(. Try again next time. You got this!!!");
+                                    }
+                                }
+
                                 $em->flush();
                                     
                                 return $this->redirect("/seetournament/".$id);
@@ -346,13 +427,13 @@ class MainController extends AbstractController
                     } else {
                         return new Response("You can't finish a tournament before the start date.");
                     }
+                    
                 } else {
-                    return new Response("You have to be the tournament creator to finish it.");
+                    return new Response("You can't finish an already finished Tournament.");
                 }
             } else {
-                return new Response("You can't finish an already finished Tournament.");
+                return new Response("You have to be the tournament creator to finish it.");
             }
-            
         } else {
             return new Response("You can't finish a deleted Tournament.");
         }
@@ -366,9 +447,47 @@ class MainController extends AbstractController
     public function deleteTournament($id): Response
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
-        return $this->render('main/deletetournament.html.twig', [
-            'tournament' => $tournament,
-        ]);
+        if($tournament->getHidden()==false) {
+            if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                if(date("now") > $tournament->getStartDate()) {
+                    return $this->render('main/deletetournament.html.twig', [
+                        'tournament' => $tournament,
+                    ]);
+                } else {
+                    return new Response("You can't delete a Tournament after the start date.");
+                }
+            } else {
+                return new Response("You can't delete this Tournament because you're not the creator user.");
+            }
+        } else {
+            return new Response("You can't delete an already deleted Tournament.");
+        }
+    }
+
+    #[Route('/deletetournamentajax/{id}', name: 'deletetournamentajax', methods: ['GET'])]
+    /**
+     * @IsGranted("ROLE_USER")
+     */
+    public function deleteTournamentAjax(Request $request,$id): Response
+    {
+        $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
+        if($tournament->getHidden()==false) {
+            if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
+                if(date("now") > $tournament->getStartDate()) {
+                    $tournament->setHidden(true);
+                    $em = $this->getDoctrine()->getManager();
+                    $em->flush();
+                    return $this->redirect("/");
+                } else {
+                    return new Response("You can't delete a Tournament after the start date.");
+                }
+            } else {
+                return new Response("You can't delete this Tournament because you're not the creator user.");
+            }
+        } else {
+            return new Response("You can't delete an already deleted Tournament.");
+        }
+        
     }
 
     

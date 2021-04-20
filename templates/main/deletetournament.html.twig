@@ -16,9 +16,9 @@
 <p>Places: {{tournament.players|length}}/20</p>
 <h4>{{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
 
-<hr>
+<input type="hidden" id="tournamentId" value="{{tournament.id}}">
 
-<br><br><a class="deletetournament">Delete Tournament</a>
+<a class="deletetournament fakelink">Delete Tournament</a>
 
 
 {% endblock %}

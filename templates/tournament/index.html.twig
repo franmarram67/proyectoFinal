@@ -19,6 +19,7 @@
                 <th>ThirdPlace</th>
                 <th>FourthPlace</th>
                 <th>Finished</th>
+                <th>Hidden</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                 <td>{{ tournament.thirdPlace }}</td>
                 <td>{{ tournament.fourthPlace }}</td>
                 <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
+                <td>{{ tournament.hidden ? 'Yes' : 'No' }}</td>
                 <td>
                     <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
                     <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
