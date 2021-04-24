@@ -22,6 +22,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use Symfony\Component\Validator\Constraints\DateTime;
+
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -33,8 +35,15 @@ class MainController extends AbstractController
     public function index(): Response
     {
         $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findByHidden(false);
+        // Continuar por aquí
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/index.html.twig', [
             'tournaments' => $tournaments,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -46,8 +55,14 @@ class MainController extends AbstractController
     {
         $allusers=$this->getDoctrine()->getRepository(User::class)->findByVerified(false);
         //$allusers=$this->getDoctrine()->getRepository(User::class)->findAll();
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/verifyusers.html.twig', [
             'allusers' => $allusers,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -57,7 +72,13 @@ class MainController extends AbstractController
      */
     public function adminPage(): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/adminpage.html.twig', [
+            'unseen' => $unseen,
         ]);
     }
 
@@ -235,11 +256,17 @@ class MainController extends AbstractController
         }
 
         $userpoints = 0;
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/myprofile.html.twig', [
             'userpoints' => $userpoints,
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
             'emailForm' => $emailForm->createView(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -248,8 +275,14 @@ class MainController extends AbstractController
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
+            if($this->getUser()) {
+                $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            } else {
+                $unseen = null;
+            }
             return $this->render('main/seetournament.html.twig', [
                 'tournament' => $tournament,
+                'unseen' => $unseen,
             ]);
         } else {
             return new Response("You can't see this tournament because it has been deleted.");
@@ -261,8 +294,14 @@ class MainController extends AbstractController
     public function seeProvince($id): Response
     {
         $province=$this->getDoctrine()->getRepository(Province::class)->find($id);
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/seeprovince.html.twig', [
             'province' => $province,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -273,8 +312,14 @@ class MainController extends AbstractController
     public function myPoints(): Response
     {
         $points=$this->getUser()->getPoints();
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/mypoints.html.twig', [
             'points' => $points,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -284,9 +329,27 @@ class MainController extends AbstractController
      */
     public function myNotifications(): Response
     {
-        $notifications=$this->getUser()->getNotifications();
+        $notifications=$this->getDoctrine()->getRepository(Notification::class)->findAllOrderedByCreationDate($this->getUser());
+
+        $em = $this->getDoctrine()->getManager();
+
+        foreach($notifications as $n) {
+            if($n->getSeen()==false) {
+                $n->setSeen(true);
+                $n->setSeenDate(new \DateTime);
+            }
+        }
+
+        $em->flush();
+
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/mynotifications.html.twig', [
             'notifications' => $notifications,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -294,8 +357,14 @@ class MainController extends AbstractController
     public function seeAllProvinces(): Response
     {
         $provinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('main/seeallprovinces.html.twig', [
             'provinces' => $provinces,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -310,8 +379,14 @@ class MainController extends AbstractController
             if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
                 if($tournament->getFinished()==false) {
                     if(date("now") < $tournament->getStartDate()) {
+                        if($this->getUser()) {
+                            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                        } else {
+                            $unseen = null;
+                        }
                         return $this->render('main/finishtournament.html.twig', [
                             'tournament' => $tournament,
+                            'unseen' => $unseen,
                         ]);
                     } else {
                         return new Response("You can't finish a tournament before the start date.");
@@ -363,6 +438,7 @@ class MainController extends AbstractController
                 
                                 //Finish Tournaments
                                 $tournament->setFinished(true);
+                                $tournament->setFinishDate(new \DateTime);
 
                                 //Create Points
                                 $pointsFirst = new Points();
@@ -401,6 +477,7 @@ class MainController extends AbstractController
                                     $notification->setUser($player);
                                     $notification->setTournament($tournament);
                                     $notification->setSeen(false);
+                                    $notification->setCreationDate(new \DateTime);
                                     if($player->getId()==$firstPlace->getId()) {
                                         $notification->setText("You won the first place!!! You are rewarded 500 points.");
                                     } else if($player->getId()==$secondPlace->getId()) {
@@ -412,6 +489,7 @@ class MainController extends AbstractController
                                     } else {
                                         $notification->setText("You didn't win this time... ;(. Try again next time. You got this!!!");
                                     }
+                                    $em->persist($notification);
                                 }
 
                                 $em->flush();
@@ -449,9 +527,15 @@ class MainController extends AbstractController
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
             if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
-                if(date("now") > $tournament->getStartDate()) {
+                if(date("now") < $tournament->getStartDate()) {
+                    if($this->getUser()) {
+                        $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                    } else {
+                        $unseen = null;
+                    }
                     return $this->render('main/deletetournament.html.twig', [
                         'tournament' => $tournament,
+                        'unseen' => $unseen,
                     ]);
                 } else {
                     return new Response("You can't delete a Tournament after the start date.");

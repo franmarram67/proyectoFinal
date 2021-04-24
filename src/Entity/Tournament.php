@@ -97,6 +97,11 @@ class Tournament
      */
     private $notifications;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $finishDate;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -338,6 +343,18 @@ class Tournament
                 $notification->setTournament(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFinishDate(): ?\DateTimeInterface
+    {
+        return $this->finishDate;
+    }
+
+    public function setFinishDate(?\DateTimeInterface $finishDate): self
+    {
+        $this->finishDate = $finishDate;
 
         return $this;
     }

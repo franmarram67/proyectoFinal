@@ -39,6 +39,16 @@ class Notification
      */
     private $seen;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $creationDate;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $seenDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -88,6 +98,30 @@ class Notification
     public function setSeen(bool $seen): self
     {
         $this->seen = $seen;
+
+        return $this;
+    }
+
+    public function getCreationDate(): ?\DateTimeInterface
+    {
+        return $this->creationDate;
+    }
+
+    public function setCreationDate(\DateTimeInterface $creationDate): self
+    {
+        $this->creationDate = $creationDate;
+
+        return $this;
+    }
+
+    public function getSeenDate(): ?\DateTimeInterface
+    {
+        return $this->seenDate;
+    }
+
+    public function setSeenDate(?\DateTimeInterface $seenDate): self
+    {
+        $this->seenDate = $seenDate;
 
         return $this;
     }

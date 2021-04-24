@@ -16,7 +16,9 @@
         <h1>Tournament Master</h1>
         {% if is_granted("ROLE_USER") %}
             Hello, {{app.user.email}} - <a href="/logout">Logout</a><br>
-            <a href="/myprofile">My profile</a>
+            <a href="/myprofile">My Profile</a><br>
+            <a href="/mypoints">My Points</a><br>
+            <a href="/mynotifications">Notifications</a> ({{unseen|length}})
         {% else %}
             <a href="/register">Register</a> or <a href="/login">Login</a>
         {% endif %}
