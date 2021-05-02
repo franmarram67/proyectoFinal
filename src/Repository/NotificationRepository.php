@@ -50,7 +50,7 @@ class NotificationRepository extends ServiceEntityRepository
     }
     */
 
-    //Find All Notifications of User with id ordered by creationDate
+    //Find All Notifications of User ordered by creationDate
     /**
      * @return Notification[] Returns an array of Notification objects
      */
@@ -59,7 +59,7 @@ class NotificationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('n')
             ->andWhere('n.user = :u')
             ->setParameter('u', $u)
-            ->orderBy('n.creationDate', 'ASC')
+            ->orderBy('n.creationDate', 'DESC')
             ->getQuery()
             ->getResult()
         ;

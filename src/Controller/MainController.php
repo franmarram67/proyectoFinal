@@ -38,12 +38,18 @@ class MainController extends AbstractController
         // Continuar por aquí
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('main/index.html.twig', [
             'tournaments' => $tournaments,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -55,14 +61,16 @@ class MainController extends AbstractController
     {
         $allusers=$this->getDoctrine()->getRepository(User::class)->findByVerified(false);
         //$allusers=$this->getDoctrine()->getRepository(User::class)->findAll();
-        if($this->getUser()) {
-            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-        } else {
-            $unseen = null;
+
+        $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        $totalPoints=0;
+        foreach($this->getUser()->getPoints() as $points) {
+            $totalPoints+=$points->getAmount();
         }
         return $this->render('main/verifyusers.html.twig', [
             'allusers' => $allusers,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -72,13 +80,14 @@ class MainController extends AbstractController
      */
     public function adminPage(): Response
     {
-        if($this->getUser()) {
-            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-        } else {
-            $unseen = null;
+        $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        $totalPoints=0;
+        foreach($this->getUser()->getPoints() as $points) {
+            $totalPoints+=$points->getAmount();
         }
         return $this->render('main/adminpage.html.twig', [
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -255,18 +264,17 @@ class MainController extends AbstractController
             return $this->redirectToRoute('myprofile');
         }
 
-        $userpoints = 0;
-        if($this->getUser()) {
-            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-        } else {
-            $unseen = null;
+        $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        $totalPoints=0;
+        foreach($this->getUser()->getPoints() as $points) {
+            $totalPoints+=$points->getAmount();
         }
         return $this->render('main/myprofile.html.twig', [
-            'userpoints' => $userpoints,
             'profileForm' => $profileForm->createView(),
             'passwordForm' => $passwordForm->createView(),
             'emailForm' => $emailForm->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -311,7 +319,7 @@ class MainController extends AbstractController
      */
     public function myPoints(): Response
     {
-        $points=$this->getUser()->getPoints();
+        $points=$this->getDoctrine()->getRepository(Points::class)->findAllOrderedByDatetime($this->getUser());
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
         } else {
@@ -475,22 +483,28 @@ class MainController extends AbstractController
                                 foreach($tournament->getPlayers() as $player) {
                                     $notification = new Notification();
                                     $notification->setUser($player);
-                                    $notification->setTournament($tournament);
                                     $notification->setSeen(false);
                                     $notification->setCreationDate(new \DateTime);
                                     if($player->getId()==$firstPlace->getId()) {
-                                        $notification->setText("You won the first place!!! You are rewarded 500 points.");
+                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the first place!!! You are rewarded 500 points.</p>");
                                     } else if($player->getId()==$secondPlace->getId()) {
-                                        $notification->setText("You won the second place!!! You are rewarded 350 points.");
+                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the second place!!! You are rewarded 350 points.</p>");
                                     } else if($player->getId()==$thirdPlace->getId()) {
-                                        $notification->setText("You won the third place!!! You are rewarded 200 points.");
+                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the third place!!! You are rewarded 200 points.</p>");
                                     } else if($player->getId()==$fourthPlace->getId()) {
-                                        $notification->setText("You won the fourth place!!! You are rewarded 100 points.");
+                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the fourth place!!! You are rewarded 100 points.</p>");
                                     } else {
-                                        $notification->setText("You didn't win this time... ;(. Try again next time. You got this!!!");
+                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'></a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You didn't win this time... ;(. Try again next time. You got this!!!</p>");
                                     }
                                     $em->persist($notification);
                                 }
+
+                                $notification = new Notification();
+                                $notification->setUser($tournament->getCreatorUser());
+                                $notification->setSeen(false);
+                                $notification->setCreationDate(new \DateTime);
+                                $notification->setText("<p>You have finished this <a href='/seetournament/".$tournament->getId()."'>tournament</a>.</p>");
+                                $em->persist($notification);
 
                                 $em->flush();
                                     

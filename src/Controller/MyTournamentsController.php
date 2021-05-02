@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Tournament;
+use App\Entity\Notification;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -34,10 +35,16 @@ class MyTournamentsController extends AbstractController
                 }
             }
         }
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('mytournaments/index.html.twig', [
             'pending' => $pending,
             'inprogress' => $inprogress,
             'finished' => $finished,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -51,16 +58,27 @@ class MyTournamentsController extends AbstractController
                 array_push($inprogress,$tournament);
             }
         }
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('mytournaments/inprogress.html.twig', [
             'inprogress' => $inprogress,
+            'unseen' => $unseen,
         ]);
     }
 
     #[Route('/created', name: 'mytournaments_created')]
     public function myTournamentsCreated(): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('mytournaments/created.html.twig', [
-            
+            'unseen' => $unseen,
         ]);
     }
 
@@ -74,8 +92,14 @@ class MyTournamentsController extends AbstractController
                 array_push($pending,$tournament);
             }
         }
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('mytournaments/pending.html.twig', [
             'pending' => $pending,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -89,8 +113,14 @@ class MyTournamentsController extends AbstractController
                 array_push($finished,$tournament);
             }
         }
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('mytournaments/finished.html.twig', [
             'finished' => $finished,
+            'unseen' => $unseen,
         ]);
     }
 }

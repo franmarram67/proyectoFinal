@@ -6,6 +6,8 @@ use App\Entity\Points;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use App\Entity\User;
+
 /**
  * @method Points|null find($id, $lockMode = null, $lockVersion = null)
  * @method Points|null findOneBy(array $criteria, array $orderBy = null)
@@ -47,4 +49,19 @@ class PointsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    //Find All Points of User ordered by datetime
+    /**
+     * @return Points[] Returns an array of Points objects
+     */
+    public function findAllOrderedByDatetime(User $u)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.user = :u')
+            ->setParameter('u', $u)
+            ->orderBy('p.datetime', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

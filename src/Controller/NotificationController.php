@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+
 #[Route('/notification')]
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -21,8 +22,14 @@ class NotificationController extends AbstractController
     #[Route('/', name: 'notification_index', methods: ['GET'])]
     public function index(NotificationRepository $notificationRepository): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('notification/index.html.twig', [
             'notifications' => $notificationRepository->findAll(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -41,17 +48,29 @@ class NotificationController extends AbstractController
             return $this->redirectToRoute('notification_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('notification/new.html.twig', [
             'notification' => $notification,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 
     #[Route('/{id}', name: 'notification_show', methods: ['GET'])]
     public function show(Notification $notification): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('notification/show.html.twig', [
             'notification' => $notification,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -67,9 +86,15 @@ class NotificationController extends AbstractController
             return $this->redirectToRoute('notification_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('notification/edit.html.twig', [
             'notification' => $notification,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 

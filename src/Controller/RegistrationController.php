@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
+use App\Entity\Notification;
+
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
@@ -40,8 +42,14 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_login');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 }

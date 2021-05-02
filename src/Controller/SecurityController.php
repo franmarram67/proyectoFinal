@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+use App\Entity\Notification;
+
 class SecurityController extends AbstractController
 {
     /**
@@ -22,8 +24,13 @@ class SecurityController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+        
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'unseen' => $unseen,]);
     }
 
     /**

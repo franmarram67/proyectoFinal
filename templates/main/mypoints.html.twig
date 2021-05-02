@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h2>My Points</h2>
+
+<ul>
+{% for point in points %}
+    <li>
+        <h4><a href="/seetournament/{{point.tournament.id}}">{{point.tournament.title}}</a> - by {{point.tournament.creatorUser.username}}</h4>
+        <p>+ {{point.amount}} points</p>
+        <h5>{{point.datetime|date('Y-m-d  H:i:s')}}</h5>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

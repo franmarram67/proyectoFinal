@@ -30,6 +30,7 @@ class ProvinceType extends AbstractType
                         'mimeTypes' => [
                             'image/jpeg',
                             'image/png',
+                            'image/svg+xml',
                         ],
                         'mimeTypesMessage' => 'Please upload a valid image',
                     ])

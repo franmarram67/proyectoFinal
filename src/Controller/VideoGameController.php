@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use App\Entity\Notification;
+
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -26,8 +28,14 @@ class VideoGameController extends AbstractController
     #[Route('/', name: 'video_game_index', methods: ['GET'])]
     public function index(VideoGameRepository $videoGameRepository): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('video_game/index.html.twig', [
             'video_games' => $videoGameRepository->findAll(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -76,17 +84,29 @@ class VideoGameController extends AbstractController
             return $this->redirectToRoute('video_game_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('video_game/new.html.twig', [
             'video_game' => $videoGame,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 
     #[Route('/{id}', name: 'video_game_show', methods: ['GET'])]
     public function show(VideoGame $videoGame): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('video_game/show.html.twig', [
             'video_game' => $videoGame,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -132,9 +152,15 @@ class VideoGameController extends AbstractController
             return $this->redirectToRoute('video_game_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('video_game/edit.html.twig', [
             'video_game' => $videoGame,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 

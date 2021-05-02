@@ -56,7 +56,7 @@ class TournamentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->andWhere('t.hidden = :val')
             ->setParameter('val', $value)
-            ->orderBy('t.creationDate', 'ASC')
+            ->orderBy('t.creationDate', 'DESC')
             ->getQuery()
             ->getResult()
         ;

@@ -9,8 +9,7 @@
 <ul>
 {% for notification in notifications %}
     <li>
-        <h4><a href="/seetournament/{{notification.tournament.id}}">{{notification.tournament.title}}</a> - by {{notification.tournament.creatorUser.username}}</h4>
-        <p>{{notification.text}}</p>
+        {{notification.text|raw}}
         <h5>{{notification.creationDate|date('Y-m-d  H:i:s')}}</h5>
     </li>
 {% endfor %}

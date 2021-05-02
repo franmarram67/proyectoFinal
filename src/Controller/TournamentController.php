@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use App\Entity\Notification;
+
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 #[Route('/tournament')]
@@ -24,8 +26,14 @@ class TournamentController extends AbstractController
     #[Route('/', name: 'tournament_index', methods: ['GET'])]
     public function index(TournamentRepository $tournamentRepository): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('tournament/index.html.twig', [
             'tournaments' => $tournamentRepository->findAll(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -35,35 +43,37 @@ class TournamentController extends AbstractController
     #[Route('/new', name: 'tournament_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
-        try {
-            if($this->getUser()->getVerified() == true) {
-                $tournament = new Tournament();
-                $form = $this->createForm(TournamentType::class, $tournament);
-                $form->handleRequest($request);
-    
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $entityManager = $this->getDoctrine()->getManager();
-    
-                    $tournament->setCreatorUser($this->getUser());
-                    $tournament->setFinished(false);
-                    $tournament->setCreationDate(new \DateTime);
-                    $tournament->setHidden(false);
-    
-                    $entityManager->persist($tournament);
-                    $entityManager->flush();
-    
-                    return $this->redirectToRoute('main');
-                }
-    
-                return $this->render('tournament/new.html.twig', [
-                    'tournament' => $tournament,
-                    'form' => $form->createView(),
-                ]);
-            } else {
-                throw new Exception("You have to be a verified user to create a Tournament.");
+        if($this->getUser()->getVerified() == true) {
+            $tournament = new Tournament();
+            $form = $this->createForm(TournamentType::class, $tournament);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $tournament->setCreatorUser($this->getUser());
+                $tournament->setFinished(false);
+                $tournament->setCreationDate(new \DateTime);
+                $tournament->setHidden(false);
+
+                $entityManager->persist($tournament);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('main');
             }
-        } catch (Exception $e) {
-            return new Response($e->getMessage());
+
+            if($this->getUser()) {
+                $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            } else {
+                $unseen = null;
+            }
+            return $this->render('tournament/new.html.twig', [
+                'tournament' => $tournament,
+                'form' => $form->createView(),
+                'unseen' => $unseen,
+            ]);
+        } else {
+            return new Response("You have to be a verified user to create a Tournament.");
         }
         
         
@@ -75,31 +85,34 @@ class TournamentController extends AbstractController
     #[Route('/adminnew', name: 'admin_tournament_new', methods: ['GET', 'POST'])]
     public function adminNew(Request $request): Response
     {
-        try {
-            if($this->getUser()->getVerified() == true) {
-                $tournament = new Tournament();
-                $form = $this->createForm(AdminTournamentType::class, $tournament);
-                $form->handleRequest($request);
-    
-                if ($form->isSubmitted() && $form->isValid()) {
-                    $entityManager = $this->getDoctrine()->getManager();
-    
-                    $entityManager->persist($tournament);
-                    $entityManager->flush();
-    
-                    return $this->redirectToRoute('main');
-                }
-    
-                return $this->render('tournament/new.html.twig', [
-                    'tournament' => $tournament,
-                    'form' => $form->createView(),
-                ]);
-            } else {
-                throw new Exception("You have to be a verified user to create a Tournament.");
+        if($this->getUser()->getVerified() == true) {
+            $tournament = new Tournament();
+            $form = $this->createForm(AdminTournamentType::class, $tournament);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+
+                $entityManager->persist($tournament);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('main');
             }
-        } catch (Exception $e) {
-            return new Response($e->getMessage());
+
+            if($this->getUser()) {
+                $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            } else {
+                $unseen = null;
+            }
+            return $this->render('tournament/new.html.twig', [
+                'tournament' => $tournament,
+                'form' => $form->createView(),
+                'unseen' => $unseen,
+            ]);
+        } else {
+            return new Response("You have to be a verified user to create a Tournament.");
         }
+        
         
         
     }
@@ -110,8 +123,14 @@ class TournamentController extends AbstractController
     #[Route('/{id}', name: 'tournament_show', methods: ['GET'])]
     public function show(Tournament $tournament): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('tournament/show.html.twig', [
             'tournament' => $tournament,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -130,9 +149,15 @@ class TournamentController extends AbstractController
             return $this->redirectToRoute('tournament_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('tournament/edit.html.twig', [
             'tournament' => $tournament,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 

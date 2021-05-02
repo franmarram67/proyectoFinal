@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use App\Entity\Notification;
+
 #[Route('/user')]
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -21,8 +23,14 @@ class UserController extends AbstractController
     #[Route('/', name: 'user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -41,17 +49,29 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('user/new.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -67,9 +87,15 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('user/edit.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 

@@ -93,11 +93,6 @@ class Tournament
     private $hidden;
 
     /**
-     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="tournament")
-     */
-    private $notifications;
-
-    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $finishDate;
@@ -313,36 +308,6 @@ class Tournament
     public function setHidden(bool $hidden): self
     {
         $this->hidden = $hidden;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Notification[]
-     */
-    public function getNotifications(): Collection
-    {
-        return $this->notifications;
-    }
-
-    public function addNotification(Notification $notification): self
-    {
-        if (!$this->notifications->contains($notification)) {
-            $this->notifications[] = $notification;
-            $notification->setTournament($this);
-        }
-
-        return $this;
-    }
-
-    public function removeNotification(Notification $notification): self
-    {
-        if ($this->notifications->removeElement($notification)) {
-            // set the owning side to null (unless already changed)
-            if ($notification->getTournament() === $this) {
-                $notification->setTournament(null);
-            }
-        }
 
         return $this;
     }

@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+use App\Entity\Notification;
+
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -26,8 +28,14 @@ class ProvinceController extends AbstractController
     #[Route('/', name: 'province_index', methods: ['GET'])]
     public function index(ProvinceRepository $provinceRepository): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('province/index.html.twig', [
             'provinces' => $provinceRepository->findAll(),
+            'unseen' => $unseen,
         ]);
     }
 
@@ -76,17 +84,29 @@ class ProvinceController extends AbstractController
             return $this->redirectToRoute('province_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('province/new.html.twig', [
             'province' => $province,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 
     #[Route('/{id}', name: 'province_show', methods: ['GET'])]
     public function show(Province $province): Response
     {
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('province/show.html.twig', [
             'province' => $province,
+            'unseen' => $unseen,
         ]);
     }
 
@@ -132,9 +152,15 @@ class ProvinceController extends AbstractController
             return $this->redirectToRoute('province_index');
         }
 
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+        } else {
+            $unseen = null;
+        }
         return $this->render('province/edit.html.twig', [
             'province' => $province,
             'form' => $form->createView(),
+            'unseen' => $unseen,
         ]);
     }
 

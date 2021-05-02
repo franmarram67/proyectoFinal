@@ -24,12 +24,6 @@ class Notification
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Tournament::class, inversedBy="notifications")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $tournament;
-
-    /**
      * @ORM\Column(type="text")
      */
     private $text;
@@ -62,18 +56,6 @@ class Notification
     public function setUser(?User $user): self
     {
         $this->user = $user;
-
-        return $this;
-    }
-
-    public function getTournament(): ?Tournament
-    {
-        return $this->tournament;
-    }
-
-    public function setTournament(?Tournament $tournament): self
-    {
-        $this->tournament = $tournament;
 
         return $this;
     }
