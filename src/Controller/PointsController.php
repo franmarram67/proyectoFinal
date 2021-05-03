@@ -25,12 +25,18 @@ class PointsController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('points/index.html.twig', [
             'points' => $pointsRepository->findAll(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -51,13 +57,19 @@ class PointsController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('points/new.html.twig', [
             'point' => $point,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -66,12 +78,18 @@ class PointsController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('points/show.html.twig', [
             'point' => $point,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -89,13 +107,19 @@ class PointsController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('points/edit.html.twig', [
             'point' => $point,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 

@@ -30,12 +30,18 @@ class ProvinceController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('province/index.html.twig', [
             'provinces' => $provinceRepository->findAll(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -86,13 +92,19 @@ class ProvinceController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('province/new.html.twig', [
             'province' => $province,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -101,12 +113,18 @@ class ProvinceController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('province/show.html.twig', [
             'province' => $province,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -154,13 +172,19 @@ class ProvinceController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('province/edit.html.twig', [
             'province' => $province,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 

@@ -44,12 +44,18 @@ class RegistrationController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 }

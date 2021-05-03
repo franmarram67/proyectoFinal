@@ -30,12 +30,18 @@ class VideoGameController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('video_game/index.html.twig', [
             'video_games' => $videoGameRepository->findAll(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -86,13 +92,19 @@ class VideoGameController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('video_game/new.html.twig', [
             'video_game' => $videoGame,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -101,12 +113,18 @@ class VideoGameController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('video_game/show.html.twig', [
             'video_game' => $videoGame,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -154,13 +172,19 @@ class VideoGameController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('video_game/edit.html.twig', [
             'video_game' => $videoGame,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 

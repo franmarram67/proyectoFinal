@@ -27,10 +27,20 @@ class SecurityController extends AbstractController
         
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
-        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error, 'unseen' => $unseen,]);
+        return $this->render('security/login.html.twig', [
+            'last_username' => $lastUsername, 
+            'error' => $error,
+            'unseen' => $unseen, 
+            'totalPoints' => $totalPoints,
+        ]);
     }
 
     /**

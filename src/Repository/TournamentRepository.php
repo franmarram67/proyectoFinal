@@ -51,7 +51,7 @@ class TournamentRepository extends ServiceEntityRepository
     /**
      * @return Tournament[] Returns an array of Tournament objects
      */
-    public function findByHidden($value)
+    public function findAllByHidden($value)
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.hidden = :val')

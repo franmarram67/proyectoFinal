@@ -34,7 +34,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'main')]
     public function index(): Response
     {
-        $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findByHidden(false);
+        $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findAllByHidden(false);
         // Continuar por aquí
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
@@ -285,12 +285,18 @@ class MainController extends AbstractController
         if($tournament->getHidden()==false) {
             if($this->getUser()) {
                 $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                $totalPoints=0;
+                foreach($this->getUser()->getPoints() as $points) {
+                    $totalPoints+=$points->getAmount();
+                }
             } else {
                 $unseen = null;
+                $totalPoints = null;
             }
             return $this->render('main/seetournament.html.twig', [
                 'tournament' => $tournament,
                 'unseen' => $unseen,
+                'totalPoints' => $totalPoints,
             ]);
         } else {
             return new Response("You can't see this tournament because it has been deleted.");
@@ -304,12 +310,18 @@ class MainController extends AbstractController
         $province=$this->getDoctrine()->getRepository(Province::class)->find($id);
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('main/seeprovince.html.twig', [
             'province' => $province,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -322,12 +334,18 @@ class MainController extends AbstractController
         $points=$this->getDoctrine()->getRepository(Points::class)->findAllOrderedByDatetime($this->getUser());
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('main/mypoints.html.twig', [
             'points' => $points,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -352,12 +370,18 @@ class MainController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('main/mynotifications.html.twig', [
             'notifications' => $notifications,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -367,12 +391,18 @@ class MainController extends AbstractController
         $provinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('main/seeallprovinces.html.twig', [
             'provinces' => $provinces,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -389,12 +419,18 @@ class MainController extends AbstractController
                     if(date("now") < $tournament->getStartDate()) {
                         if($this->getUser()) {
                             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                            $totalPoints=0;
+                            foreach($this->getUser()->getPoints() as $points) {
+                                $totalPoints+=$points->getAmount();
+                            }
                         } else {
                             $unseen = null;
+                            $totalPoints = null;
                         }
                         return $this->render('main/finishtournament.html.twig', [
                             'tournament' => $tournament,
                             'unseen' => $unseen,
+                            'totalPoints' => $totalPoints,
                         ]);
                     } else {
                         return new Response("You can't finish a tournament before the start date.");
@@ -544,12 +580,18 @@ class MainController extends AbstractController
                 if(date("now") < $tournament->getStartDate()) {
                     if($this->getUser()) {
                         $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                        $totalPoints=0;
+                        foreach($this->getUser()->getPoints() as $points) {
+                            $totalPoints+=$points->getAmount();
+                        }
                     } else {
                         $unseen = null;
+                        $totalPoints = null;
                     }
                     return $this->render('main/deletetournament.html.twig', [
                         'tournament' => $tournament,
                         'unseen' => $unseen,
+                        'totalPoints' => $totalPoints,
                     ]);
                 } else {
                     return new Response("You can't delete a Tournament after the start date.");

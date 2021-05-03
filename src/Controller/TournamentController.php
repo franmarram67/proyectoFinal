@@ -28,12 +28,18 @@ class TournamentController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('tournament/index.html.twig', [
             'tournaments' => $tournamentRepository->findAll(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -63,14 +69,20 @@ class TournamentController extends AbstractController
             }
 
             if($this->getUser()) {
-                $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
             } else {
                 $unseen = null;
+                $totalPoints = null;
             }
             return $this->render('tournament/new.html.twig', [
                 'tournament' => $tournament,
                 'form' => $form->createView(),
                 'unseen' => $unseen,
+                'totalPoints' => $totalPoints,
             ]);
         } else {
             return new Response("You have to be a verified user to create a Tournament.");
@@ -100,14 +112,20 @@ class TournamentController extends AbstractController
             }
 
             if($this->getUser()) {
-                $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
             } else {
                 $unseen = null;
+                $totalPoints = null;
             }
             return $this->render('tournament/new.html.twig', [
                 'tournament' => $tournament,
                 'form' => $form->createView(),
                 'unseen' => $unseen,
+                'totalPoints' => $totalPoints,
             ]);
         } else {
             return new Response("You have to be a verified user to create a Tournament.");
@@ -125,12 +143,18 @@ class TournamentController extends AbstractController
     {
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('tournament/show.html.twig', [
             'tournament' => $tournament,
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
@@ -151,13 +175,19 @@ class TournamentController extends AbstractController
 
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
         } else {
             $unseen = null;
+            $totalPoints = null;
         }
         return $this->render('tournament/edit.html.twig', [
             'tournament' => $tournament,
             'form' => $form->createView(),
             'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
         ]);
     }
 
