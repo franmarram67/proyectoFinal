@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Points;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -79,4 +80,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
+
+    // Global Ranking
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function globalRanking()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
+            ->addSelect('SUM(p.amount) as totalAmount')
+            ->andWhere('p.user = u')
+            ->from('App\Entity\Points', 'p')
+            ->orderBy('totalAmount', 'DESC')
+            ->addGroupBy("u.id")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    // // Global Ranking
+    // /**
+    //  * @return User[] Returns an array of User objects
+    //  */
+    // public function globalRanking()
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         //->setParameter('val', $value)
+    //         ->innerJoin('u.points','p')
+    //         ->select('u, SUM(p.amount) as totalAmount')
+    //         ->andWhere('p.user = u')
+    //         ->orderBy('totalAmount', 'DESC')
+    //         ->addGroupBy("1")
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 }

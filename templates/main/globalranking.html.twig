@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h2>Global Ranking</h2>
+
+<ul>
+    {% for i in 0..(rankingUsers|length - 1) %}
+    <li>
+        <h3>{{ "%04d"|format(i+1) }}. 
+    {% if rankingUsers[i].profilePicture == null %}
+        <img src="/img/default.jpg" width="30px"/> 
+    {% else %}
+        <img src="/img/{{rankingUsers[i].profilePicture}}" width="30px"/>
+    {% endif %}
+    {{rankingUsers[i].email}} - {{rankingUsers[i].totalAmount}} </h3>
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

@@ -54,14 +54,16 @@ class PointsRepository extends ServiceEntityRepository
     /**
      * @return Points[] Returns an array of Points objects
      */
-    public function findAllOrderedByDatetime(User $u)
+    public function findAllByUser(User $u)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.user = :u')
-            ->setParameter('u', $u)
+            ->andWhere('p.user = :user')
+            ->setParameter('user', $u)
             ->orderBy('p.datetime', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
+
+
 }

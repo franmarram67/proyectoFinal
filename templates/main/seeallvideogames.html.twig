@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tournament Master{% endblock %}
+
+{% block body %}
+
+<h2>All Videogames</h2>
+<ul>
+{% for videogame in videogames %}
+    <li>
+        <h3><a href="/seevideogame/{{videogame.id}}">{{videogame.title}}</a></h3>
+        <img src="/img/{{videogame.image}}" width="300px"/>
+        <h4>{{videogame.ageRating}}</p>
+        <p>{{videogame.description}}</p>
+        <p><a href="{{videogame.link}}">Website</a></p>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

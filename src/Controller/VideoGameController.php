@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use App\Entity\Notification;
+use App\Entity\Points;
 
 // Cargar imagen
 use Symfony\Component\HttpFoundation\File\Exception\FileException;

@@ -12,6 +12,7 @@ use App\Entity\Tournament;
 use App\Entity\Province;
 use App\Entity\Notification;
 use App\Entity\Points;
+use App\Entity\VideoGame;
 
 use App\Form\ProfileType;
 use App\Form\ChangePasswordType;
@@ -331,7 +332,7 @@ class MainController extends AbstractController
      */
     public function myPoints(): Response
     {
-        $points=$this->getDoctrine()->getRepository(Points::class)->findAllOrderedByDatetime($this->getUser());
+        $myPoints=$this->getDoctrine()->getRepository(Points::class)->findAllByUser($this->getUser());
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;
@@ -343,7 +344,7 @@ class MainController extends AbstractController
             $totalPoints = null;
         }
         return $this->render('main/mypoints.html.twig', [
-            'points' => $points,
+            'myPoints' => $myPoints,
             'unseen' => $unseen,
             'totalPoints' => $totalPoints,
         ]);
@@ -628,6 +629,73 @@ class MainController extends AbstractController
             return new Response("You can't delete an already deleted Tournament.");
         }
         
+    }
+
+    #[Route('/seeallvideogames', name: 'seeallvideogames')]
+    public function seeAllVideoGames(): Response
+    {
+        $videogames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
+        } else {
+            $unseen = null;
+            $totalPoints = null;
+        }
+        return $this->render('main/seeallvideogames.html.twig', [
+            'videogames' => $videogames,
+            'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
+        ]);
+    }
+
+    #[Route('/seevideogame/{id}', name: 'seevideogame')]
+    public function seeVideoGame($id): Response
+    {
+        $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($id);
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
+        } else {
+            $unseen = null;
+            $totalPoints = null;
+        }
+        return $this->render('main/seevideogame.html.twig', [
+            'videogame' => $videogame,
+            'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
+        ]);
+    }
+
+    #[Route('/globalranking', name: 'globalranking')]
+    public function globalRanking(): Response
+    {
+        $allProvinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
+        $allVideoGames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
+        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->globalRanking();;
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
+        } else {
+            $unseen = null;
+            $totalPoints = null;
+        }
+        return $this->render('main/globalranking.html.twig', [
+            'rankingUsers' => $rankingUsers,
+            'allProvinces' => $allProvinces,
+            'allVideoGames' => $allVideoGames,
+            'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
+        ]);
     }
 
     

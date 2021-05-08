@@ -6,14 +6,18 @@
 
 <h2>My Points</h2>
 
-<ul>
-{% for point in points %}
-    <li>
-        <h4><a href="/seetournament/{{point.tournament.id}}">{{point.tournament.title}}</a> - by {{point.tournament.creatorUser.username}}</h4>
-        <p>+ {{point.amount}} points</p>
-        <h5>{{point.datetime|date('Y-m-d  H:i:s')}}</h5>
-    </li>
-{% endfor %}
-</ul>
+{% if myPoints == null %}
+    <p>There aren't any recorded Notifications...</p>
+{% else %}
+    <ul>
+    {% for point in myPoints %}
+        <li>
+            <h4><a href="/seetournament/{{point.tournament.id}}">{{point.tournament.title}}</a> - by {{point.tournament.creatorUser.username}}</h4>
+            <p>+ {{point.amount}} points</p>
+            <h5>{{point.datetime|date('Y-m-d  H:i:s')}}</h5>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
 
 {% endblock %}

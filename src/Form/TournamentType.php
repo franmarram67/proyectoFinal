@@ -18,7 +18,7 @@ class TournamentType extends AbstractType
             ->add('title')
             ->add('description')
             ->add('startDate', DateTimeType::class, [
-                'widget' => 'single_text',
+                // 'widget' => 'single_text',
                 'attr' => [
                     'class' => 'datetimepicker',
                     'min' => "2021-01-01 00:00:00",

@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 use App\Entity\Notification;
+use App\Entity\Points;
 
 use Symfony\Component\Config\Definition\Exception\Exception;
 

@@ -6,7 +6,7 @@
 
 <h2>Created Tournaments</h2>
 <ul>
-{% for t in app.user.createdTournaments %}
+{% for t in created %}
     <li>
         <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
         <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>

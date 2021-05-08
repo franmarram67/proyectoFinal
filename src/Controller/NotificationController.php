@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Notification;
+use App\Entity\Points;
 use App\Form\NotificationType;
 use App\Repository\NotificationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

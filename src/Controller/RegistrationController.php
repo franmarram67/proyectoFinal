@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use App\Entity\Notification;
+use App\Entity\Points;
 
 class RegistrationController extends AbstractController
 {

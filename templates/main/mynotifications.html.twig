@@ -6,13 +6,18 @@
 
 <h2>My Notifications</h2>
 
-<ul>
-{% for notification in notifications %}
-    <li>
-        {{notification.text|raw}}
-        <h5>{{notification.creationDate|date('Y-m-d  H:i:s')}}</h5>
-    </li>
-{% endfor %}
-</ul>
+{% if notifications == null %}
+    <p>There aren't any recorded Notifications...</p>
+{% else %}
+    <ul>
+    {% for notification in notifications %}
+        <li>
+            {{notification.text|raw}}
+            <h5>{{notification.creationDate|date('Y-m-d  H:i:s')}}</h5>
+        </li>
+
+    {% endfor %}
+    </ul>
+{% endif %}
 
 {% endblock %}

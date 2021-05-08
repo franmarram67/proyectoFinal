@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 use App\Entity\Notification;
+use App\Entity\Points;
 
 class SecurityController extends AbstractController
 {
