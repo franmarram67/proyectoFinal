@@ -678,7 +678,7 @@ class MainController extends AbstractController
     {
         $allProvinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
         $allVideoGames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
-        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->globalRanking();;
+        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->globalRanking();
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;
@@ -693,6 +693,36 @@ class MainController extends AbstractController
             'rankingUsers' => $rankingUsers,
             'allProvinces' => $allProvinces,
             'allVideoGames' => $allVideoGames,
+            'unseen' => $unseen,
+            'totalPoints' => $totalPoints,
+        ]);
+    }
+
+    #[Route('/ranking/{provinceId}&{videogameId}&{year}', name: 'ranking')]
+    public function ranking($provinceId,$videogameId,$year): Response
+    {
+        $province=$this->getDoctrine()->getRepository(Province::class)->find($provinceId);
+        $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($videogameId);
+        $allProvinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
+        $allVideoGames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
+        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->globalRanking();
+        if($this->getUser()) {
+            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+            $totalPoints=0;
+            foreach($this->getUser()->getPoints() as $points) {
+                $totalPoints+=$points->getAmount();
+            }
+        } else {
+            $unseen = null;
+            $totalPoints = null;
+        }
+        return $this->render('main/ranking.html.twig', [
+            'province' => $province,
+            'videogame' => $videogame,
+            'year' => $year,
+            'allProvinces' => $allProvinces,
+            'allVideoGames' => $allVideoGames,
+            'rankingUsers' => $rankingUsers,
             'unseen' => $unseen,
             'totalPoints' => $totalPoints,
         ]);
