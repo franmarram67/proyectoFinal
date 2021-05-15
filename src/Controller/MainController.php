@@ -705,7 +705,7 @@ class MainController extends AbstractController
         $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($videogameId);
         $allProvinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
         $allVideoGames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
-        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->globalRanking();
+        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->ranking($province,$videogame,$year);
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;

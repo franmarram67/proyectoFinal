@@ -1,6 +1,0 @@
-SELECT * FROM points, user WHERE points.user_id = user.id;
-SELECT SUM(points.amount) FROM points, user WHERE points.user_id = 2;
-
-SELECT user_id, SUM(amount) total_puntos FROM points GROUP BY user_id;
-SELECT user.id, SUM(points.amount) total_puntos FROM points, user WHERE points.user_id = user.id GROUP BY 1;
-SELECT user.id, SUM(points.amount) total_puntos FROM points JOIN user ON (points.user_id = user.id) GROUP BY 1;  

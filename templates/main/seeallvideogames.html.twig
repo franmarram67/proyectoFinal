@@ -5,16 +5,16 @@
 {% block body %}
 
 <h2>All Videogames</h2>
-<ul>
+<div class="row">
 {% for videogame in videogames %}
-    <li>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
         <h3><a href="/seevideogame/{{videogame.id}}">{{videogame.title}}</a></h3>
-        <img src="/img/{{videogame.image}}" width="300px"/>
-        <h4>{{videogame.ageRating}}</p>
+        <img src="/img/{{videogame.image}}" class="w-100"/>
+        <p>{{videogame.ageRating}}</p>
         <p>{{videogame.description}}</p>
         <p><a href="{{videogame.link}}">Website</a></p>
-    </li>
+    </div>
 {% endfor %}
-</ul>
+</div>
 
 {% endblock %}

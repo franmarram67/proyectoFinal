@@ -29,19 +29,25 @@ Year: <select id="year" name="year">
 
 <button id="searchRanking">Search</button>
 
-<ul>
-    {% for i in 0..(rankingUsers|length - 1) %}
-    <li>
+
+{% if rankingUsers == null %}
+    <p>No users were found...</p>
+{% else %}
+    <ul>
+        {% for i in 0..(rankingUsers|length - 1) %}
+        <li>
         <h3>{{ "%04d"|format(i+1) }}. 
-    {% if rankingUsers[i].profilePicture == null %}
-        <img src="/img/default.jpg" width="30px"/> 
-    {% else %}
-        <img src="/img/{{rankingUsers[i].profilePicture}}" width="30px"/>
-    {% endif %}
-    {{rankingUsers[i].email}} - {{rankingUsers[i].totalAmount}} </h3>
-    </li>
-    {% endfor %}
-</ul>
+            {% if rankingUsers[i].profilePicture == null %}
+                <img src="/img/default.jpg" width="30px"/> 
+            {% else %}
+                <img src="/img/{{rankingUsers[i].profilePicture}}" width="30px"/>
+            {% endif %}
+            {{rankingUsers[i].email}} - {{rankingUsers[i].totalAmount}} </h3>
+        </li>            
+        {% endfor %}
+    </ul>
+{% endif %}
+
 
 
 {% endblock %}

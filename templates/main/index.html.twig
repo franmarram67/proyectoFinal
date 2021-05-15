@@ -4,62 +4,73 @@
 
 {% block body %}
 
-
+    
+<h2>Tournaments</h2>
 {% if is_granted("ROLE_USER") %}
     {% if app.user.verified == true %}
-        <a href="/tournament/new">Create New Tournament</a>
+        <a href="/tournament/new" class="btn btn-warning" role="button">Create New Tournament</a>
     {% endif %}
 {% endif %}
-<h2>Tournaments</h2>
-<ul>
-{% for tournament in tournaments %}
-    <li>
-        <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
-        {{ tournament.finished == true ? "<i><u>This tournament has finished.</i></u><br>" : "" }}
-        <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
-        <p>VideoGame: {{ tournament.videogame }}</p>
-        <p>Places: {{tournament.players|length}}/20</p>
-        <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
-        {% if is_granted("ROLE_USER") %}
-            {% if app.user.id != tournament.creatorUser.id %}
-                {% if tournament.finished == false %}
-                    {% if app.user not in tournament.players %}
-                        {% if app.user.verified == true %}
-                            {% if date() < date(tournament.startDate) %}
-                                {% if tournament.players|length < 20 %}
-                                    <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+<div class="row">
+    {% for tournament in tournaments %}
+    {# <div class="card">
+        <h5 class="card-header">Featured</h5>
+        <div class="card-body">
+            <h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div> #}
+        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+            <div class="card m-1 w-100">
+                <h3 class="card-header"><a href="/seetournament/{{tournament.id}}" class="text-decoration-none">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
+                <div class="card-body">
+                    {% if tournament.finished %}<p class="card-text">This tournament has finished.</p>{% endif %}
+                    <p class="card-text">{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
+                    <p class="card-text">VideoGame: {{ tournament.videogame }}</p>
+                    <p class="card-text">Places: {{tournament.players|length}}/20</p>
+                    <h4 class="card-text small">Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
+                    {% if is_granted("ROLE_USER") %}
+                        {% if app.user.id != tournament.creatorUser.id %}
+                            {% if tournament.finished == false %}
+                                {% if app.user not in tournament.players %}
+                                    {% if app.user.verified == true %}
+                                        {% if date() < date(tournament.startDate) %}
+                                            {% if tournament.players|length < 20 %}
+                                                <a href="/signuptotournament/{{tournament.id}}" class="btn btn-warning" role="button">Sign Up</a>
+                                            {% else %}
+                                                <p class="card-text">You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.</p>
+                                            {% endif %}
+                                        {% else %}
+                                            <p class="card-text">You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.</p>
+                                        {% endif %}
+                                    {% else %}
+                                        <p class="card-text">You can't Sign Up to this Tournament because you're not a verified user.</p>
+                                    {% endif %}
                                 {% else %}
-                                    You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
+                                    <p class="card-text">You already Signed Up to this Tournament.</p>
                                 {% endif %}
                             {% else %}
-                                You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
+                                <p class="card-text">You can't Sign Up to a finished Tournament.</p>
                             {% endif %}
                         {% else %}
-                            You can't Sign Up to this Tournament because you're not a verified user.
+                            {% if tournament.finished == true %}
+                                <p class="card-text">Your tournament has finished, you can't finish it or delete it.</p>
+                            {% elseif date() > date(tournament.startDate) %}
+                                <p class="card-text">You can't Sign Up to your own Tournament.</p>
+                                <a href="/finishtournament/{{tournament.id}}" class="btn btn-warning" role="button">Finish Tournament</a>
+                            {% elseif date() < date(tournament.startDate) %}  
+                                <p class="card-text">You can't Sign Up to your own Tournament.</p>
+                                <a href="/deletetournament/{{tournament.id}}" class="btn btn-warning" role="button">Delete Tournament</a>  
+                            {% endif %}
                         {% endif %}
                     {% else %}
-                        You already Signed Up to this Tournament.
+                        <p class="card-text">Login to be able to Sign Up to this Tournament.</p>
                     {% endif %}
-                {% else %}
-                    You can't Sign Up to a finished Tournament.
-                {% endif %}
-            {% else %}
-                {% if tournament.finished == true %}
-                    Your tournament has finished, you can't finish it or delete it.<br><br>
-                {% elseif date() > date(tournament.startDate) %}
-                    You can't Sign Up to your own Tournament.<br><br>
-                    <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
-                {% elseif date() < date(tournament.startDate) %}  
-                    You can't Sign Up to your own Tournament.<br><br>
-                    <a href="/deletetournament/{{tournament.id}}">Delete Tournament</a>  
-                {% endif %}
-            {% endif %}
-        {% else %}
-            Login to be able to Sign Up to this Tournament.
-        {% endif %}
-        
-    </li>
-{% endfor %}
-</ul>
+                </div>
+            </div>
+        </div>            
+    {% endfor %}
+</div>
 
 {% endblock %}

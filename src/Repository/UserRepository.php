@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\User;
 use App\Entity\Points;
+use App\Entity\Province;
+use App\Entity\VideoGame;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -93,11 +95,64 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere('p.user = u')
             ->from('App\Entity\Points', 'p')
             ->orderBy('totalAmount', 'DESC')
-            ->addGroupBy("u.id")
+            ->groupBy("u.id")
             ->getQuery()
             ->getResult()
         ;
     }
+
+    // Ranking
+    /**
+     * @return User[] Returns an array of User objects
+     */
+    public function ranking(Province $province, VideoGame $videogame, $year)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
+            ->addSelect('SUM(p.amount) as totalAmount')
+            ->andWhere('p.user = u')
+            ->andWhere('u.province = :province')
+            ->andWhere('year(p.datetime) = :year')
+            ->andWhere('p.tournament = t')
+            ->andWhere('t.videogame = :videogame')
+            ->setParameter('province', $province)
+            ->setParameter('year', $year)
+            ->setParameter('videogame', $videogame)
+            ->from('App\Entity\Points', 'p')
+            ->from('App\Entity\Tournament', 't')
+            ->orderBy('totalAmount', 'DESC')
+            ->groupBy("u.id")
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    // // Ranking
+    // /**
+    //  * @return User[] Returns an array of User objects
+    //  */
+    // public function ranking(Province $province, 
+    // //VideoGame $videogame, 
+    // $year)
+    // {
+    //     return $this->createQueryBuilder('u')
+    //         ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
+    //         ->addSelect('SUM(p.amount) as totalAmount')
+    //         //->addSelect('IDENTITY(p.tournament) as tournament, IDENTITY(tournament.videogame) as v')
+    //         ->andWhere('p.user = u')
+    //         ->andWhere('u.province = :province')
+    //         //->andWhere('v = :videogame')
+    //         ->andWhere('year(p.datetime) = :year')
+    //         ->setParameter('province', $province)
+    //         //->setParameter('videogame', $videogame)
+    //         ->setParameter('year', $year)
+    //         ->from('App\Entity\Points', 'p')
+    //         ->orderBy('totalAmount', 'DESC')
+    //         ->groupBy("u.id")
+    //         ->getQuery()
+    //         ->getResult()
+    //     ;
+    // }
 
     // // Global Ranking
     // /**

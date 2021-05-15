@@ -5,14 +5,14 @@
 {% block body %}
 
 <h2>All Provinces</h2>
-<ul>
+<div class="row">
 {% for province in provinces %}
-    <li>
+    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
         <h3><a href="/seeprovince/{{province.id}}">{{province.name}}</a></h3>
-        <img src="/img/{{province.image}}" width="300px"/>
+        <img src="/img/{{province.image}}" class="w-100"/>
         <p>{{province.description}}</p>
-    </li>
+    </div>
 {% endfor %}
-</ul>
+</div>
 
 {% endblock %}
