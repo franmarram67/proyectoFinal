@@ -5,11 +5,11 @@
 {% block body %}
 
 <h2>All Videogames</h2>
-<div class="row">
+<div>
 {% for videogame in videogames %}
-    <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+    <div>
         <h3><a href="/seevideogame/{{videogame.id}}">{{videogame.title}}</a></h3>
-        <img src="/img/{{videogame.image}}" class="w-100"/>
+        <img src="/img/{{videogame.image}}"/>
         <p>{{videogame.ageRating}}</p>
         <p>{{videogame.description}}</p>
         <p><a href="{{videogame.link}}">Website</a></p>

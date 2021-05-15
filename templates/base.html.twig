@@ -10,18 +10,14 @@
         {% endblock %}
         <link rel="stylesheet" href="/css/main.css">
 
-        {# BOOTSTRAP! #}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         
     </head>
     <body>
     
 
-        <div class="container-fluid bg-dark text-white py-3 mb-1">
-            <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <div>
                 <h1>Tournament Master</h1>
                 <div>
                     {% if is_granted("ROLE_USER") %}
@@ -32,25 +28,25 @@
                 </div>
             </div>
 
-            <div class="navbar d-flex justify-content-around">
-                <a href="/" class="btn btn-light" role="button">Home</a>
-                <a href="/seeallprovinces" class="btn btn-light" role="button">Provinces</a>
-                <a href="/seeallvideogames" class="btn btn-light" role="button">Videogames</a>
-                <a href="/globalranking" class="btn btn-light" role="button">Global Ranking</a>
+            <div>
+                <a href="/">Home</a>
+                <a href="/seeallprovinces">Provinces</a>
+                <a href="/seeallvideogames">Videogames</a>
+                <a href="/globalranking">Global Ranking</a>
                 {% if is_granted("ROLE_USER") %}
-                    <a href="/mytournaments" class="btn btn-light" role="button">My Tournaments</a>
-                    <a href="/myprofile" class="btn btn-light" role="button">My Profile</a>
-                    <a href="/mypoints" class="btn btn-light" role="button">My Points [{{totalPoints}}] </a> 
-                    <a href="/mynotifications" class="btn btn-light" role="button">Notifications ({{unseen|length}})</a> 
+                    <a href="/mytournaments">My Tournaments</a>
+                    <a href="/myprofile">My Profile</a>
+                    <a href="/mypoints">My Points [{{totalPoints}}] </a> 
+                    <a href="/mynotifications">Notifications ({{unseen|length}})</a> 
                 {% endif %}
                 
                 {% if is_granted("ROLE_ADMIN") %}
-                    <a href="/verifyusers" class="btn btn-light" role="button">Verify users</a>
-                    <a href="/adminpage" class="btn btn-light" role="button">Admin Page</a>
+                    <a href="/verifyusers">Verify users</a>
+                    <a href="/adminpage">Admin Page</a>
                 {% endif %}
             </div>
         </div>
-        <div class="container-fluid">
+        <div>
         {% block body %}{% endblock %}
         </div>
         {% block javascripts %}
