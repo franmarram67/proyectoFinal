@@ -4,32 +4,69 @@
 
 {% block body %}
 
-    
-<h2>Tournaments</h2>
-{% if is_granted("ROLE_USER") %}
-    {% if app.user.verified == true %}
-        <a href="/tournament/new">Create New Tournament</a>
-    {% endif %}
-{% endif %}
-<div class="row">
-    {% for tournament in tournaments %}
-    {# <div class="card">
-        <h5 class="card-header">Featured</h5>
-        <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-    </div> #}
-        <div>
-            <div>
-                <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3>
-                <div>
-                    {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %}
-                    <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
-                    <p>VideoGame: {{ tournament.videogame }}</p>
-                    <p>Places: {{tournament.players|length}}/20</p>
-                    <h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
+<div class="slider">
+    {# <img src="/img/slider1.jpg"/> #}
+    <div class="sliderText">
+        <h1>Welcome to <br>Tournament Master!</h1>
+        <a class="playNow">PLAY NOW</a>
+    </div>
+</div>
+
+<section class="about">
+    <div class="aboutImage">
+        <div><img src="/img/slider2.jpg "/></div>
+    </div>
+    <div class="aboutText">
+        <h1>About Us</h1>
+        <p>
+            <b>Tournament Master</b> Has Become The Most POPULAR Free E-Sports Tournament Host In The Last Few Years.<br><br> We Have A Talented And Commited Team To Our Vision Of Becoming <b>The Best Free E-Sports Tournament Host Provider</b> In The Game.<br><br> We Provide <u><i>High Quality Tournaments</i></u> That Are <b>Engaging And Fun For Everybody</b> Giving Away Fantastic PRIZES For Our Winners.<br><br> We Hope That You Enjoy <b>Tournament Master</b> The Best And Decide To Go Back With Us For Another <i>Fun And Competitive Adventure</i>!
+        </p>
+    </div>
+</section>
+
+<section class="services">
+    <div class="servicesText">
+        <h1>Services</h1>
+        <p>
+            <b>Tournament Master</b> Is The Top Leading Hosting Service For YOUR Tournaments.<br><br> We Have An Amazing Infraestructure Built On Blockchain To Guarantee <b>The Privacy Of Our Customers</b>. <br><br> We Work With Gaming Companies Like Valve And Microsoft To Optimize The Service <u><i>That We are Providing</i></u>. 
+        </p>
+        <a class="signUp">SIGN UP</a>
+    </div>
+    <div class="servicesImage">
+        <div><img src="/img/slider3.jpg "/></div>
+    </div>
+</section>
+
+
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Tournaments</h1></div>
+        {% if is_granted("ROLE_USER") %}
+            {% if app.user.verified == true %}
+                <div class="mainHeaderCreate"><a href="/tournament/new" class="createTournament">Create New Tournament</a></div>
+            {% endif %}
+        {% endif %}
+    </div>
+    <div class="mainTournaments">
+        {% for tournament in tournaments %}
+            <div class="tournamentItem">
+                <div class="tournamentItemImage">
+                    <div><a href="/seetournament/{{tournament.id}}"><img src="/img/{{tournament.videogame.image}}"/></a></div>
+                </div>
+                {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                <div class="tournamentItemTitle">
+                    <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a></h3>
+                </div>
+                {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                <div class="tournamentItemDescription">
+                    <p>{{ tournament.description|length > 150 ? tournament.description|slice(0, 150) ~ ' ...' : tournament.description  }}</p>
+                </div>
+                {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                <div class="tournamentItemData">
+                    <p class="places">{{tournament.players|length}}/20</p>
+                    <h4 class="startDate">{{tournament.startDate|date('Y-m-d  H:i') }}</h4>
+                </div>
+                <div class="tournamentItemSignUp">
                     {% if is_granted("ROLE_USER") %}
                         {% if app.user.id != tournament.creatorUser.id %}
                             {% if tournament.finished == false %}
@@ -39,38 +76,49 @@
                                             {% if tournament.players|length < 20 %}
                                                 <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
                                             {% else %}
-                                                <p>You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.</p>
+                                                {# <p>You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.</p> #}
+                                                <a href="/signuptotournament/{{tournament.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.">Sign Up</a>
                                             {% endif %}
                                         {% else %}
-                                            <p>You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.</p>
+                                            {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                            <a href="/signuptotournament/{{tournament.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
                                         {% endif %}
                                     {% else %}
-                                        <p>You can't Sign Up to this Tournament because you're not a verified user.</p>
+                                        {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                        <a href="/signuptotournament/{{tournament.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
                                     {% endif %}
                                 {% else %}
-                                    <p>You already Signed Up to this Tournament.</p>
+                                    {# <p>You already Signed Up to this Tournament.</p> #}
+                                    <a href="/signuptotournament/{{tournament.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
                                 {% endif %}
                             {% else %}
-                                <p>You can't Sign Up to a finished Tournament.</p>
+                                {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                <a href="/signuptotournament/{{tournament.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
                             {% endif %}
                         {% else %}
                             {% if tournament.finished == true %}
-                                <p>Your tournament has finished, you can't finish it or delete it.</p>
+                                {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                <a href="/signuptotournament/{{tournament.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
                             {% elseif date() > date(tournament.startDate) %}
-                                <p>You can't Sign Up to your own Tournament.</p>
-                                <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
+                                {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                <a href="/finishtournament/{{tournament.id}}">Finish</a>
                             {% elseif date() < date(tournament.startDate) %}  
-                                <p>You can't Sign Up to your own Tournament.</p>
-                                <a href="/deletetournament/{{tournament.id}}">Delete Tournament</a>  
+                                {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                <a href="/deletetournament/{{tournament.id}}">Edit</a>  
                             {% endif %}
                         {% endif %}
                     {% else %}
-                        <p>Login to be able to Sign Up to this Tournament.</p>
+                        {% if tournament.finished == true %}
+                            <a href="/signuptotournament/{{tournament.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                        {% else %}
+                            {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                            <a href="/signuptotournament/{{tournament.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                        {% endif %}
                     {% endif %}
                 </div>
-            </div>
-        </div>            
-    {% endfor %}
-</div>
+            </div>            
+        {% endfor %}
+    </div>
+</main>
 
 {% endblock %}

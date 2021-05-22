@@ -1,0 +1,46 @@
+footer {
+    height: 300px;
+    padding: 5px;
+    background-color: $mainColor;
+    color: $mainTextColor;
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+
+    .footerTitle, .footerNav, .footerSocial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .footerTitle {
+        flex-direction: column;
+        div {
+            text-align: center;
+            transform: scale(1.5);
+        }
+        
+    }
+
+    .footerNav {
+        nav {
+            transform: scale(1.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            a {
+                margin-bottom: 5px;
+            }
+        }
+    }
+
+    .footerSocial {
+        font-size: 2rem;
+        a {
+            i {
+                margin-left: 5px;
+            }
+        }
+    }
+}

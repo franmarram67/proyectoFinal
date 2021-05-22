@@ -386,10 +386,10 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/seeallprovinces', name: 'seeallprovinces')]
-    public function seeAllProvinces(): Response
+    #[Route('/seealltournaments', name: 'seealltournaments')]
+    public function seeAllTournaments(): Response
     {
-        $provinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
+        $tournaments=$this->getDoctrine()->getRepository(tournament::class)->findAll();
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;
@@ -400,8 +400,8 @@ class MainController extends AbstractController
             $unseen = null;
             $totalPoints = null;
         }
-        return $this->render('main/seeallprovinces.html.twig', [
-            'provinces' => $provinces,
+        return $this->render('main/seealltournaments.html.twig', [
+            'tournaments' => $tournaments,
             'unseen' => $unseen,
             'totalPoints' => $totalPoints,
         ]);
@@ -614,7 +614,7 @@ class MainController extends AbstractController
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
             if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
-                if(date("now") > $tournament->getStartDate()) {
+                if(date("now") < $tournament->getStartDate()) {
                     $tournament->setHidden(true);
                     $em = $this->getDoctrine()->getManager();
                     $em->flush();

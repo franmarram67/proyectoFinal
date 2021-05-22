@@ -1,0 +1,44 @@
+.slider {
+    height: 780px;
+    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url("/img/slider1.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    .sliderText {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: $mainTextColor;
+        font-size: $sliderTextFontSize;
+        text-align: center;
+        
+        text-shadow: 0 0 10px $mainColor;
+        
+        h1 {
+            margin-bottom: 20px;
+        }
+        
+        .playNow {
+            cursor: pointer;
+            color: $mainTextColor;
+            text-decoration: none;
+            padding: 10px 20px;
+            top: 5px;
+            text-shadow: none;
+            font-size: $sliderTextFontSize;
+            box-shadow: 0 0 10px $mainColor;
+            transition: all 0.5s ease;
+            background-color: $secondaryTextColor;
+            &:hover {
+                transition: all 0.5s ease;
+                background-color: $thirdTextColor;
+                font-size: $sliderTextFontSize+0.5rem;
+            }
+        }
+    }
+    &.common {
+        height: 200px;
+    }
+}

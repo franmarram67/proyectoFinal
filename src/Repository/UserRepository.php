@@ -111,10 +111,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
             ->addSelect('SUM(p.amount) as totalAmount')
             ->andWhere('p.user = u')
+            // if($province!=null){->andWhere('u.province = :province')};
+            // if($year!=null){->andWhere('year(p.datetime) = :year')};
+            // if($videogame!=null){->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')};
             ->andWhere('u.province = :province')
             ->andWhere('year(p.datetime) = :year')
-            ->andWhere('p.tournament = t')
-            ->andWhere('t.videogame = :videogame')
+            ->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')
             ->setParameter('province', $province)
             ->setParameter('year', $year)
             ->setParameter('videogame', $videogame)

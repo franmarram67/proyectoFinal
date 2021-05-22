@@ -1,0 +1,723 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #00ffdd;
+}
+
+a:hover {
+  color: #56ffe8;
+  text-decoration: underline;
+}
+
+header {
+  padding: 5px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  position: fixed;
+  opacity: 0.9;
+  width: 100%;
+  top: 0;
+  z-index: 99999;
+}
+
+header div.top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+header nav {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: column;
+}
+
+header nav a {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  text-align: center;
+  padding: 5px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+
+header nav a:hover {
+  background-color: #687271;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+header #logo {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.fakelink:hover {
+  cursor: pointer;
+}
+
+.slider {
+  height: 780px;
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.3)), to(rgba(0, 0, 0, 0.3))), url("/img/slider1.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/img/slider1.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.slider .sliderText {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 2rem;
+  text-align: center;
+  text-shadow: 0 0 10px #2b2b2b;
+}
+
+.slider .sliderText h1 {
+  margin-bottom: 20px;
+}
+
+.slider .sliderText .playNow {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  text-shadow: none;
+  font-size: 2rem;
+  -webkit-box-shadow: 0 0 10px #2b2b2b;
+          box-shadow: 0 0 10px #2b2b2b;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #00ffdd;
+}
+
+.slider .sliderText .playNow:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #9500ff;
+  font-size: 2.5rem;
+}
+
+.slider.common {
+  height: 200px;
+}
+
+.about {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#2b2b2b), to(#424242));
+  background-image: linear-gradient(to bottom right, #2b2b2b, #424242);
+  height: 500px;
+}
+
+.about .aboutText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+  color: #ffffff;
+}
+
+.about .aboutText h1 {
+  margin-bottom: 15px;
+  color: #00ffdd;
+}
+
+.about .aboutText p {
+  width: 75%;
+}
+
+.about .aboutImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.about .aboutImage div {
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.about .aboutImage div:hover {
+  -webkit-transform: translate(0, -15px);
+          transform: translate(0, -15px);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.about .aboutImage div img {
+  position: absolute;
+}
+
+.services {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#ececec), to(#e7e7e7));
+  background-image: linear-gradient(to bottom right, #ececec, #e7e7e7);
+  height: 500px;
+}
+
+.services .servicesText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+.services .servicesText h1 {
+  margin-bottom: 15px;
+  color: #9500ff;
+}
+
+.services .servicesText p {
+  width: 75%;
+  margin-bottom: 20px;
+}
+
+.services .servicesText .signUp {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  font-size: 2rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #ffd700;
+}
+
+.services .servicesText .signUp:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 2.5rem;
+}
+
+.services .servicesImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services .servicesImage div {
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  position: relative;
+  border: 3px solid #000000;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.services .servicesImage div:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.services .servicesImage div img {
+  position: absolute;
+  width: 600px;
+}
+
+main .mainHeader {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+main .mainHeader .mainHeaderTitle, main .mainHeader .mainHeaderCreate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainHeader .mainHeaderCreate .createTournament {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #9500ff;
+}
+
+main .mainHeader .mainHeaderCreate .createTournament:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+  background-color: #00ffdd;
+}
+
+main .mainTournaments {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 125px;
+  grid-auto-flow: row;
+}
+
+main .mainTournaments .tournamentItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 2fr 2fr 3fr 1fr 2fr;
+      grid-template-columns: 2fr 2fr 3fr 1fr 2fr;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  margin: 0 50px 15px 50px;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemImage div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemImage div a {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemImage div a img {
+  position: absolute;
+  width: 100%;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemImage div a img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemTitle h3 a {
+  text-decoration: none;
+  color: #000000;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemTitle h3 a:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.3rem;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemDescription {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: justify;
+  padding-right: 5px;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemData .places {
+  background-color: #ffd700;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemData .startDate {
+  color: #000000;
+  font-size: 0.9rem;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemData .startDate, main .mainTournaments .tournamentItem .tournamentItemData .places {
+  padding: 5px;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.disabled {
+  background: #cecece;
+  font-size: 0.7rem;
+  cursor: not-allowed;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.disabled:hover {
+  font-size: 0.7rem;
+  background: #cecece;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.finished {
+  background: #9b93a0;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.finished:hover {
+  background: #9b93a0;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.signedIn {
+  background: #9b5454;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.signedIn:hover {
+  background: #9b5454;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.inProgress {
+  background: #61a061;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a.inProgress:hover {
+  background: #61a061;
+}
+
+main .mainTournaments .tournamentItem .tournamentItemSignUp a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+footer {
+  height: 300px;
+  padding: 5px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+footer .footerTitle, footer .footerNav, footer .footerSocial {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+footer .footerTitle {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+footer .footerTitle div {
+  text-align: center;
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+}
+
+footer .footerNav nav {
+  -webkit-transform: scale(1.2);
+          transform: scale(1.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+footer .footerNav nav a {
+  margin-bottom: 5px;
+}
+
+footer .footerSocial {
+  font-size: 2rem;
+}
+
+footer .footerSocial a i {
+  margin-left: 5px;
+}
+
+.loginRegister {
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.3)), to(rgba(0, 0, 0, 0.3))), url("/img/slider4.jpg");
+  background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/img/slider4.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -ms-flex-preferred-size: 0%;
+      flex-basis: 0%;
+}
+
+.loginRegister .form {
+  background-color: #d1fff9;
+  padding: 15px;
+  border-radius: 10px;
+  opacity: 0.95;
+}
+
+.loginRegister .form .linkSection a {
+  color: #9500ff;
+}
+
+.loginRegister .form .heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.loginRegister .form form div {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: column;
+  margin-bottom: 10px;
+}
+
+.loginRegister .form form .loginButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+.loginRegister .form form .loginButton button {
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.loginRegister .form form .loginButton button:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+main {
+  padding: 5px;
+}
+/*# sourceMappingURL=main.css.map */

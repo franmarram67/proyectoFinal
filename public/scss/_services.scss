@@ -1,0 +1,67 @@
+.services {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    background-image: linear-gradient(to bottom right, $mainColorLight, $mainColorLightDimmed); 
+    // background-color: $mainColor;
+    height: 500px;
+    .servicesText {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        //color: $mainTextColor;
+        h1 {
+            margin-bottom: 15px;
+            color: $thirdTextColor;
+        }
+        p {
+            width: 75%;
+            margin-bottom: 20px;
+        }
+        .signUp {
+            cursor: pointer;
+            color: $mainTextColor;
+            text-decoration: none;
+            padding: 10px 20px;
+            top: 5px;
+            font-size: $sliderTextFontSize;
+            transition: all 0.5s ease;
+            background-color: $fourthTextColor;
+            &:hover {
+                transition: all 0.5s ease;
+                // background-color: $thirdTextColor;
+                font-size: $sliderTextFontSize+0.5rem;
+            }
+        }
+    }
+    .servicesImage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+            width: 350px;
+            height: 350px;
+            overflow:hidden;
+            position: relative;
+            // border-radius: 50%;
+            border: 3px solid $mainTextColorDark;
+            transition: all 0.5s ease;
+            &:hover {
+                transform: scale(1.05);
+                transition: all 0.5s ease;
+            }
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            img {
+                position: absolute;
+                width: 600px;
+            }
+        }
+
+        
+        
+    }
+}

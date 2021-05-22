@@ -1,0 +1,48 @@
+.about {
+    display: grid;
+    grid-auto-columns: 1fr;
+    grid-auto-flow: column;
+    background-image: linear-gradient(to bottom right, $mainColor, $mainColorDimmed); 
+    // background-color: $mainColor;
+    height: 500px;
+    .aboutText {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        color: $mainTextColor;
+        h1 {
+            margin-bottom: 15px;
+            color: $secondaryTextColor;
+        }
+        p {
+            width: 75%;
+        }
+    }
+    .aboutImage {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        div {
+            width: 350px;
+            height: 350px;
+            overflow:hidden;
+            position: relative;
+            border-radius: 50%;
+            border: 3px solid $mainTextColor;
+            transition: all 0.5s ease;
+            &:hover {
+                transform: translate(0,-15px);
+                transition: all 0.5s ease;
+            }
+
+            img {
+                position: absolute;
+            }
+        }
+
+        
+        
+    }
+}

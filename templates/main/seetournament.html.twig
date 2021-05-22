@@ -4,6 +4,11 @@
 
 {% block body %}
 
+<div class="slider common">
+    {# <img src="/img/slider1.jpg"/> #}
+</div>
+
+
 <h2>{{tournament.title}} - by {{tournament.creatorUser.username}}</h2>
 {{ tournament.finished == true ? "<i><u>This tournament has finished.</i></u><br>" : "" }}
 <p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>

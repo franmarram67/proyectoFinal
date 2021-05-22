@@ -1,0 +1,177 @@
+main {
+    .mainHeader {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+
+        .mainHeaderTitle, .mainHeaderCreate {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mainHeaderCreate .createTournament {
+            cursor: pointer;
+            color: $mainTextColor;
+            text-decoration: none;
+            padding: 10px 20px;
+            top: 5px;
+            // font-size: $sliderTextFontSize;
+            transition: all 0.5s ease;
+            background-color: $thirdTextColor;
+            &:hover {
+                transition: all 0.5s ease;
+                // background-color: $thirdTextColor;
+                font-size: 1.2rem;
+                background-color: $secondaryTextColor;
+            }
+        }
+    }
+
+    .mainTournaments {
+        display: grid;
+        grid-auto-rows: 125px;
+        grid-auto-flow: row;
+        .tournamentItem {
+            display: grid;
+            grid-template-columns: 2fr 2fr 3fr 1fr 2fr;
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 50px 15px 50px;
+            .tournamentItemImage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    overflow:hidden;
+                    position: relative;
+
+                    
+                    a {
+                        width: 100%;
+                        height: 100%;
+                        display:flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        img {
+                            position: absolute;
+                            width: 100%;
+                            transition: all 1s ease;
+                            &:hover {
+                                transform: scale(1.05);
+                                transition: all 1s ease;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .tournamentItemTitle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                h3 a {
+                    text-decoration: none;
+                    color: $mainTextColorDark;
+                    transition: all 1s ease;
+                    &:hover {
+                        transition: all 1s ease;
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+            
+            .tournamentItemDescription {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: justify;
+                padding-right: 5px;
+            }
+
+            .tournamentItemData {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+                .places {
+                    background-color: $fourthTextColor;
+                    margin-bottom: 10px;
+                    color: $mainTextColor;
+                }
+                .startDate {
+                    color: $mainTextColorDark;
+                    font-size: 0.9rem;
+                }
+                .startDate, .places {
+                    
+                    // border-radius: 5px;
+                    padding: 5px;
+                }
+            }
+            
+            .tournamentItemSignUp {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                a {
+                    cursor: pointer;
+                    color: $mainTextColor;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    transform: scale(1.3);
+                    font-size: 1.1rem;
+                    text-transform: uppercase;
+                    top: 5px;
+                    background: linear-gradient(to bottom right, $secondaryTextColor, $thirdTextColor);
+                    background-size: 100% 100%;
+                    background-position:left bottom;
+                    // font-size: $sliderTextFontSize;
+                    transition: all 0.5s ease;
+                    &.disabled {
+                        background: $colorGray;
+                        font-size: 0.7rem;
+                        cursor: not-allowed;
+                        &:hover {
+                            // background-color: $thirdTextColor;
+                            font-size: 0.7rem;
+                            background: $colorGray;
+                        }
+                    }
+                    &.finished {
+                        background: $thirdTextColorDimmed;
+                        &:hover {
+                            background: $thirdTextColorDimmed;
+                        }
+                    }
+                    &.signedIn {
+                        background: $colorSignedIn;
+                        &:hover {
+                            background: $colorSignedIn;
+                        }
+                    }
+                    &.inProgress {
+                        background: $colorInProgress;
+                        &:hover {
+                            background: $colorInProgress;
+                        }
+                    }
+                    &:hover {
+                        transition: all 0.5s ease;
+                        // background-color: $thirdTextColor;
+                        font-size: 1.3rem;
+                        background: linear-gradient(to left, $fourthTextColor, $fourthTextColorDimmed);
+                    }
+                }
+            }
+        }
+    }
+}

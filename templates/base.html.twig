@@ -10,17 +10,22 @@
         {% endblock %}
         <link rel="stylesheet" href="/css/main.css">
 
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         
     </head>
     <body>
     
 
-        <div>
-            <div>
-                <h1>Tournament Master</h1>
+        <header>
+            <div class="top">
+                <a href="/" id="logo"><h1>Tournament Master</h1></a>
                 <div>
                     {% if is_granted("ROLE_USER") %}
+                        <a href="/mypoints">Points [{{totalPoints}}]</a> ,   
+                        <a href="/mynotifications"><i class="fas fa-bell"></i> ({{unseen|length}})</a> 
                         Hello, {{app.user.email}} - <a href="/logout">Logout</a>
                     {% else %}
                         <a href="/register">Register</a> or <a href="/login">Login</a>
@@ -28,7 +33,7 @@
                 </div>
             </div>
 
-            <div>
+            <nav>
                 <a href="/">Home</a>
                 <a href="/seeallprovinces">Provinces</a>
                 <a href="/seeallvideogames">Videogames</a>
@@ -36,19 +41,43 @@
                 {% if is_granted("ROLE_USER") %}
                     <a href="/mytournaments">My Tournaments</a>
                     <a href="/myprofile">My Profile</a>
-                    <a href="/mypoints">My Points [{{totalPoints}}] </a> 
-                    <a href="/mynotifications">Notifications ({{unseen|length}})</a> 
+                    
                 {% endif %}
                 
                 {% if is_granted("ROLE_ADMIN") %}
-                    <a href="/verifyusers">Verify users</a>
+                    {# <a href="/verifyusers">Verify users</a> #}
                     <a href="/adminpage">Admin Page</a>
                 {% endif %}
-            </div>
-        </div>
-        <div>
+            </nav>
+        </header>
+
         {% block body %}{% endblock %}
-        </div>
+        
+        <footer>
+            <div class="footerTitle">
+                <div>
+                    <h3>Tournament Master</h3>
+                    <p>2021 All Rights Reserved ©</p>
+                </div>
+            </div>
+            <div class="footerNav">
+                <nav>
+                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Privacy Notice</a>
+                    <a href="#">Politics & Security</a>
+                    <a href="#">How It Works</a>
+                </nav>
+            </div>
+            <div class="footerSocial">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </footer>
+
+        <script src="https://kit.fontawesome.com/3ec96a9d80.js" crossorigin="anonymous"></script>
+        <script src="/js/disableLinks.js"></script>
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}

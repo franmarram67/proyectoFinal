@@ -75,7 +75,7 @@ $(document).ready(function() {
         var idT=$("#tournamentId").val();
         console.log("tournamentId: "+idT);
         console.log("----");
-        var c = confirm("Are you sure you want to delete this Tournament?");4
+        var c = confirm("Are you sure you want to delete this Tournament?");
         if(c) {
             deleteTournament(idT);
         }
