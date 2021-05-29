@@ -8,37 +8,49 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Province index</h1>
+<div class="body">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for province in provinces %}
-            <tr>
-                <td>{{ province.id }}</td>
-                <td>{{ province.name }}</td>
-                <td>{{ province.description }}</td>
-                <td><img src="/img/{{ province.image }}" width="100px" /></td>
-                <td>
-                    <a href="{{ path('province_show', {'id': province.id}) }}">show</a>
-                    <a href="{{ path('province_edit', {'id': province.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Province index</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Image</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for province in provinces %}
+                <tr>
+                    <td>{{ province.id }}</td>
+                    <td>{{ province.name }}</td>
+                    <td>{{ province.description }}</td>
+                    <td><img src="/img/{{ province.image }}" width="100px" /></td>
+                    <td>
+                        <a href="{{ path('province_show', {'id': province.id}) }}">show</a>
+                        <a href="{{ path('province_edit', {'id': province.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('province_new') }}">Create new</a>
+        <a href="{{ path('province_new') }}">Create new</a>
+    </div>
+
+</main>
+
+
+</div>
+
 {% endblock %}

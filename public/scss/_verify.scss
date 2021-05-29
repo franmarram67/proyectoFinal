@@ -1,0 +1,54 @@
+main {
+    .mainAdminVerify {
+        display: grid;
+        grid-auto-rows: 75px;
+        grid-auto-flow: row;
+        .adminVerifyItem {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 50px 15px 50px;
+            .adminVerifyItemUser, .adminVerifyItemVerify {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .adminVerifyItemUser {
+                background-color: $fourthTextColorDimmed;
+                font-size: 1.2rem;
+            }
+            .adminVerifyItemVerify {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                // margin-top: 20px;
+                a {
+                    border: none;
+                    cursor: pointer;
+                    color: $mainTextColor;
+                    text-decoration: none;
+                    padding: 10px 20px;
+                    transform: scale(1);
+                    font-size: 1.1rem;
+                    text-transform: uppercase;
+                    top: 5px;
+                    background: linear-gradient(to bottom right, $secondaryTextColor, $thirdTextColor);
+                    background-size: 100% 100%;
+                    background-position:left bottom;
+                    // font-size: $sliderTextFontSize;
+                    transition: all 0.5s ease;
+                    &:hover {
+                        transition: all 0.5s ease;
+                        // background-color: $thirdTextColor;
+                        font-size: 1.3rem;
+                        background: linear-gradient(to left, $fourthTextColor, $fourthTextColorDimmed);
+                        // color: $mainTextColorDark;
+                    }
+                }
+            }
+        }
+    }
+}

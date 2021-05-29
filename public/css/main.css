@@ -552,6 +552,292 @@ main .mainTournaments .tournamentItem .tournamentItemSignUp a:hover {
   background: linear-gradient(to left, #ffd700, #ffec83);
 }
 
+main .notFound {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .viewAll {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin: 20px 0 0 0;
+}
+
+main .viewAll a {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  text-shadow: none;
+  font-size: 2rem;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #00ffdd;
+}
+
+main .viewAll a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #9500ff;
+  font-size: 2.5rem;
+}
+
+main .mainOneTournament .oneTournamentItem {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to bottom right, #d1fff9, #e4fffb);
+  margin: 0 50px 0 50px;
+}
+
+main .mainOneTournament .oneTournamentItem .oneTournamentItemImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a img {
+  position: absolute;
+  width: 125%;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 3fr 1fr 2fr;
+      grid-template-rows: 1fr 3fr 1fr 2fr;
+  grid-auto-flow: row;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle h3 a {
+  text-decoration: none;
+  color: #000000;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 2.1rem;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle h3 a:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 2.2rem;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 1fr;
+  padding: 20px 0;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .desc {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 0px 25px;
+  text-align: justify;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .points {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .points p {
+  background-color: #56f156;
+  padding: 5px;
+  margin-left: 5px;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemData .places {
+  background-color: #ffd700;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemData .startDate {
+  color: #000000;
+  font-size: 0.9rem;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemData .startDate, main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemData .places {
+  padding: 5px;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(2);
+          transform: scale(2);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.disabled {
+  background: #cecece;
+  font-size: 0.7rem;
+  cursor: not-allowed;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.disabled:hover {
+  font-size: 0.7rem;
+  background: #cecece;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.finished {
+  background: #9b93a0;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.finished:hover {
+  background: #9b93a0;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.signedIn {
+  background: #9b5454;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.signedIn:hover {
+  background: #9b5454;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.inProgress {
+  background: #61a061;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a.inProgress:hover {
+  background: #61a061;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
 footer {
   height: 300px;
   padding: 5px;
@@ -561,6 +847,8 @@ footer {
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
+  margin-top: 35px;
+  opacity: 1;
 }
 
 footer .footerTitle, footer .footerNav, footer .footerSocial {
@@ -640,9 +928,9 @@ footer .footerSocial a i {
 }
 
 .loginRegister .form {
-  background-color: #d1fff9;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
   padding: 15px;
-  border-radius: 10px;
   opacity: 0.95;
 }
 
@@ -717,7 +1005,966 @@ footer .footerSocial a i {
   background: linear-gradient(to left, #ffd700, #ffec83);
 }
 
+main .mainVideogames {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  margin: 0 30px 0 50px;
+}
+
+main .mainVideogames .videogameItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 200px 1fr 3fr 1fr;
+      grid-template-rows: 200px 1fr 3fr 1fr;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to bottom right, #d1fff9, #e4fffb);
+  margin: 0 20px 20px 0;
+}
+
+main .mainVideogames .videogameItem .videogameItemImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainVideogames .videogameItem .videogameItemImage div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+main .mainVideogames .videogameItem .videogameItemImage div a {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainVideogames .videogameItem .videogameItemImage div a img {
+  position: absolute;
+  width: 110%;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainVideogames .videogameItem .videogameItemImage div a img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainVideogames .videogameItem .videogameItemTitle {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainVideogames .videogameItem .videogameItemTitle h3 a {
+  text-decoration: none;
+  color: #000000;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainVideogames .videogameItem .videogameItemTitle h3 a:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.3rem;
+}
+
+main .mainVideogames .videogameItem .videogameItemDescription {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: justify;
+  padding: 0 10px 10px 10px;
+}
+
+main .mainVideogames .videogameItem .videogameItemData {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  text-align: center;
+}
+
+main .mainVideogames .videogameItem .videogameItemData .ageRating {
+  background-color: #ffd700;
+  margin-bottom: 10px;
+  color: #ffffff;
+  padding: 5px;
+}
+
+main .create {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .create .form {
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  padding: 15px;
+  opacity: 0.95;
+}
+
+main .create .form .linkSection a {
+  color: #9500ff;
+}
+
+main .create .form .heading {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+main .create .form form div {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: column;
+  margin-bottom: 10px;
+}
+
+main .create .form form div #tournament_startDate {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-auto-flow: row;
+}
+
+main .create .form form .createButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+main .create .form form .createButton button, main .create .form form .createButton a {
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .create .form form .createButton button:hover, main .create .form form .createButton a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+main .mainSearch {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  margin-bottom: 20px;
+}
+
+main .mainSearch .mainSearchButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainSearch .mainSearchButton a {
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #9500ff;
+}
+
+main .mainSearch .mainSearchButton a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+  background-color: #00ffdd;
+}
+
+main .mainSearch .mainSearchSelect {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+
+main .mainSearch .mainSearchSelect div {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  margin-bottom: 10px;
+}
+
+main .mainSearch .mainSearchSelect div span {
+  text-align: right;
+  padding-right: 20px;
+}
+
+main .mainRanking {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 75px;
+  grid-auto-flow: row;
+}
+
+main .mainRanking .rankingItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 2fr 3fr 1fr;
+      grid-template-columns: 1fr 2fr 3fr 1fr;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  margin: 0 50px 15px 50px;
+}
+
+main .mainRanking .rankingItem .rankingItemPosition, main .mainRanking .rankingItem .rankingItemPoints, main .mainRanking .rankingItem .rankingItemUser, main .mainRanking .rankingItem .rankingItemImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainRanking .rankingItem .rankingItemPosition {
+  background-color: #ececec;
+  font-size: 1.2rem;
+}
+
+main .mainRanking .rankingItem .rankingItemPosition h3 {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainRanking .rankingItem .rankingItemPosition h3:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.5rem;
+}
+
+main .mainRanking .rankingItem .rankingItemPoints {
+  background-color: #ffec83;
+  font-size: 1.2rem;
+}
+
+main .mainRanking .rankingItem .rankingItemUser {
+  font-size: 1.2rem;
+}
+
+main .mainRanking .rankingItem .rankingItemImage {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainRanking .rankingItem .rankingItemImage div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainRanking .rankingItem .rankingItemImage div img {
+  position: absolute;
+  width: 100%;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainRanking .rankingItem .rankingItemImage div img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainProfile {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  margin: 0 50px 15px 50px;
+}
+
+main .mainProfile .mainProfileInfo {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 5fr 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: 5fr 1fr 1fr 1fr 1fr 1fr;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to bottom right, #d1fff9, #e4fffb);
+  margin-right: 10px;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoImage, main .mainProfile .mainProfileInfo .mainProfileInfoName, main .mainProfile .mainProfileInfo .mainProfileInfoVerified, main .mainProfile .mainProfileInfo .mainProfileInfoDNI, main .mainProfile .mainProfileInfo .mainProfileInfoProvince, main .mainProfile .mainProfileInfo .mainProfileInfoEmail {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoImage div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoImage div img {
+  position: absolute;
+  width: 100%;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoImage div img:hover {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoName h3 {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoName h3:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.35rem;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoDNI, main .mainProfile .mainProfileInfo .mainProfileInfoProvince, main .mainProfile .mainProfileInfo .mainProfileInfoEmail {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoDNI .right, main .mainProfile .mainProfileInfo .mainProfileInfoProvince .right, main .mainProfile .mainProfileInfo .mainProfileInfoEmail .right {
+  text-align: left;
+  margin-left: 10px;
+}
+
+main .mainProfile .mainProfileInfo .mainProfileInfoDNI .left, main .mainProfile .mainProfileInfo .mainProfileInfoProvince .left, main .mainProfile .mainProfileInfo .mainProfileInfoEmail .left {
+  text-align: left;
+  margin-right: 10px;
+}
+
+main .mainProfile .mainProfileForm {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 200px 150px 150px;
+      grid-template-rows: 200px 150px 150px;
+  padding: 10px;
+  background-image: -webkit-gradient(linear, left top, right bottom, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to bottom right, #d1fff9, #e4fffb);
+  margin-left: 10px;
+}
+
+main .mainProfile .mainProfileForm .profile form, main .mainProfile .mainProfileForm .email form, main .mainProfile .mainProfileForm .password form {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+
+main .mainProfile .mainProfileForm .profile form .inputs, main .mainProfile .mainProfileForm .email form .inputs, main .mainProfile .mainProfileForm .password form .inputs {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 1fr;
+}
+
+main .mainProfile .mainProfileForm .profile form .inputs div, main .mainProfile .mainProfileForm .email form .inputs div, main .mainProfile .mainProfileForm .password form .inputs div {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+}
+
+main .mainProfile .mainProfileForm .profile form .saveButton, main .mainProfile .mainProfileForm .email form .saveButton, main .mainProfile .mainProfileForm .password form .saveButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main .mainProfile .mainProfileForm .profile form .saveButton button, main .mainProfile .mainProfileForm .email form .saveButton button, main .mainProfile .mainProfileForm .password form .saveButton button {
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .mainProfile .mainProfileForm .profile form .saveButton button:hover, main .mainProfile .mainProfileForm .email form .saveButton button:hover, main .mainProfile .mainProfileForm .password form .saveButton button:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+main .mainHeader .mainHeaderPoints {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-size: 2.25rem;
+  font-weight: bold;
+  overflow: hidden;
+  position: relative;
+}
+
+main .mainHeader .mainHeaderPoints .points {
+  width: 100%;
+  height: 100%;
+  animation: points 5s linear 0s infinite;
+  -webkit-animation: points 5s linear 0s infinite;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background: linear-gradient(-45deg, #00ffdd, #00b49c, #ffd700, #ffec83, #9500ff, #7e1ec2, #00ffdd, #00b49c);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@-webkit-keyframes points {
+  0% {
+    background-position: 0% 50%;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  33% {
+    background-position: 33% 50%;
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  67% {
+    background-position: 67% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes points {
+  0% {
+    background-position: 0% 50%;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+  33% {
+    background-position: 33% 50%;
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  67% {
+    background-position: 67% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+main .mainPoints {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 75px;
+  grid-auto-flow: row;
+}
+
+main .mainPoints .pointsItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr 2fr;
+      grid-template-columns: 1fr 1fr 2fr;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  margin: 0 50px 15px 50px;
+}
+
+main .mainPoints .pointsItem .pointsItemAmount, main .mainPoints .pointsItem .pointsItemTournament, main .mainPoints .pointsItem .pointsItemDate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainPoints .pointsItem .pointsItemAmount {
+  background-color: #ececec;
+  font-size: 1.2rem;
+}
+
+main .mainPoints .pointsItem .pointsItemAmount h3 {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainPoints .pointsItem .pointsItemAmount h3:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.5rem;
+}
+
+main .mainPoints .pointsItem .pointsItemDate {
+  background-color: #ffec83;
+  font-size: 1.2rem;
+}
+
+main .mainPoints .pointsItem .pointsItemTournament {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+main .mainPoints .pointsItem .pointsItemTournament h3 a {
+  text-decoration: none;
+  color: #000000;
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+}
+
+main .mainPoints .pointsItem .pointsItemTournament h3 a:hover {
+  -webkit-transition: all 1s ease;
+  transition: all 1s ease;
+  font-size: 1.3rem;
+}
+
+main .mainNotifications {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 75px;
+  grid-auto-flow: row;
+}
+
+main .mainNotifications .notificationItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr;
+      grid-template-columns: 1fr 3fr;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  margin: 0 50px 15px 50px;
+}
+
+main .mainNotifications .notificationItem .notificationItemDate, main .mainNotifications .notificationItem .notificationItemContent {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainNotifications .notificationItem .notificationItemDate {
+  background-color: #ffec83;
+  font-size: 1.2rem;
+}
+
+main .mainNotifications .notificationItem .notificationItemContent {
+  font-size: 1.2rem;
+}
+
+main .mainNotifications .notificationItem .notificationItemContent > *:not(:last-child) {
+  margin-right: 5px;
+}
+
+main .mainAdminButtons {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[4];
+      grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 100px;
+  margin: 0 50px 0 50px;
+}
+
+main .mainAdminButtons .adminButtonItem {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainAdminButtons .adminButtonItem .button {
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  top: 5px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  background-color: #9500ff;
+}
+
+main .mainAdminButtons .adminButtonItem .button:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.2rem;
+  background-color: #00ffdd;
+}
+
+main .mainAdminVerify {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-rows: 75px;
+  grid-auto-flow: row;
+}
+
+main .mainAdminVerify .adminVerifyItem {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr;
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  margin: 0 50px 15px 50px;
+}
+
+main .mainAdminVerify .adminVerifyItem .adminVerifyItemUser, main .mainAdminVerify .adminVerifyItem .adminVerifyItemVerify {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+}
+
+main .mainAdminVerify .adminVerifyItem .adminVerifyItemUser {
+  background-color: #ffec83;
+  font-size: 1.2rem;
+}
+
+main .mainAdminVerify .adminVerifyItem .adminVerifyItemVerify {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main .mainAdminVerify .adminVerifyItem .adminVerifyItemVerify a {
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1);
+          transform: scale(1);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .mainAdminVerify .adminVerifyItem .adminVerifyItemVerify a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+main .finishTournament {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+main .finishTournament .finishForm {
+  background-image: -webkit-gradient(linear, left top, right top, from(#d1fff9), to(#e4fffb));
+  background-image: linear-gradient(to right, #d1fff9, #e4fffb);
+  padding: 15px;
+  opacity: 0.95;
+  width: 500px;
+}
+
+main .finishTournament .finishForm .selectWinners {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 10px;
+}
+
+main .finishTournament .finishForm .firstPlace, main .finishTournament .finishForm .secondPlace, main .finishTournament .finishForm .thirdPlace, main .finishTournament .finishForm .fourthPlace, main .finishTournament .finishForm .selectWinners {
+  display: -ms-grid;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  margin-bottom: 10px;
+  grid-auto-rows: 1fr;
+}
+
+main .finishTournament .finishForm .finishButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+main .finishTournament .finishForm .finishButton button, main .finishTournament .finishForm .finishButton a {
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  -webkit-transform: scale(1.3);
+          transform: scale(1.3);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  top: 5px;
+  background: -webkit-gradient(linear, left top, right bottom, from(#00ffdd), to(#9500ff));
+  background: linear-gradient(to bottom right, #00ffdd, #9500ff);
+  background-size: 100% 100%;
+  background-position: left bottom;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+main .finishTournament .finishForm .finishButton button:hover, main .finishTournament .finishForm .finishButton a:hover {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  font-size: 1.3rem;
+  background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
+  background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
 main {
   padding: 5px;
+}
+
+.body {
+  min-height: 300px;
 }
 /*# sourceMappingURL=main.css.map */

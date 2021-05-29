@@ -8,54 +8,69 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Tournament index</h1>
+<div class="body">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>StartDate</th>
-                <th>VideoGame</th>
-                <th>CreatorUser</th>
-                <th>FirstPlace</th>
-                <th>SecondPlace</th>
-                <th>ThirdPlace</th>
-                <th>FourthPlace</th>
-                <th>Finished</th>
-                <th>Hidden</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tournament in tournaments %}
-            <tr>
-                <td>{{ tournament.id }}</td>
-                <td>{{ tournament.title }}</td>
-                <td>{{ tournament.description }}</td>
-                <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ tournament.videogame }}</td>
-                <td>{{ tournament.creatorUser }}</td>
-                <td>{{ tournament.firstPlace }}</td>
-                <td>{{ tournament.secondPlace }}</td>
-                <td>{{ tournament.thirdPlace }}</td>
-                <td>{{ tournament.fourthPlace }}</td>
-                <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
-                <td>{{ tournament.hidden ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
-                    <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
-                    <a href="{{ path('tournament_delete', {'id': tournament.id}) }}">delete</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Tournament index</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>StartDate</th>
+                    <th>VideoGame</th>
+                    <th>CreatorUser</th>
+                    <th>FirstPlace</th>
+                    <th>SecondPlace</th>
+                    <th>ThirdPlace</th>
+                    <th>FourthPlace</th>
+                    <th>Places</th>
+                    <th>Finished</th>
+                    <th>Hidden</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tournament in tournaments %}
+                <tr>
+                    <td>{{ tournament.id }}</td>
+                    <td>{{ tournament.title }}</td>
+                    <td>{{ tournament.description }}</td>
+                    <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ tournament.videogame }}</td>
+                    <td>{{ tournament.creatorUser }}</td>
+                    <td>{{ tournament.firstPlace }}</td>
+                    <td>{{ tournament.secondPlace }}</td>
+                    <td>{{ tournament.thirdPlace }}</td>
+                    <td>{{ tournament.fourthPlace }}</td>
+                    <td>{{ tournament.places }}</td>
+                    <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
+                    <td>{{ tournament.hidden ? 'Yes' : 'No' }}</td>
+                    <td>
+                        <a href="{{ path('tournament_show', {'id': tournament.id}) }}">show</a>
+                        <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
+                        <a href="{{ path('tournament_delete', {'id': tournament.id}) }}">delete</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('admin_tournament_new') }}">Create new</a>
+        <a href="{{ path('admin_tournament_new') }}">Create new</a>
+    </div>
+
+</main>
+
+    
+
+</div>
+
 {% endblock %}

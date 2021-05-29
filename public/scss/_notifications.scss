@@ -1,0 +1,31 @@
+main {
+    .mainNotifications {
+        display: grid;
+        grid-auto-rows: 75px;
+        grid-auto-flow: row;
+        .notificationItem {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 50px 15px 50px;
+            .notificationItemDate, .notificationItemContent {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+
+            .notificationItemDate {
+                background-color: $fourthTextColorDimmed;
+                font-size: 1.2rem;
+            }
+
+            .notificationItemContent {
+                font-size: 1.2rem;
+                &>*:not(:last-child) {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+}

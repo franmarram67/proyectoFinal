@@ -8,61 +8,373 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>Created Tournaments</h2>
-<ul>
-{% for t in created|slice(0, 10) %}
-    <li>
-        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-        <p>VideoGame: {{ t.videogame }}</p>
-        <p>Places: {{t.players|length}}/20</p>
-        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
-    </li>
-{% endfor %}
-</ul>
-<a href="/mytournaments/created">See All Created Tournaments</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Created Tournaments</h1></div>
+        {% if is_granted("ROLE_USER") %}
+            {% if app.user.verified == true %}
+                <div class="mainHeaderCreate"><a href="/tournament/new" class="createTournament">Create New Tournament</a></div>
+            {% endif %}
+        {% endif %}
+    </div>
+    {% if created == null %}
+        <div class="notFound"><p>No Tournaments Were Found...</p></div>  
+    {% else %}
+        <div class="mainTournaments">
+            {% for t in created|slice(0,10) %}
+                <div class="tournamentItem">
+                    <div class="tournamentItemImage">
+                        <div><a href="/seetournament/{{t.id}}"><img src="/img/{{t.videogame.image}}"/></a></div>
+                    </div>
+                    {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                    <div class="tournamentItemTitle">
+                        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a></h3>
+                    </div>
+                    {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                    <div class="tournamentItemDescription">
+                        <p>{{ t.description|length > 150 ? t.description|slice(0, 150) ~ ' ...' : t.description  }}</p>
+                    </div>
+                    {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                    <div class="tournamentItemData">
+                        <p class="places">{{t.players|length}}/{{t.places}}</p>
+                        <h4 class="startDate">{{t.startDate|date('Y-m-d  H:i') }}</h4>
+                    </div>
+                    <div class="tournamentItemSignUp">
+                        {% if is_granted("ROLE_USER") %}
+                            {% if app.user.id != t.creatorUser.id %}
+                                {% if t.finished == false %}
+                                    {% if app.user not in t.players %}
+                                        {% if app.user.verified == true %}
+                                            {% if date() < date(t.startDate) %}
+                                                {% if t.players|length < t.places %}
+                                                    <a href="/signuptotournament/{{t.id}}">Sign Up</a>
+                                                {% else %}
+                                                    {# <p>You can't Sign Up to this Tournament because there's no more places left.</p> #}
+                                                    <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left.">Sign Up</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                                <a href="/signuptotournament/{{t.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                            <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {# <p>You already Signed Up to this Tournament.</p> #}
+                                        <a href="/signuptotournament/{{t.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
+                                    {% endif %}
+                                {% else %}
+                                    {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                                {% endif %}
+                            {% else %}
+                                {% if t.finished == true %}
+                                    {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
+                                {% elseif date() > date(t.startDate) %}
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/finishtournament/{{t.id}}">Finish</a>
+                                {% elseif date() < date(t.startDate) %}  
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/edittournament/{{t.id}}">Edit</a>  
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if t.finished == true %}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                            {% else %}
+                                {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                        
+            {% endfor %}
+        </div>
+        <div class="viewAll">
+            <a href="/mytournaments/created">VIEW ALL</a>
+        </div>
+    {% endif %}
+</main>
 
-<h2>Pending Tournaments</h2>
-<ul>
-{% for t in pending|slice(0, 10) %}
-    <li>
-        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-        <p>VideoGame: {{ t.videogame }}</p>
-        <p>Places: {{t.players|length}}/20</p>
-        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
-    </li>
-{% endfor %}
-</ul>
-<a href="/mytournaments/pending">See All Pending Tournaments</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Pending Tournaments</h1></div>
+        {% if is_granted("ROLE_USER") %}
+            {# {% if app.user.verified == true %}
+                <div class="mainHeaderCreate"><a href="/tournament/new" class="createTournament">Create New Tournament</a></div>
+            {% endif %} #}
+        {% endif %}
+    </div>
+    {% if pending == null %}
+        <div class="notFound"><p>No Tournaments Were Found...</p></div>  
+    {% else %}
+        <div class="mainTournaments">
+            {% for t in pending|slice(0,10) %}
+                <div class="tournamentItem">
+                    <div class="tournamentItemImage">
+                        <div><a href="/seetournament/{{t.id}}"><img src="/img/{{t.videogame.image}}"/></a></div>
+                    </div>
+                    {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                    <div class="tournamentItemTitle">
+                        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a></h3>
+                    </div>
+                    {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                    <div class="tournamentItemDescription">
+                        <p>{{ t.description|length > 150 ? t.description|slice(0, 150) ~ ' ...' : t.description  }}</p>
+                    </div>
+                    {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                    <div class="tournamentItemData">
+                        <p class="places">{{t.players|length}}/{{t.places}}</p>
+                        <h4 class="startDate">{{t.startDate|date('Y-m-d  H:i') }}</h4>
+                    </div>
+                    <div class="tournamentItemSignUp">
+                        {% if is_granted("ROLE_USER") %}
+                            {% if app.user.id != t.creatorUser.id %}
+                                {% if t.finished == false %}
+                                    {% if app.user not in t.players %}
+                                        {% if app.user.verified == true %}
+                                            {% if date() < date(t.startDate) %}
+                                                {% if t.players|length < t.places %}
+                                                    <a href="/signuptotournament/{{t.id}}">Sign Up</a>
+                                                {% else %}
+                                                    {# <p>You can't Sign Up to this Tournament because there's no more places left.</p> #}
+                                                    <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left.">Sign Up</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                                <a href="/signuptotournament/{{t.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                            <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {# <p>You already Signed Up to this Tournament.</p> #}
+                                        <a href="/signuptotournament/{{t.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
+                                    {% endif %}
+                                {% else %}
+                                    {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                                {% endif %}
+                            {% else %}
+                                {% if t.finished == true %}
+                                    {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
+                                {% elseif date() > date(t.startDate) %}
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/finishtournament/{{t.id}}">Finish</a>
+                                {% elseif date() < date(t.startDate) %}  
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/edittournament/{{t.id}}">Edit</a>  
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if t.finished == true %}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                            {% else %}
+                                {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                        
+            {% endfor %}
+        </div>
+        <div class="viewAll">
+            <a href="/mytournaments/pending">VIEW ALL</a>
+        </div>
+    {% endif %}
+</main>
 
-<h2>Tournaments In Progress</h2>
-<ul>
-{% for t in inprogress|slice(0, 10) %}
-    <li>
-        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-        <p>VideoGame: {{ t.videogame }}</p>
-        <p>Places: {{t.players|length}}/20</p>
-        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
-    </li>
-{% endfor %}
-</ul>
-<a href="/mytournaments/inprogress">See All Tournaments In Progress</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>In Progress Tournaments</h1></div>
+        {% if is_granted("ROLE_USER") %}
+            {# {% if app.user.verified == true %}
+                <div class="mainHeaderCreate"><a href="/tournament/new" class="createTournament">Create New Tournament</a></div>
+            {% endif %} #}
+        {% endif %}
+    </div>
+    {% if inprogress == null %}
+        <div class="notFound"><p>No Tournaments Were Found...</p></div>  
+    {% else %}
+        <div class="mainTournaments">
+            {% for t in inprogress|slice(0,10) %}
+                <div class="tournamentItem">
+                    <div class="tournamentItemImage">
+                        <div><a href="/seetournament/{{t.id}}"><img src="/img/{{t.videogame.image}}"/></a></div>
+                    </div>
+                    {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                    <div class="tournamentItemTitle">
+                        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a></h3>
+                    </div>
+                    {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                    <div class="tournamentItemDescription">
+                        <p>{{ t.description|length > 150 ? t.description|slice(0, 150) ~ ' ...' : t.description  }}</p>
+                    </div>
+                    {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                    <div class="tournamentItemData">
+                        <p class="places">{{t.players|length}}/{{t.places}}</p>
+                        <h4 class="startDate">{{t.startDate|date('Y-m-d  H:i') }}</h4>
+                    </div>
+                    <div class="tournamentItemSignUp">
+                        {% if is_granted("ROLE_USER") %}
+                            {% if app.user.id != t.creatorUser.id %}
+                                {% if t.finished == false %}
+                                    {% if app.user not in t.players %}
+                                        {% if app.user.verified == true %}
+                                            {% if date() < date(t.startDate) %}
+                                                {% if t.players|length < t.places %}
+                                                    <a href="/signuptotournament/{{t.id}}">Sign Up</a>
+                                                {% else %}
+                                                    {# <p>You can't Sign Up to this Tournament because there's no more places left.</p> #}
+                                                    <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left.">Sign Up</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                                <a href="/signuptotournament/{{t.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                            <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {# <p>You already Signed Up to this Tournament.</p> #}
+                                        <a href="/signuptotournament/{{t.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
+                                    {% endif %}
+                                {% else %}
+                                    {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                                {% endif %}
+                            {% else %}
+                                {% if t.finished == true %}
+                                    {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
+                                {% elseif date() > date(t.startDate) %}
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/finishtournament/{{t.id}}">Finish</a>
+                                {% elseif date() < date(t.startDate) %}  
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/edittournament/{{t.id}}">Edit</a>  
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if t.finished == true %}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                            {% else %}
+                                {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                        
+            {% endfor %}
+        </div>
+        <div class="viewAll">
+            <a href="/mytournaments/inprogress">VIEW ALL</a>
+        </div>
+    {% endif %}
+</main>
 
-<h2>Finished Tournaments</h2>
-<ul>
-{% for t in finished|slice(0, 10) %}
-    <li>
-        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a> - by {{t.creatorUser.username}}</h3>
-        <p>{{ t.description|length > 50 ? t.description|slice(0, 50) ~ '...' : t.description  }}</p>
-        <p>VideoGame: {{ t.videogame }}</p>
-        <p>Places: {{t.players|length}}/20</p>
-        <h4>Start Date: {{t.startDate|date('Y-m-d  H:i:s') }}</h4>
-    </li>
-{% endfor %}
-</ul>
-<a href="/mytournaments/finished">See All Finished Tournaments</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Finished Tournaments</h1></div>
+        {% if is_granted("ROLE_USER") %}
+            {# {% if app.user.verified == true %}
+                <div class="mainHeaderCreate"><a href="/tournament/new" class="createTournament">Create New Tournament</a></div>
+            {% endif %} #}
+        {% endif %}
+    </div>
+    {% if finished == null %}
+        <div class="notFound"><p>No Tournaments Were Found...</p></div>  
+    {% else %}
+        <div class="mainTournaments">
+            {% for t in finished|slice(0,10) %}
+                <div class="tournamentItem">
+                    <div class="tournamentItemImage">
+                        <div><a href="/seetournament/{{t.id}}"><img src="/img/{{t.videogame.image}}"/></a></div>
+                    </div>
+                    {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                    <div class="tournamentItemTitle">
+                        <h3><a href="/seetournament/{{t.id}}">{{t.title}}</a></h3>
+                    </div>
+                    {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                    <div class="tournamentItemDescription">
+                        <p>{{ t.description|length > 150 ? t.description|slice(0, 150) ~ ' ...' : t.description  }}</p>
+                    </div>
+                    {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                    <div class="tournamentItemData">
+                        <p class="places">{{t.players|length}}/{{t.places}}</p>
+                        <h4 class="startDate">{{t.startDate|date('Y-m-d  H:i') }}</h4>
+                    </div>
+                    <div class="tournamentItemSignUp">
+                        {% if is_granted("ROLE_USER") %}
+                            {% if app.user.id != t.creatorUser.id %}
+                                {% if t.finished == false %}
+                                    {% if app.user not in t.players %}
+                                        {% if app.user.verified == true %}
+                                            {% if date() < date(t.startDate) %}
+                                                {% if t.players|length < t.places %}
+                                                    <a href="/signuptotournament/{{t.id}}">Sign Up</a>
+                                                {% else %}
+                                                    {# <p>You can't Sign Up to this Tournament because there's no more places left.</p> #}
+                                                    <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left.">Sign Up</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                                <a href="/signuptotournament/{{t.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                            <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {# <p>You already Signed Up to this Tournament.</p> #}
+                                        <a href="/signuptotournament/{{t.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
+                                    {% endif %}
+                                {% else %}
+                                    {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                                {% endif %}
+                            {% else %}
+                                {% if t.finished == true %}
+                                    {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
+                                {% elseif date() > date(t.startDate) %}
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/finishtournament/{{t.id}}">Finish</a>
+                                {% elseif date() < date(t.startDate) %}  
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/edittournament/{{t.id}}">Edit</a>  
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if t.finished == true %}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                            {% else %}
+                                {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                        
+            {% endfor %}
+        </div>
+        <div class="viewAll">
+            <a href="/mytournaments/finished">VIEW ALL</a>
+        </div>
+    {% endif %}
+</main>
+
+
+</div>
 
 {% endblock %}

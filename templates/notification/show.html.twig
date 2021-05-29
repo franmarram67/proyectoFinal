@@ -8,36 +8,47 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Notification</h1>
+<div class="body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ notification.id }}</td>
-            </tr>
-            <tr>
-                <th>Text</th>
-                <td>{{ notification.text }}</td>
-            </tr>
-            <tr>
-                <th>User</th>
-                <td>{{ notification.user }}</td>
-            </tr>
-            <tr>
-                <th>Tournament</th>
-                <td>{{ notification.tournament }}</td>
-            </tr>
-            <tr>
-                <th>Seen</th>
-                <td>{{ notification.seen ? "Yes" : "No" }}</td>
-            </tr>
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Notification</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ notification.id }}</td>
+                </tr>
+                <tr>
+                    <th>Text</th>
+                    <td>{{ notification.text }}</td>
+                </tr>
+                <tr>
+                    <th>User</th>
+                    <td>{{ notification.user }}</td>
+                </tr>
+                <tr>
+                    <th>Seen</th>
+                    <td>{{ notification.seen ? "Yes" : "No" }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('notification_index') }}">back to list</a>
+        <a href="{{ path('notification_index') }}">back to list</a>
 
-    <a href="{{ path('notification_edit', {'id': notification.id}) }}">edit</a>
+        <a href="{{ path('notification_edit', {'id': notification.id}) }}">edit</a>
 
-    {{ include('notification/_delete_form.html.twig') }}
+        {{ include('notification/_delete_form.html.twig') }}
+    </div>
+
+</main>
+
+    <h1></h1>
+
+    
+
+</div>
+
 {% endblock %}

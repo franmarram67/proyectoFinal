@@ -9,18 +9,33 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>Unverified Users</h2>
-{% if allusers != null %}
-    <ul>
-    {% for user in allusers %}
-        <li>
-            <p>{{user.email}} - <a href="/verify/{{user.id}}">verify</a> <a href="/user/{{user.id}}">show</a></p>
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    There isn't any unverified users.
-{% endif %}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Unverified Users</h1></div>
+        <div class="mainHeaderCreate"><a href="/verifyall" class="createTournament">Verify All</a></div>
+    </div>
+    {% if allusers != null %}
+    <div class="mainAdminVerify">
+        {% for user in allusers %}
+        <div class="adminVerifyItem">
+            <div class="adminVerifyItemUser">
+                <p>{{user.email}}</p>
+            </div>
+            <div class="adminVerifyItemVerify">
+                <a href="/verify/{{user.id}}">verify</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <div class="notFound"><p>No Unverified Users Were Found...</p></div>  
+    {% endif %}
+    
+
+</main>
+
+</div>
 
 {% endblock %}

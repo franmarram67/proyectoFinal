@@ -8,9 +8,20 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Create new Province</h1>
+<div class="body">
 
-    {{ include('province/_form.html.twig') }}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Create new Province</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        {{ include('province/_form.html.twig') }}
 
-    <a href="{{ path('province_index') }}">back to list</a>
+        <a href="{{ path('province_index') }}">back to list</a>
+    </div>
+
+</main>
+
+</div>
+
 {% endblock %}

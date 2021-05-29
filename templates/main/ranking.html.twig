@@ -8,52 +8,72 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>Ranking of {{province}}, {{videogame}}, {{year}}</h2>
+<main>
+    <div class="mainHeader">    
+        <div class="mainHeaderTitle"><h1>Ranking of {% if province != null %}{{province}} {% endif %}{% if videogame != null %}{{videogame}} {% endif %}{% if year != "null" %}{{year}}{% endif %}</h1></div>
+    </div>
 
-Province: <select id="province" name="province">
-    <option disabled selected value> -- Select A Province -- </option>
-    {% for province in allProvinces %}
-        <option value="{{province.id}}">{{province}}</option>
-    {% endfor %}
-</select> 
+    <div class="mainSearch">
+        <div class="mainSearchSelect">
+            <div><span>Province: </span><select id="province" name="province">
+                <option disabled selected value> -- Select A Province -- </option>
+                {% for province in allProvinces %}
+                    <option value="{{province.id}}">{{province}}</option>
+                {% endfor %}
+            </select></div> 
 
-VideoGame: <select id="videogame" name="videogame">
-    <option disabled selected value> -- Select A VideoGame -- </option>
-    {% for videogame in allVideoGames %}
-        <option value="{{videogame.id}}">{{videogame}}</option>
-    {% endfor %}
-</select> 
+            <div><span>VideoGame: </span><select id="videogame" name="videogame">
+                <option disabled selected value> -- Select A VideoGame -- </option>
+                {% for videogame in allVideoGames %}
+                    <option value="{{videogame.id}}">{{videogame}}</option>
+                {% endfor %}
+            </select></div>
 
-Year: <select id="year" name="year">
-    <option disabled selected value> -- Select A Year -- </option>
-    <option value="2019">2019</option>
-    <option value="2020">2020</option>
-    <option value="2021">2021</option>
-</select>
+            <div><span>Year: </span><select id="year" name="year">
+                <option disabled selected value> -- Select A Year -- </option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select></div>
+        </div>
 
-<button id="searchRanking">Search</button>
+        <div class="mainSearchButton"><a id="searchRanking">Ranking Search</a></div>
+    </div>
 
+    {% if rankingUsers == null %}
+        <div class="notFound"><p>No users were found...</p></div>
+    {% else %}
+        <div class="mainRanking">
+            {% for i in 0..(rankingUsers|length - 1) %}
+            <div class="rankingItem">
+                <div class="rankingItemPosition">
+                    <h3>{{ "%04d"|format(i+1) }}.</h3>
+                </div>
+                <div class="rankingItemPoints">
+                    <p>{{rankingUsers[i].totalAmount}}</p>
+                </div>
+                <div class="rankingItemUser">
+                    <p>{{rankingUsers[i].email}}  </p>
+                </div>
+                <div class="rankingItemImage">
+                    <div>
+                        {% if rankingUsers[i].profilePicture == null %}
+                            <img src="/img/default.jpg"/> 
+                        {% else %}
+                            <img src="/img/{{rankingUsers[i].profilePicture}}"/>
+                        {% endif %}
+                    </div>
+                </div>                
+            </div>            
+            {% endfor %}
+        </div>
+    {% endif %}
 
-{% if rankingUsers == null %}
-    <p>No users were found...</p>
-{% else %}
-    <ul>
-        {% for i in 0..(rankingUsers|length - 1) %}
-        <li>
-        <h3>{{ "%04d"|format(i+1) }}. 
-            {% if rankingUsers[i].profilePicture == null %}
-                <img src="/img/default.jpg" width="30px"/> 
-            {% else %}
-                <img src="/img/{{rankingUsers[i].profilePicture}}" width="30px"/>
-            {% endif %}
-            {{rankingUsers[i].email}} - {{rankingUsers[i].totalAmount}} </h3>
-        </li>            
-        {% endfor %}
-    </ul>
-{% endif %}
+</main>
 
-
+</div>
 
 {% endblock %}
 

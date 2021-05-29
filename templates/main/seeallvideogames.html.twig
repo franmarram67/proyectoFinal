@@ -8,18 +8,45 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>All Videogames</h2>
-<div>
-{% for videogame in videogames %}
-    <div>
-        <h3><a href="/seevideogame/{{videogame.id}}">{{videogame.title}}</a></h3>
-        <img src="/img/{{videogame.image}}"/>
-        <p>{{videogame.ageRating}}</p>
-        <p>{{videogame.description}}</p>
-        <p><a href="{{videogame.link}}">Website</a></p>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Videogames</h1></div>
     </div>
-{% endfor %}
+    {% if videogames == null %}
+        <div class="notFound"><p>No Videogames Were Found....</p></div>  
+    {% else %}
+        <div class="mainVideogames">
+            {% for v in videogames %}
+                <div class="videogameItem">
+                    <div class="videogameItemImage">
+                        <div><a href="{{v.link}}"><img src="/img/{{v.image}}"/></a></div>
+                    </div>
+                    {# <h3><a href="/seetournament/{{tournament.id}}">{{tournament.title}}</a> - by {{tournament.creatorUser.username}}</h3> #}
+                    <div class="videogameItemTitle">
+                        <h3><a href="{{v.link}}">{{v.title}}</a></h3>
+                    </div>
+                    {# {% if tournament.finished %}<p>This tournament has finished.</p>{% endif %} #}
+                    <div class="videogameItemDescription">
+                        <p>{{ v.description|length > 260 ? v.description|slice(0, 260) ~ ' ...' : v.description  }}</p>
+                    </div>
+                    {# <p>VideoGame: {{ tournament.videogame }}</p> #}
+                    <div class="videogameItemData">
+                        <p class="ageRating">{{v.ageRating}}</p>
+                    </div>
+                    
+                </div>
+                        
+            {% endfor %}
+        </div>
+        {# <div class="viewAll">
+            <a href="/mytournaments/created">VIEW ALL</a>
+        </div> #}
+    {% endif %}
+
+</main>
+
 </div>
 
 {% endblock %}

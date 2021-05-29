@@ -8,39 +8,54 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Points index</h1>
+<div class="body">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Amount</th>
-                <th>Datetime</th>
-                <th>Tournament</th>
-                <th>User</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for point in points %}
-            <tr>
-                <td>{{ point.id }}</td>
-                <td>{{ point.amount }}</td>
-                <td>{{ point.datetime ? point.datetime|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ point.tournament }}</td>
-                <td>{{ point.user }}</td>
-                <td>
-                    <a href="{{ path('points_show', {'id': point.id}) }}">show</a>
-                    <a href="{{ path('points_edit', {'id': point.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Points index</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Amount</th>
+                    <th>Datetime</th>
+                    <th>Tournament</th>
+                    <th>User</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for point in points %}
+                <tr>
+                    <td>{{ point.id }}</td>
+                    <td>{{ point.amount }}</td>
+                    <td>{{ point.datetime ? point.datetime|date('Y-m-d H:i:s') : '' }}</td>
+                    <td>{{ point.tournament }}</td>
+                    <td>{{ point.user }}</td>
+                    <td>
+                        <a href="{{ path('points_show', {'id': point.id}) }}">show</a>
+                        <a href="{{ path('points_edit', {'id': point.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('points_new') }}">Create new</a>
+        <a href="{{ path('points_new') }}">Create new</a>
+    </div>
+
+</main>
+
+    <h1></h1>
+
+    
+
+</div>
+
 {% endblock %}

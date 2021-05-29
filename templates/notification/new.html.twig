@@ -8,9 +8,21 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Create new Notification</h1>
+<div class="body">
 
-    {{ include('notification/_form.html.twig') }}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Create new Notification</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        {{ include('notification/_form.html.twig') }}
 
-    <a href="{{ path('notification_index') }}">back to list</a>
+        <a href="{{ path('notification_index') }}">back to list</a>
+    </div>
+
+</main>
+    
+
+</div>
+
 {% endblock %}

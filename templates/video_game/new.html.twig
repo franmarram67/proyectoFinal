@@ -8,9 +8,21 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Create new VideoGame</h1>
+<div class="body">
 
-    {{ include('video_game/_form.html.twig') }}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Create new VideoGame</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        {{ include('video_game/_form.html.twig') }}
 
-    <a href="{{ path('video_game_index') }}">back to list</a>
+        <a href="{{ path('video_game_index') }}">back to list</a>
+    </div>
+
+</main>
+    
+
+</div>
+
 {% endblock %}

@@ -18,6 +18,7 @@ use App\Form\ProfileType;
 use App\Form\ChangePasswordType;
 use App\Form\ChangeEmailType;
 use App\Form\FinishTournamentType;
+use App\Form\TournamentNoPlacesType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -106,6 +107,22 @@ class MainController extends AbstractController
         return $this->redirectToRoute('verifyusers');
     }
 
+    #[Route('/verifyall', name: 'verifyall')]
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function verifyAll(): Response
+    {
+        $allusers=$this->getDoctrine()->getRepository(User::class)->findByVerified(false);
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach($allusers as $user) {
+            $user->setVerified(true);
+        }
+        $entityManager->flush();
+
+        return $this->redirectToRoute('verifyusers');
+    }
+
     #[Route('/signuptotournament/{id}', name: 'signuptotournament')]
     /**
      * @IsGranted("ROLE_USER")
@@ -120,7 +137,7 @@ class MainController extends AbstractController
                         if($this->getUser()->getVerified() == true) {
                             
                             if(date("now") < $tournament->getStartDate()) {
-                                if(count($tournament->getPlayers()) < 20) {
+                                if(count($tournament->getPlayers()) < $tournament->getPlaces()) {
                                     
                                     $entityManager = $this->getDoctrine()->getManager();
                                     $tournament->addPlayer($this->getUser());
@@ -133,7 +150,7 @@ class MainController extends AbstractController
                                     
                                     
                                 } else {
-                                    return new Response("You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.");
+                                    return new Response("You can't Sign Up to this Tournament because there's no more places left");
                                 }
                             } else {
                                 return new Response("You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.");
@@ -295,7 +312,7 @@ class MainController extends AbstractController
                 $totalPoints = null;
             }
             return $this->render('main/seetournament.html.twig', [
-                'tournament' => $tournament,
+                't' => $tournament,
                 'unseen' => $unseen,
                 'totalPoints' => $totalPoints,
             ]);
@@ -303,27 +320,6 @@ class MainController extends AbstractController
             return new Response("You can't see this tournament because it has been deleted.");
         }
         
-    }
-
-    #[Route('/seeprovince/{id}', name: 'seeprovince')]
-    public function seeProvince($id): Response
-    {
-        $province=$this->getDoctrine()->getRepository(Province::class)->find($id);
-        if($this->getUser()) {
-            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-            $totalPoints=0;
-            foreach($this->getUser()->getPoints() as $points) {
-                $totalPoints+=$points->getAmount();
-            }
-        } else {
-            $unseen = null;
-            $totalPoints = null;
-        }
-        return $this->render('main/seeprovince.html.twig', [
-            'province' => $province,
-            'unseen' => $unseen,
-            'totalPoints' => $totalPoints,
-        ]);
     }
 
     #[Route('/mypoints', name: 'mypoints')]
@@ -389,7 +385,7 @@ class MainController extends AbstractController
     #[Route('/seealltournaments', name: 'seealltournaments')]
     public function seeAllTournaments(): Response
     {
-        $tournaments=$this->getDoctrine()->getRepository(tournament::class)->findAll();
+        $tournaments=$this->getDoctrine()->getRepository(Tournament::class)->findAllByHidden(false);
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;
@@ -491,24 +487,25 @@ class MainController extends AbstractController
                                 $pointsThird = new Points();
                                 $pointsFourth = new Points();
 
+                                $multiplier = $tournament->getPlaces()/8;
                                 $pointsFirst->setUser($firstPlace);
                                 $pointsFirst->setDatetime(new \DateTime);
-                                $pointsFirst->setAmount(500);
+                                $pointsFirst->setAmount(500 * $multiplier);
                                 $pointsFirst->setTournament($tournament);
 
                                 $pointsSecond->setUser($secondPlace);
                                 $pointsSecond->setDatetime(new \DateTime);
-                                $pointsSecond->setAmount(350);
+                                $pointsSecond->setAmount(350 * $multiplier);
                                 $pointsSecond->setTournament($tournament);
 
                                 $pointsThird->setUser($thirdPlace);
                                 $pointsThird->setDatetime(new \DateTime);
-                                $pointsThird->setAmount(200);
+                                $pointsThird->setAmount(200 * $multiplier);
                                 $pointsThird->setTournament($tournament);
 
                                 $pointsFourth->setUser($fourthPlace);
                                 $pointsFourth->setDatetime(new \DateTime);
-                                $pointsFourth->setAmount(100);
+                                $pointsFourth->setAmount(100 * $multiplier);
                                 $pointsFourth->setTournament($tournament);
 
                                 $em->persist($pointsFirst);
@@ -523,15 +520,15 @@ class MainController extends AbstractController
                                     $notification->setSeen(false);
                                     $notification->setCreationDate(new \DateTime);
                                     if($player->getId()==$firstPlace->getId()) {
-                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the first place!!! You are rewarded 500 points.</p>");
+                                        $notification->setText("<p>You have won the first place in this <a href='/seetournament/".$tournament->getId()."'>tournament</a>.</p>");
                                     } else if($player->getId()==$secondPlace->getId()) {
-                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the second place!!! You are rewarded 350 points.</p>");
+                                        $notification->setText("<p>You have won the second place in this <a href='/seetournament/".$tournament->getId()."'>tournament</a>.</p>");
                                     } else if($player->getId()==$thirdPlace->getId()) {
-                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the third place!!! You are rewarded 200 points.</p>");
+                                        $notification->setText("<p>You have won the third place in this <a href='/seetournament/".$tournament->getId()."'>tournament</a>.</p>");
                                     } else if($player->getId()==$fourthPlace->getId()) {
-                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'>".$tournament->getTitle()."</a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You won the fourth place!!! You are rewarded 100 points.</p>");
+                                        $notification->setText("<p>You have won the fourth place in this <a href='/seetournament/".$tournament->getId()."'>tournament</a>.</p>");
                                     } else {
-                                        $notification->setText("<h4><a href='/seetournament/".$tournament->getId()."'></a> - by ".$tournament->getCreatorUser()->getUsername()."</h4><p>You didn't win this time... ;(. Try again next time. You got this!!!</p>");
+                                        $notification->setText("<p>You haven't won in this <a href='/seetournament/".$tournament->getId()."'>tournament</a>. Please try again, never give up!</p>");
                                     }
                                     $em->persist($notification);
                                 }
@@ -569,28 +566,32 @@ class MainController extends AbstractController
         
     }
 
-    #[Route('/deletetournament/{id}', name: 'deletetournament')]
+    #[Route('/edittournament/{id}', name: 'edittournament')]
     /**
      * @IsGranted("ROLE_USER")
      */
-    public function deleteTournament($id): Response
+    public function editTournament($id, Request $request): Response
     {
         $tournament=$this->getDoctrine()->getRepository(Tournament::class)->find($id);
         if($tournament->getHidden()==false) {
             if($this->getUser()->getId() == $tournament->getCreatorUser()->getId()) {
                 if(date("now") < $tournament->getStartDate()) {
-                    if($this->getUser()) {
-                        $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-                        $totalPoints=0;
-                        foreach($this->getUser()->getPoints() as $points) {
-                            $totalPoints+=$points->getAmount();
-                        }
-                    } else {
-                        $unseen = null;
-                        $totalPoints = null;
+                    $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+                    $totalPoints=0;
+                    foreach($this->getUser()->getPoints() as $points) {
+                        $totalPoints+=$points->getAmount();
                     }
-                    return $this->render('main/deletetournament.html.twig', [
+                    $form = $this->createForm(TournamentNoPlacesType::class, $tournament);
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        $this->getDoctrine()->getManager()->flush();
+
+                        return $this->redirect('/seetournament/'.$id);
+                    }
+                    return $this->render('main/edittournament.html.twig', [
                         'tournament' => $tournament,
+                        'form' => $form->createView(),
                         'unseen' => $unseen,
                         'totalPoints' => $totalPoints,
                     ]);
@@ -652,26 +653,26 @@ class MainController extends AbstractController
         ]);
     }
 
-    #[Route('/seevideogame/{id}', name: 'seevideogame')]
-    public function seeVideoGame($id): Response
-    {
-        $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($id);
-        if($this->getUser()) {
-            $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
-            $totalPoints=0;
-            foreach($this->getUser()->getPoints() as $points) {
-                $totalPoints+=$points->getAmount();
-            }
-        } else {
-            $unseen = null;
-            $totalPoints = null;
-        }
-        return $this->render('main/seevideogame.html.twig', [
-            'videogame' => $videogame,
-            'unseen' => $unseen,
-            'totalPoints' => $totalPoints,
-        ]);
-    }
+    // #[Route('/seevideogame/{id}', name: 'seevideogame')]
+    // public function seeVideoGame($id): Response
+    // {
+    //     $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($id);
+    //     if($this->getUser()) {
+    //         $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
+    //         $totalPoints=0;
+    //         foreach($this->getUser()->getPoints() as $points) {
+    //             $totalPoints+=$points->getAmount();
+    //         }
+    //     } else {
+    //         $unseen = null;
+    //         $totalPoints = null;
+    //     }
+    //     return $this->render('main/seevideogame.html.twig', [
+    //         'videogame' => $videogame,
+    //         'unseen' => $unseen,
+    //         'totalPoints' => $totalPoints,
+    //     ]);
+    // }
 
     #[Route('/globalranking', name: 'globalranking')]
     public function globalRanking(): Response
@@ -701,11 +702,21 @@ class MainController extends AbstractController
     #[Route('/ranking/{provinceId}&{videogameId}&{year}', name: 'ranking')]
     public function ranking($provinceId,$videogameId,$year): Response
     {
-        $province=$this->getDoctrine()->getRepository(Province::class)->find($provinceId);
-        $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($videogameId);
         $allProvinces=$this->getDoctrine()->getRepository(Province::class)->findAll();
         $allVideoGames=$this->getDoctrine()->getRepository(VideoGame::class)->findAll();
-        $rankingUsers = $this->getDoctrine()->getRepository(User::class)->ranking($province,$videogame,$year);
+        // var_dump("TODO:".$provinceId==null && $videogameId==null && $year==null);
+        // var_dump($year=="null");
+        // var_dump($videogameId=="null");
+        // var_dump($provinceId=="null");
+        // exit;
+        if($provinceId=="null"&&$videogameId=="null"&&$year=="null") {
+            return $this->redirectToRoute("globalranking");
+        } else {
+            $province=$this->getDoctrine()->getRepository(Province::class)->find($provinceId);
+            $videogame=$this->getDoctrine()->getRepository(VideoGame::class)->find($videogameId);
+            $rankingUsers = $this->getDoctrine()->getRepository(User::class)->ranking($province,$videogame,$year);
+        }
+        
         if($this->getUser()) {
             $unseen=$this->getDoctrine()->getRepository(Notification::class)->findAllUnseenOfUser($this->getUser());
             $totalPoints=0;

@@ -7,9 +7,23 @@
 @import "about";
 @import "services";
 @import "tournaments";
+@import "onetournament";
 @import "footer";
 @import "loginRegister";
+@import "videogames";
+@import "create";
+@import "ranking";
+@import "profile";
+@import "points";
+@import "notifications";
+@import "adminpage";
+@import "verify";
+@import "finish";
 
 main {
     padding: 5px;
+}
+
+.body {
+    min-height: 300px;
 }

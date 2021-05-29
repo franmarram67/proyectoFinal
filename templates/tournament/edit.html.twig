@@ -8,11 +8,24 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Edit Tournament</h1>
+<div class="body">
 
-    {{ include('tournament/_form.html.twig', {'button_label': 'Update'}) }}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Edit Tournament</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        {{ include('tournament/_form.html.twig', {'button_label': 'Edit'}) }}
 
-    <a href="{{ path('tournament_index') }}">back to list</a>
+        {# <a href="{{ path('tournament_index') }}">back to list</a> #}
 
-    {{ include('tournament/_delete_form.html.twig') }}
+        {{ include('tournament/_delete_form.html.twig') }}
+    </div>
+
+</main>
+
+    
+
+</div>
+
 {% endblock %}

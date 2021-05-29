@@ -1,0 +1,82 @@
+main {
+    .mainVideogames {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 1fr;
+        margin: 0 30px 0 50px;
+        .videogameItem {
+            display: grid;
+            grid-template-rows: 200px 1fr 3fr 1fr;
+            background-image: linear-gradient(to bottom right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 20px 20px 0;
+            .videogameItemImage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    overflow:hidden;
+                    position: relative;
+
+                    
+                    a {
+                        width: 100%;
+                        height: 100%;
+                        display:flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        img {
+                            position: absolute;
+                            width: 110%;
+                            transition: all 1s ease;
+                            &:hover {
+                                transform: scale(1.05);
+                                transition: all 1s ease;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .videogameItemTitle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                h3 a {
+                    text-decoration: none;
+                    color: $mainTextColorDark;
+                    transition: all 1s ease;
+                    &:hover {
+                        transition: all 1s ease;
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+
+            .videogameItemDescription {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: justify;
+                padding: 0 10px 10px 10px;
+            }
+
+            .videogameItemData {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                text-align: center;
+                .ageRating {
+                    background-color: $fourthTextColor;
+                    margin-bottom: 10px;
+                    color: $mainTextColor;
+                    padding: 5px;
+                }
+            }
+        }
+    }
+}

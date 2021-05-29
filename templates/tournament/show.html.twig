@@ -8,64 +8,81 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Tournament</h1>
+<div class="body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ tournament.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ tournament.title }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ tournament.description }}</td>
-            </tr>
-            <tr>
-                <th>StartDate</th>
-                <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>VideoGame</th>
-                <td>{{ tournament.videogame }}</td>
-            </tr>
-            <tr>
-                <th>CreatorUser</th>
-                <td>{{ tournament.creatorUser }}</td>
-            </tr>
-            <tr>
-                <th>FirstPlace</th>
-                <td>{{ tournament.firstPlace }}</td>
-            </tr>
-            <tr>
-                <th>SecondPlace</th>
-                <td>{{ tournament.secondPlace }}</td>
-            </tr>
-            <tr>
-                <th>ThirdPlace</th>
-                <td>{{ tournament.thirdPlace }}</td>
-            </tr>
-            <tr>
-                <th>FourthPlace</th>
-                <td>{{ tournament.fourthPlace }}</td>
-            </tr>
-            <tr>
-                <th>Finished</th>
-                <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Hidden</th>
-                <td>{{ tournament.hidden ? 'Yes' : 'No' }}</td>
-            </tr>
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Tournament</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ tournament.id }}</td>
+                </tr>
+                <tr>
+                    <th>Title</th>
+                    <td>{{ tournament.title }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ tournament.description }}</td>
+                </tr>
+                <tr>
+                    <th>StartDate</th>
+                    <td>{{ tournament.startDate ? tournament.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>VideoGame</th>
+                    <td>{{ tournament.videogame }}</td>
+                </tr>
+                <tr>
+                    <th>CreatorUser</th>
+                    <td>{{ tournament.creatorUser }}</td>
+                </tr>
+                <tr>
+                    <th>FirstPlace</th>
+                    <td>{{ tournament.firstPlace }}</td>
+                </tr>
+                <tr>
+                    <th>SecondPlace</th>
+                    <td>{{ tournament.secondPlace }}</td>
+                </tr>
+                <tr>
+                    <th>ThirdPlace</th>
+                    <td>{{ tournament.thirdPlace }}</td>
+                </tr>
+                <tr>
+                    <th>FourthPlace</th>
+                    <td>{{ tournament.fourthPlace }}</td>
+                </tr>
+                <tr>
+                    <th>Places</th>
+                    <td>{{ tournament.places }}</td>
+                </tr>
+                <tr>
+                    <th>Finished</th>
+                    <td>{{ tournament.finished ? 'Yes' : 'No' }}</td>
+                </tr>
+                <tr>
+                    <th>Hidden</th>
+                    <td>{{ tournament.hidden ? 'Yes' : 'No' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('tournament_index') }}">back to list</a>
+        <a href="{{ path('tournament_index') }}">back to list</a>
 
-    <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
+        <a href="{{ path('tournament_edit', {'id': tournament.id}) }}">edit</a>
 
-    {{ include('tournament/_delete_form.html.twig') }}
+        {{ include('tournament/_delete_form.html.twig') }}
+    </div>
+
+</main>
+
+    
+
+</div>
+
 {% endblock %}

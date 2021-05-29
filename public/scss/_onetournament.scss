@@ -1,0 +1,169 @@
+main {
+    .mainOneTournament {
+        .oneTournamentItem {
+            display: grid;
+            grid-auto-columns: 1fr;
+            grid-auto-flow: column;
+            background-image: linear-gradient(to bottom right, $fifthTextColor, $fifthTextColorDimmed);
+            margin: 0 50px 0 50px;
+            // height: 500px;
+            .oneTournamentItemImage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    overflow:hidden;
+                    position: relative;
+
+                    
+                    a {
+                        width: 100%;
+                        height: 100%;
+                        display:flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        img {
+                            position: absolute;
+                            width: 125%;
+                            transition: all 1s ease;
+                            &:hover {
+                                transform: scale(1.05);
+                                transition: all 1s ease;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .sidebar {
+                display: grid;
+                grid-template-rows: 1fr 3fr 1fr 2fr;
+                grid-auto-flow: row;
+                .oneTournamentItemTitle {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    h3 a {
+                        text-decoration: none;
+                        color: $mainTextColorDark;
+                        transition: all 1s ease;
+                        font-size: 2.1rem;
+                        &:hover {
+                            transition: all 1s ease;
+                            font-size: 2.2rem;
+                        }
+                    }
+                }
+                .oneTournamentItemDescription {
+                    // display: flex;
+                    // flex-direction: column;
+                    // justify-content: space-between;
+                    // align-items: center;
+                    
+                    display: grid;
+                    grid-auto-rows: 1fr;
+                    padding: 20px 0;
+                    .desc {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        margin: 0px 25px;
+                        text-align: justify;
+                    }
+                    .points {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        p {
+                            background-color: $colorGreen;
+                            padding: 5px;
+                            margin-left: 5px;
+                        }
+                    }
+                }
+                .oneTournamentItemData {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    text-align: center;
+                    // transform: scale(1.2);
+                    .places {
+                        background-color: $fourthTextColor;
+                        margin-bottom: 10px;
+                        color: $mainTextColor;
+                    }
+                    .startDate {
+                        color: $mainTextColorDark;
+                        font-size: 0.9rem;
+                    }
+                    .startDate, .places {
+                        
+                        // border-radius: 5px;
+                        padding: 5px;
+                    }
+                }
+                .oneTournamentItemSignUp {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    a {
+                        cursor: pointer;
+                        color: $mainTextColor;
+                        text-decoration: none;
+                        padding: 10px 20px;
+                        transform: scale(2);
+                        font-size: 1.1rem;
+                        text-transform: uppercase;
+                        top: 5px;
+                        background: linear-gradient(to bottom right, $secondaryTextColor, $thirdTextColor);
+                        background-size: 100% 100%;
+                        background-position:left bottom;
+                        // font-size: $sliderTextFontSize;
+                        transition: all 0.5s ease;
+                        &.disabled {
+                            background: $colorGray;
+                            font-size: 0.7rem;
+                            cursor: not-allowed;
+                            &:hover {
+                                // background-color: $thirdTextColor;
+                                font-size: 0.7rem;
+                                background: $colorGray;
+                            }
+                        }
+                        &.finished {
+                            background: $thirdTextColorDimmed;
+                            &:hover {
+                                background: $thirdTextColorDimmed;
+                            }
+                        }
+                        &.signedIn {
+                            background: $colorSignedIn;
+                            &:hover {
+                                background: $colorSignedIn;
+                            }
+                        }
+                        &.inProgress {
+                            background: $colorInProgress;
+                            &:hover {
+                                background: $colorInProgress;
+                            }
+                        }
+                        &:hover {
+                            transition: all 0.5s ease;
+                            // background-color: $thirdTextColor;
+                            font-size: 1.3rem;
+                            background: linear-gradient(to left, $fourthTextColor, $fourthTextColorDimmed);
+                        }
+                    }
+                }
+            }
+            
+        }
+    }
+}

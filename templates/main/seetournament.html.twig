@@ -8,53 +8,91 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>{{tournament.title}} - by {{tournament.creatorUser.username}}</h2>
-{{ tournament.finished == true ? "<i><u>This tournament has finished.</i></u><br>" : "" }}
-<p>{{ tournament.description|length > 50 ? tournament.description|slice(0, 50) ~ '...' : tournament.description  }}</p>
-<p>VideoGame: {{ tournament.videogame }}</p>
-<p>Places: {{tournament.players|length}}/20</p>
-<h4>Start Date: {{tournament.startDate|date('Y-m-d  H:i:s') }}</h4>
-{% if is_granted("ROLE_USER") %}
-    {% if app.user.id != tournament.creatorUser.id %}
-        {% if tournament.finished == false %}
-            {% if app.user not in tournament.players %}
-                {% if app.user.verified == true %}
-                    {% if date() < date(tournament.startDate) %}
-                        {% if tournament.players|length < 20 %}
-                            <a href="/signuptotournament/{{tournament.id}}">Sign Up</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Tournament</h1></div>
+    </div>
+    <div class="mainOneTournament">
+            <div class="oneTournamentItem">
+                <div class="oneTournamentItemImage">
+                    <div><a href="#"><img src="/img/{{t.videogame.image}}"/></a></div>
+                </div>
+                <div class="sidebar">
+                    <div class="oneTournamentItemTitle">
+                        <h3><a href="#">{{t.title}}</a></h3>
+                    </div>
+                    <div class="oneTournamentItemDescription">
+                        <p class="desc">{{ t.description }}</p>
+                        <div class="points">
+                            <p>1st: {{500 * t.places / 8}} points</p>
+                            <p>2nd: {{350 * t.places / 8}} points</p>
+                            <p>3rd: {{200 * t.places / 8}} points</p>
+                            <p>4th: {{100 * t.places / 8}} points</p>                            
+                        </div>
+                    </div>
+                    <div class="oneTournamentItemData">
+                        <p class="places">{{t.players|length}}/{{t.places}}</p>
+                        <h4 class="startDate">{{t.startDate|date('Y-m-d  H:i') }}</h4>
+                    </div>
+                    <div class="oneTournamentItemSignUp">
+                        {% if is_granted("ROLE_USER") %}
+                            {% if app.user.id != t.creatorUser.id %}
+                                {% if t.finished == false %}
+                                    {% if app.user not in t.players %}
+                                        {% if app.user.verified == true %}
+                                            {% if date() < date(t.startDate) %}
+                                                {% if t.players|length < t.places %}
+                                                    <a href="/signuptotournament/{{t.id}}">Sign Up</a>
+                                                {% else %}
+                                                    {# <p>You can't Sign Up to this Tournament because there's no more places left.</p> #}
+                                                    <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because there's no more places left.">Sign Up</a>
+                                                {% endif %}
+                                            {% else %}
+                                                {# <p>You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.</p> #}
+                                                <a href="/signuptotournament/{{t.id}}" class="disabled inProgress" title="You can't Sign Up to this Tournament because it is In Progress. You have to Sign Up before the Start Date.">In Progress</a>
+                                            {% endif %}
+                                        {% else %}
+                                            {# <p>You can't Sign Up to this Tournament because you're not a verified user.</p> #}
+                                            <a href="/signuptotournament/{{t.id}}" class="disabled" title="You can't Sign Up to this Tournament because you're not a verified user.">Sign Up</a>
+                                        {% endif %}
+                                    {% else %}
+                                        {# <p>You already Signed Up to this Tournament.</p> #}
+                                        <a href="/signuptotournament/{{t.id}}" class="disabled signedIn" title="You already Signed Up to this Tournament.">Signed In</a>
+                                    {% endif %}
+                                {% else %}
+                                    {# <p>You can't Sign Up to a finished Tournament.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                                {% endif %}
+                            {% else %}
+                                {% if t.finished == true %}
+                                    {# <p>Your tournament has finished, you can't finish it or delete it.</p> #}
+                                    <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="Your tournament has finished, you can't finish it or delete it.">Finished</a>
+                                {% elseif date() > date(t.startDate) %}
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/finishtournament/{{t.id}}">Finish</a>
+                                {% elseif date() < date(t.startDate) %}  
+                                    {# <p>You can't Sign Up to your own Tournament.</p> #}
+                                    <a href="/edittournament/{{t.id}}">Edit</a>  
+                                {% endif %}
+                            {% endif %}
                         {% else %}
-                            You can't Sign Up to this Tournament because there's no more places left. Max 20 players per tournament.
+                            {% if t.finished == true %}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled finished" title="You can't Sign Up to a finished Tournament.">Finished</a>
+                            {% else %}
+                                {# <p>Login to be able to Sign Up to this Tournament.</p> #}
+                                <a href="/signuptotournament/{{t.id}}" class="disabled" title="Login to be able to Sign Up to this Tournament.">Sign Up</a>
+                            {% endif %}
                         {% endif %}
-                    {% else %}
-                        You can't Sign Up to this Tournament the date to Sign Up has expired. You have to Sign Up before the Start Date.
-                    {% endif %}
-                {% else %}
-                    You can't Sign Up to this Tournament because you're not a verified user.
-                {% endif %}
-            {% else %}
-                You already Signed Up to this Tournament.
-            {% endif %}
-        {% else %}
-            You can't Sign Up to a finished Tournament.
-        {% endif %}
-    {% else %}
-        {% if tournament.finished == true %}
-            Your tournament has finished, you can't finish it or delete it.<br><br>
-        {% elseif date() > date(tournament.startDate) %}
-            You can't Sign Up to your own Tournament.<br><br>
-            <a href="/finishtournament/{{tournament.id}}">Finish Tournament</a>
-        {% elseif date() < date(tournament.startDate) %}  
-            You can't Sign Up to your own Tournament.<br><br>
-            <a href="/deletetournament/{{tournament.id}}">Delete Tournament</a>  
-        {% endif %}
-    {% endif %}
-{% else %}
-    Login to be able to Sign Up to this Tournament.
-{% endif %}
-<p>First Place User wins: 500 points<br> 
-Second Place User wins: 350 points<br> 
-Third Place User wins: 200 points<br> 
-Fourth Place User wins: 100 points</p>
+                    </div>
+                </div>
+                
+            </div>
+                    
+    </div>
+</main>
+
+</div>
 
 {% endblock %}

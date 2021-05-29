@@ -8,21 +8,38 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>My Points</h2>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>My Points</h1></div>
+        <div class="mainHeaderPoints"><div class="points"><p>{{totalPoints}}</p></div></div>
+    </div>
+    
+    {% if myPoints == null %}
+        <div class="notFound"><p>There aren't any recorded Points...</p></div>
+    {% else %}
+        <div class="mainPoints">
+        {% for point in myPoints %}
+            <div class="pointsItem">
+                <div class="pointsItemAmount">
+                    <h3>+{{point.amount}}</h3>
+                </div>
+                <div class="pointsItemDate">
+                    <p>{{point.datetime|date('Y-m-d  H:i')}}</p>
+                </div>
+                <div class="pointsItemTournament">
+                    <h3><a href="/seetournament/{{point.tournament.id}}">{{point.tournament.title}}</a></h3>
+                </div>
+                
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+</main>
 
-{% if myPoints == null %}
-    <p>There aren't any recorded Points...</p>
-{% else %}
-    <ul>
-    {% for point in myPoints %}
-        <li>
-            <h4><a href="/seetournament/{{point.tournament.id}}">{{point.tournament.title}}</a> - by {{point.tournament.creatorUser.username}}</h4>
-            <p>+ {{point.amount}} points</p>
-            <h5>{{point.datetime|date('Y-m-d  H:i:s')}}</h5>
-        </li>
-    {% endfor %}
-    </ul>
-{% endif %}
+
+
+</div>
 
 {% endblock %}

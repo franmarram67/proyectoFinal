@@ -8,42 +8,54 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>VideoGame index</h1>
+<div class="body">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Image</th>
-                <th>Description</th>
-                <th>Link</th>
-                <th>AgeRating</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for video_game in video_games %}
-            <tr>
-                <td>{{ video_game.id }}</td>
-                <td>{{ video_game.title }}</td>
-                <td><img src="/img/{{ video_game.image }}" width="100px"/></td>
-                <td>{{ video_game.description }}</td>
-                <td>{{ video_game.link }}</td>
-                <td>{{ video_game.ageRating }}</td>
-                <td>
-                    <a href="{{ path('video_game_show', {'id': video_game.id}) }}">show</a>
-                    <a href="{{ path('video_game_edit', {'id': video_game.id}) }}">edit</a>
-                    <a href="{{ path('video_game_delete', {'id': video_game.id}) }}">delete</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>VideoGame index</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Title</th>
+                    <th>Image</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                    <th>AgeRating</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for video_game in video_games %}
+                <tr>
+                    <td>{{ video_game.id }}</td>
+                    <td>{{ video_game.title }}</td>
+                    <td><img src="/img/{{ video_game.image }}" width="100px"/></td>
+                    <td>{{ video_game.description }}</td>
+                    <td>{{ video_game.link }}</td>
+                    <td>{{ video_game.ageRating }}</td>
+                    <td>
+                        <a href="{{ path('video_game_show', {'id': video_game.id}) }}">show</a>
+                        <a href="{{ path('video_game_edit', {'id': video_game.id}) }}">edit</a>
+                        <a href="{{ path('video_game_delete', {'id': video_game.id}) }}">delete</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
-    <a href="{{ path('video_game_new') }}">Create new</a>
+        <a href="{{ path('video_game_new') }}">Create new</a>
+    </div>
+
+</main>
+
+
+</div>
+
 {% endblock %}

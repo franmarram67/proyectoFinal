@@ -8,21 +8,36 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
+<div class="body">
 
-<h2>My Notifications</h2>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>My Notifications</h1></div>
+    </div>
+
 
 {% if notifications == null %}
-    <p>There aren't any recorded Notifications...</p>
+    <div class="notFound"><p>There aren't any recorded Notifications...</p></div>
 {% else %}
-    <ul>
+    <div class="mainNotifications">
     {% for notification in notifications %}
-        <li>
-            {{notification.text|raw}}
-            <h5>{{notification.creationDate|date('Y-m-d  H:i:s')}}</h5>
-        </li>
+        <div class="notificationItem">
+            <div class="notificationItemDate">
+                <p>{{notification.creationDate|date('Y-m-d  H:i')}}</p>
+            </div>
+            <div class="notificationItemContent">
+                {{notification.text|raw}}
+            </div>
+            
+            
+        </div>
 
     {% endfor %}
-    </ul>
+    </div>
 {% endif %}
+
+</main>
+
+</div>
 
 {% endblock %}

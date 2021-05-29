@@ -105,49 +105,61 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * @return User[] Returns an array of User objects
      */
-    public function ranking(Province $province, VideoGame $videogame, $year)
+    public function ranking($province, $videogame, $year)
     {
-        return $this->createQueryBuilder('u')
+        $query = $this->createQueryBuilder('u')
             ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
             ->addSelect('SUM(p.amount) as totalAmount')
             ->andWhere('p.user = u')
-            // if($province!=null){->andWhere('u.province = :province')};
-            // if($year!=null){->andWhere('year(p.datetime) = :year')};
-            // if($videogame!=null){->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')};
-            ->andWhere('u.province = :province')
-            ->andWhere('year(p.datetime) = :year')
-            ->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')
-            ->setParameter('province', $province)
-            ->setParameter('year', $year)
-            ->setParameter('videogame', $videogame)
             ->from('App\Entity\Points', 'p')
-            ->from('App\Entity\Tournament', 't')
             ->orderBy('totalAmount', 'DESC')
             ->groupBy("u.id")
+        ;
+
+        // var_dump($province!=null);
+        // var_dump($videogame!=null);
+        // var_dump($year!="null");
+        // exit;
+        if($province!=null) {
+            $query
+            ->andWhere('u.province = :province')
+            ->setParameter('province', $province)
+            ;
+        }
+        
+        if($videogame!=null) {
+            $query
+            ->andWhere('p.tournament = t')
+            ->andWhere('t.videogame = :videogame')
+            ->setParameter('videogame', $videogame)
+            ->from('App\Entity\Tournament', 't')
+            ;
+        }
+
+        if($year!="null") {
+            $query
+            ->andWhere('year(p.datetime) = :year')
+            ->setParameter('year', $year)
+            ;
+        }
+        
+
+        return $query
             ->getQuery()
             ->getResult()
         ;
     }
-
-    // // Ranking
+    
+    // // Global Ranking
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
-    // public function ranking(Province $province, 
-    // //VideoGame $videogame, 
-    // $year)
+    // public function globalRanking()
     // {
     //     return $this->createQueryBuilder('u')
     //         ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
     //         ->addSelect('SUM(p.amount) as totalAmount')
-    //         //->addSelect('IDENTITY(p.tournament) as tournament, IDENTITY(tournament.videogame) as v')
     //         ->andWhere('p.user = u')
-    //         ->andWhere('u.province = :province')
-    //         //->andWhere('v = :videogame')
-    //         ->andWhere('year(p.datetime) = :year')
-    //         ->setParameter('province', $province)
-    //         //->setParameter('videogame', $videogame)
-    //         ->setParameter('year', $year)
     //         ->from('App\Entity\Points', 'p')
     //         ->orderBy('totalAmount', 'DESC')
     //         ->groupBy("u.id")
@@ -156,21 +168,33 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     //     ;
     // }
 
-    // // Global Ranking
+    // // Ranking
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
-    // public function globalRanking()
+    // public function ranking(Province $province, VideoGame $videogame, $year)
     // {
     //     return $this->createQueryBuilder('u')
-    //         //->setParameter('val', $value)
-    //         ->innerJoin('u.points','p')
-    //         ->select('u, SUM(p.amount) as totalAmount')
+    //         ->select('u.email, u.name, u.surname, u.profilePicture, IDENTITY(u.province)')
+    //         ->addSelect('SUM(p.amount) as totalAmount')
     //         ->andWhere('p.user = u')
+    //         // if($province!=null){->andWhere('u.province = :province')};
+    //         // if($year!=null){->andWhere('year(p.datetime) = :year')};
+    //         // if($videogame!=null){->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')};
+    //         ->andWhere('u.province = :province')
+    //         ->andWhere('year(p.datetime) = :year')
+    //         ->andWhere('p.tournament = t')->andWhere('t.videogame = :videogame')
+    //         ->setParameter('province', $province)
+    //         ->setParameter('year', $year)
+    //         ->setParameter('videogame', $videogame)
+    //         ->from('App\Entity\Points', 'p')
+    //         ->from('App\Entity\Tournament', 't')
     //         ->orderBy('totalAmount', 'DESC')
-    //         ->addGroupBy("1")
+    //         ->groupBy("u.id")
     //         ->getQuery()
     //         ->getResult()
     //     ;
     // }
+
+    
 }

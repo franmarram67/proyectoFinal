@@ -97,6 +97,11 @@ class Tournament
      */
     private $finishDate;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $places;
+
     public function __construct()
     {
         $this->players = new ArrayCollection();
@@ -320,6 +325,18 @@ class Tournament
     public function setFinishDate(?\DateTimeInterface $finishDate): self
     {
         $this->finishDate = $finishDate;
+
+        return $this;
+    }
+
+    public function getPlaces(): ?int
+    {
+        return $this->places;
+    }
+
+    public function setPlaces(int $places): self
+    {
+        $this->places = $places;
 
         return $this;
     }

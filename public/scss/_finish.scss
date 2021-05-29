@@ -1,50 +1,48 @@
-.loginRegister {
-    background: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3) ), url("/img/slider4.jpg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-basis: 0%;
-    .form {
-        background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
-        padding: 15px;
-        // border-radius: 10px;
-        opacity: 0.95;
-        .linkSection {
-            a {
-                color: $thirdTextColor;
-            }
-            
-        }
-
-        .heading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        form {
-            div {
-                display: grid;
-                grid-auto-columns: 1fr;
-                grid-auto-rows: 1fr;
-                grid-auto-flow: column;
+main {
+    .finishTournament {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        .finishForm {
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            padding: 15px;
+            // border-radius: 10px;
+            opacity: 0.95;
+            width: 500px;
+            .selectWinners {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
                 margin-bottom: 10px;
             }
-            
+            .firstPlace, .secondPlace, .thirdPlace, .fourthPlace, .selectWinners {
+                display: grid;
+                grid-auto-columns: 1fr;
+                grid-auto-flow: column;
+                margin-bottom: 10px;
+                grid-auto-rows: 1fr;
+            }
+            .firstPlace {
+                
+            }
+            .secondPlace {
 
-            .loginButton {
+            }
+            .thirdPlace {
+
+            }
+            .fourthPlace {
+
+            }
+            .finishButton {
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 flex-direction: column;
                 margin-top: 20px;
-                button {
+                button, a {
                     border: none;
                     cursor: pointer;
                     color: $mainTextColor;
@@ -68,6 +66,5 @@
                 }
             }
         }
-        
     }
 }

@@ -14,7 +14,6 @@ class NotificationType extends AbstractType
         $builder
             ->add('text')
             ->add('user')
-            ->add('tournament')
             ->add('seen')
         ;
     }

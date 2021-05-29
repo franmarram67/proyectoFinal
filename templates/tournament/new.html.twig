@@ -14,9 +14,26 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Create new Tournament</h1>
+<div class="body">
 
-    {{ include('tournament/_form.html.twig') }}
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Create Tournament</h1></div>
+    </div>
 
-    <a href="{{ path('tournament_index') }}">back to list</a>
+    <div class="create">
+        <div class="form">
+            {# <div class="linkSection"><a href="/">Home</a> <a href="/login">Log In</a></div> #}
+            
+
+            {{ include('tournament/_form.html.twig') }}
+
+            {# <a href="{{ path('tournament_index') }}">back to list</a> #}
+        </div>
+    </div>
+
+</main>
+
+</div>
+
 {% endblock %}

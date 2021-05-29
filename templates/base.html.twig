@@ -8,7 +8,7 @@
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
-        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/main.css" type="text/css">
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
@@ -24,7 +24,15 @@
                 <a href="/" id="logo"><h1>Tournament Master</h1></a>
                 <div>
                     {% if is_granted("ROLE_USER") %}
-                        <a href="/mypoints">Points [{{totalPoints}}]</a> ,   
+                        <a href="/mypoints">Points [
+                            {% if totalPoints < 1000 %}
+                                {{totalPoints}}
+                            {% elseif totalPoints > 1000 %}
+                                {{ (totalPoints / 1000) | number_format(1) }}K
+                            {% elseif totalPoints > 1000000 %}
+                                {{ (totalPoints / 1000000) | number_format(1) }}M
+                            {% endif %}
+                            ]</a> ,   
                         <a href="/mynotifications"><i class="fas fa-bell"></i> ({{unseen|length}})</a> 
                         Hello, {{app.user.email}} - <a href="/logout">Logout</a>
                     {% else %}
@@ -35,7 +43,7 @@
 
             <nav>
                 <a href="/">Home</a>
-                <a href="/seeallprovinces">Provinces</a>
+                <a href="/seealltournaments">Tournaments</a>
                 <a href="/seeallvideogames">Videogames</a>
                 <a href="/globalranking">Global Ranking</a>
                 {% if is_granted("ROLE_USER") %}

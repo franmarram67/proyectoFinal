@@ -1,11 +1,13 @@
 {{ form_start(form) }}
     {{ form_row(form.title) }}
     {{ form_row(form.description) }}
+    {{ form_row(form.places) }}
 
-    {{ form_label(form.startDate) }}
+    {# {{ form_label(form.startDate) }}
     {{ form_widget(form.startDate) }}
-    {{ form_errors(form.startDate) }}
+    {{ form_errors(form.startDate) }} #}
+    {{ form_row(form.startDate) }}
 
     {{ form_row(form.videogame) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="createButton"><button>{{ button_label|default('Create') }}</button></div>
 {{ form_end(form) }}

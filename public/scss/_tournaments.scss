@@ -173,5 +173,38 @@ main {
                 }
             }
         }
+
+    }
+
+    .notFound {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .viewAll {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 20px 0 0 0;
+        a {
+            cursor: pointer;
+            color: $mainTextColor;
+            text-decoration: none;
+            padding: 10px 20px;
+            top: 5px;
+            text-shadow: none;
+            font-size: $sliderTextFontSize;
+            transition: all 0.5s ease;
+            background-color: $secondaryTextColor;
+            &:hover {
+                transition: all 0.5s ease;
+                background-color: $thirdTextColor;
+                font-size: $sliderTextFontSize+0.5rem;
+            }
+        }
+        
     }
 }

@@ -1,0 +1,113 @@
+main {
+    .mainSearch {
+        display: grid;
+        grid-auto-columns: 1fr;
+        grid-auto-flow: column;
+        margin-bottom: 20px;
+        .mainSearchButton {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .mainSearchButton a {
+            cursor: pointer;
+            color: $mainTextColor;
+            text-decoration: none;
+            padding: 10px 20px;
+            top: 5px;
+            transform: scale(1.5);
+            // font-size: $sliderTextFontSize;
+            transition: all 0.5s ease;
+            background-color: $thirdTextColor;
+            &:hover {
+                transition: all 0.5s ease;
+                // background-color: $thirdTextColor;
+                font-size: 1.2rem;
+                background-color: $secondaryTextColor;
+            }
+        }
+
+        .mainSearchSelect {
+            display: grid;
+            grid-auto-rows: 1fr;
+            div {
+                display: grid;
+                grid-auto-columns: 1fr;
+                grid-auto-flow: column;
+                span {
+                    text-align: right;
+                    padding-right: 20px;
+                    
+                }
+                margin-bottom: 10px;
+            }
+        }
+    }
+
+    .mainRanking {
+        display: grid;
+        grid-auto-rows: 75px;
+        grid-auto-flow: row;
+        .rankingItem {
+            display: grid;
+            grid-template-columns: 1fr 2fr 3fr 1fr;
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 50px 15px 50px;
+            .rankingItemPosition, .rankingItemPoints, .rankingItemUser, .rankingItemImage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .rankingItemPosition {
+                background-color: $mainColorLight;
+                font-size: 1.2rem;
+                h3 {
+                    transition: all 1s ease;
+                    &:hover {
+                        transition: all 1s ease;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+            .rankingItemPoints {
+                background-color: $fourthTextColorDimmed;
+                font-size: 1.2rem;
+            }
+            .rankingItemUser {
+                font-size: 1.2rem;
+            }
+            .rankingItemImage {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                div {
+                    width: 100%;
+                    height: 100%;
+                    overflow:hidden;
+                    position: relative;
+
+                    
+                    // width: 100%;
+                    // height: 100%;
+                    display:flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        position: absolute;
+                        width: 100%;
+                        transition: all 1s ease;
+                        &:hover {
+                            transform: scale(1.05);
+                            transition: all 1s ease;
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,99 @@
+main {
+    .mainHeader {
+        .mainHeaderPoints {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.25rem;
+            font-weight: bold;
+            
+            overflow:hidden;
+            position: relative;
+            .points {
+                width: 100%;
+                height: 100%;
+                animation: points 5s linear 0s infinite;
+                -webkit-animation: points 5s linear 0s infinite;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+
+                background: linear-gradient(-45deg, $secondaryTextColor, $secondaryTextColorDark, $fourthTextColor, $fourthTextColorDimmed, $thirdTextColor, $thirdTextColor2, $secondaryTextColor, $secondaryTextColorDark);
+                background-size: 400% 400%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                @keyframes points {
+                    0% {
+                        background-position: 0% 50%;
+                        transform: scale(1);
+                    }
+                    33% {
+                        background-position: 33% 50%;
+                    }
+                    50% {
+                        transform: scale(1.2);
+                    }
+                    67% {
+                        background-position: 67% 50%;
+                    }
+                    100% {
+                        background-position: 100% 50%;
+                        transform: scale(1);
+                    }
+                }
+
+                
+            }
+            
+        }
+    }
+
+    .mainPoints {
+        display: grid;
+        grid-auto-rows: 75px;
+        grid-auto-flow: row;
+        .pointsItem {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr;
+            background-image: linear-gradient(to right, $fifthTextColor, $fifthTextColorDimmed); 
+            margin: 0 50px 15px 50px;
+            .pointsItemAmount, .pointsItemTournament, .pointsItemDate {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+            }
+            .pointsItemAmount {
+                background-color: $mainColorLight;
+                font-size: 1.2rem;
+                h3 {
+                    transition: all 1s ease;
+                    &:hover {
+                        transition: all 1s ease;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+            .pointsItemDate {
+                background-color: $fourthTextColorDimmed;
+                font-size: 1.2rem;
+            }
+
+            .pointsItemTournament {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                h3 a {
+                    text-decoration: none;
+                    color: $mainTextColorDark;
+                    transition: all 1s ease;
+                    &:hover {
+                        transition: all 1s ease;
+                        font-size: 1.3rem;
+                    }
+                }
+            }
+        }
+    }
+}

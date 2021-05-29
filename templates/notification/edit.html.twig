@@ -8,11 +8,25 @@
     {# <img src="/img/slider1.jpg"/> #}
 </div>
 
-    <h1>Edit Notification</h1>
+<div class="body">
 
-    {{ include('notification/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('notification_index') }}">back to list</a>
+<main>
+    <div class="mainHeader">
+        <div class="mainHeaderTitle"><h1>Edit Notification</h1></div>
+    </div>
+    <div class="mainAdminContent">
+        {{ include('notification/_form.html.twig', {'button_label': 'Update'}) }}
 
-    {{ include('notification/_delete_form.html.twig') }}
+        <a href="{{ path('notification_index') }}">back to list</a>
+
+        {{ include('notification/_delete_form.html.twig') }}
+    </div>
+
+</main>
+
+
+
+</div>
+
 {% endblock %}
