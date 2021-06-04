@@ -22,10 +22,46 @@ main {
 
             .notificationItemContent {
                 font-size: 1.2rem;
+                padding: 5px;
                 &>*:not(:last-child) {
                     margin-right: 5px;
                 }
             }
         }
     }
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    .notificationItemDate, .notificationItemContent {
+        font-size: 1.1rem !important;
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+}
+
+@media screen and (max-width: 768px) {
+    .notificationItemDate, .notificationItemContent {
+        font-size: 1rem !important;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mainNotifications {
+        grid-auto-rows: 150px !important;
+        .notificationItem {
+            grid-template-columns: none !important;
+            grid-template-rows: 1fr 2fr;
+        }
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    
 }

@@ -61,6 +61,7 @@ main {
                         img {
                             position: absolute;
                             width: 100%;
+                            min-height: 100%;
                             transition: all 1s ease;
                             &:hover {
                                 transform: scale(1.05);
@@ -75,6 +76,7 @@ main {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                text-align: center;
 
                 h3 a {
                     text-decoration: none;
@@ -91,7 +93,7 @@ main {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                text-align: justify;
+                text-align: center;
                 padding-right: 5px;
             }
 
@@ -206,5 +208,132 @@ main {
             }
         }
         
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 125% !important;
+                    // display: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 150% !important;
+                    // display: none;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 175% !important;
+                    // display: none;
+                }
+            }
+        }
+    }
+    .tournamentItemSignUp {
+        a {
+            transform: scale(1.15) !important;
+        }
+    }
+    .viewAll {
+        a {
+            font-size: $sliderTextFontSizeSmaller !important;
+            &:hover {
+                font-size: $sliderTextFontSizeSmaller+0.25rem !important;
+            }
+        }
+        
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .mainHeader {
+        margin-bottom: 30px !important;
+    }
+    .mainTournaments {
+        grid-auto-rows: 1fr !important;
+        .tournamentItem {
+            grid-template-columns: none !important;
+            grid-template-rows: 3fr 1fr 1fr 1fr 1.5fr !important;
+            margin-bottom: 30px !important;
+        }
+    }
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 100% !important;
+                    // display: none;
+                }
+            }
+        }
+    }
+    .tournamentItemSignUp {
+        a {
+            transform: scale(1.5) !important;
+        }
+    }
+    .viewAll {
+        a {
+            font-size: $sliderTextFontSize !important;
+            &:hover {
+                font-size: $sliderTextFontSize+0.5rem !important;
+            }
+        }
+        
+    }
+        
+}
+
+
+@media screen and (max-width: 600px) {
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 125% !important;
+                    // display: none;
+                }
+            }
+        }
+    }
+    .mainHeader {
+        grid-auto-columns: none !important;
+        grid-auto-rows: 1fr !important;
+        grid-auto-flow: row !important;
+        .mainHeaderTitle {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .tournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 150% !important;
+                    // display: none;
+                }
+            }
+        }
     }
 }

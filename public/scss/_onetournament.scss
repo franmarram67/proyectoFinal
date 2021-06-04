@@ -6,6 +6,7 @@ main {
             grid-auto-flow: column;
             background-image: linear-gradient(to bottom right, $fifthTextColor, $fifthTextColorDimmed);
             margin: 0 50px 0 50px;
+            
             // height: 500px;
             .oneTournamentItemImage {
                 display: flex;
@@ -27,7 +28,8 @@ main {
 
                         img {
                             position: absolute;
-                            width: 125%;
+                            width: 175%;
+                            min-height: 100%;
                             transition: all 1s ease;
                             &:hover {
                                 transform: scale(1.05);
@@ -40,18 +42,23 @@ main {
 
             .sidebar {
                 display: grid;
-                grid-template-rows: 1fr 3fr 1fr 2fr;
+                grid-template-rows: 1fr 2fr 1fr 1.5fr;
                 grid-auto-flow: row;
+                padding: 10px;
+                width: 100%;
                 .oneTournamentItemTitle {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-
+                    h3 {
+                        text-align: center;
+                    }
                     h3 a {
                         text-decoration: none;
                         color: $mainTextColorDark;
                         transition: all 1s ease;
                         font-size: 2.1rem;
+                        
                         &:hover {
                             transition: all 1s ease;
                             font-size: 2.2rem;
@@ -66,7 +73,7 @@ main {
                     
                     display: grid;
                     grid-auto-rows: 1fr;
-                    padding: 20px 0;
+                    // padding: 20px 0;
                     .desc {
                         display: flex;
                         justify-content: center;
@@ -80,8 +87,11 @@ main {
                         align-items: center;
                         p {
                             background-color: $colorGreen;
+                            &:not(:first-child) {
+                                margin-left: 5px;
+                            }
                             padding: 5px;
-                            margin-left: 5px;
+                            text-align: center;
                         }
                     }
                 }
@@ -164,6 +174,84 @@ main {
                 }
             }
             
+        }
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .oneTournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 200% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .oneTournamentItem {
+        grid-auto-columns: none !important;
+        grid-auto-flow: row !important;
+        grid-template-rows: 3fr 6fr !important;
+
+    }
+    .oneTournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+}
+
+@media screen and (max-width: 768px) {
+    .oneTournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 125% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .oneTournamentItem {
+        grid-template-rows: 1.5fr 5fr !important;
+
+    }
+    .oneTournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 100% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .oneTournamentItem {
+        grid-template-rows: 1fr 4fr !important;
+        margin: 0 30px 0 30px !important;
+    }
+    .oneTournamentItemImage {
+        div {
+            a {
+                img {
+                    width: 125% !important;
+                }
+            }
         }
     }
 }

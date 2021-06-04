@@ -30,3 +30,47 @@ main {
         }
     }
 }
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    .mainAdminButtons {
+        // grid-template-columns: repeat(3, 1fr) !important;
+        .adminButtonItem {
+            .button {
+                transform: scale(1.15) !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    
+}
+
+@media screen and (max-width: 768px) {
+    .mainAdminButtons {
+        grid-template-columns: repeat(3, 1fr) !important;
+        
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mainAdminButtons {
+        grid-template-columns: repeat(2, 1fr) !important;
+        .adminButtonItem {
+            .button {
+                transform: scale(1.05) !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .mainAdminButtons {
+        grid-template-columns: repeat(1, 1fr) !important;
+        
+    }
+}

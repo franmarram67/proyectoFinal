@@ -4,7 +4,7 @@
     grid-auto-flow: column;
     background-image: linear-gradient(to bottom right, $mainColorLight, $mainColorLightDimmed); 
     // background-color: $mainColor;
-    height: 500px;
+    min-height: 550px;
     .servicesText {
         display: flex;
         justify-content: center;
@@ -63,5 +63,49 @@
 
         
         
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    
+}
+
+@media screen and (max-width: 850px) {
+
+}
+
+@media screen and (max-width: 768px) {
+    .services {
+        grid-auto-columns: none !important;
+        grid-auto-flow: row;
+        grid-auto-rows: 1fr;
+        height: auto;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        .servicesImage {
+            padding: 30px 0 0px 0;
+            grid-row: 1;           
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    
+}
+
+@media screen and (max-width: 400px) {
+    .services {
+        .servicesImage {
+            padding: 30px 0 15px 0 !important;        
+            div {
+                width: 300px !important;
+                height: 300px !important;
+            }
+            
+        }
     }
 }

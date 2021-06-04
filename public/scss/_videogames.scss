@@ -29,7 +29,8 @@ main {
 
                         img {
                             position: absolute;
-                            width: 110%;
+                            width: 150%;
+                            min-height: 100%;
                             transition: all 1s ease;
                             &:hover {
                                 transform: scale(1.05);
@@ -79,4 +80,79 @@ main {
             }
         }
     }
+}
+
+@media screen and (max-width: 1200px) {
+    .mainVideogames {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .videogameItemImage {
+        div {
+            a {
+                img {
+                    width: 140% !important;
+                }
+            }
+        }
+    }
+    
+}
+
+@media screen and (max-width: 992px) {
+    .mainVideogames {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .videogameItemImage {
+        div {
+            a {
+                img {
+                    width: 125% !important;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    
+}
+
+@media screen and (max-width: 768px) {
+    .mainVideogames {
+        grid-template-columns: repeat(1, 1fr) !important;
+    }
+    .videogameItemImage {
+        div {
+            a {
+                img {
+                    width: 100% !important;
+                }
+            }
+        }
+    }  
+}
+
+
+@media screen and (max-width: 600px) {
+    .videogameItemImage {
+        div {
+            a {
+                img {
+                    width: 150% !important;
+                }
+            }
+        }
+    }  
+}
+
+@media screen and (max-width: 400px) {
+    .videogameItemImage {
+        div {
+            a {
+                img {
+                    width: 175% !important;
+                }
+            }
+        }
+    }  
 }

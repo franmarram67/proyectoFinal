@@ -68,3 +68,28 @@ main {
         }
     }
 }
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 850px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 600px) {
+    .finishButton {
+        button, a {
+            transform: scale(1.1) !important;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    
+}

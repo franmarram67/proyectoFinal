@@ -99,6 +99,7 @@ main {
                     img {
                         position: absolute;
                         width: 100%;
+                        min-height: 100%;
                         transition: all 1s ease;
                         &:hover {
                             transform: scale(1.05);
@@ -110,4 +111,82 @@ main {
             }
         }
     }
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    .rankingItemImage {
+        div {
+            img {
+                width: 125% !important;
+            }
+        }
+    }
+    .rankingItemPoints, .rankingItemPosition, .rankingItemUser {
+        font-size: 1.1rem !important;
+    }
+    .rankingItemPosition {
+        h3 {
+            font-size: 1.1rem !important;
+            &:hover {
+                font-size: 1.25rem !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+
+}
+
+@media screen and (max-width: 768px) {
+    .rankingItemImage {
+        div {
+            img {
+                width: 150% !important;
+            }
+        }
+    }
+    .rankingItemPoints, .rankingItemPosition, .rankingItemUser {
+        font-size: 1rem !important;
+    }
+    .mainSearch {
+        grid-auto-columns: none !important;
+        grid-auto-flow: row !important;
+        grid-auto-rows: 1fr !important;
+        padding: 0px 50px;
+        .mainSearchSelect {
+            div {
+                span {
+                    text-align: left !important;
+                }
+            }
+        }
+    }
+    .rankingItemPosition {
+        h3 {
+            font-size: 1rem !important;
+            &:hover {
+                font-size: 1.15rem !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mainRanking {
+        grid-auto-rows: 150px !important;
+        .rankingItem {
+            grid-template-columns: none !important;
+            grid-template-rows: 1fr 1fr 1fr 1.5fr;
+        }
+    }
+    
+}
+
+@media screen and (max-width: 400px) {
+    
 }

@@ -9,6 +9,7 @@
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
         <link rel="stylesheet" href="/css/main.css" type="text/css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
@@ -22,21 +23,27 @@
         <header>
             <div class="top">
                 <a href="/" id="logo"><h1>Tournament Master</h1></a>
-                <div>
+                <div class="topData">
                     {% if is_granted("ROLE_USER") %}
-                        <a href="/mypoints">Points [
-                            {% if totalPoints < 1000 %}
-                                {{totalPoints}}
-                            {% elseif totalPoints > 1000 %}
-                                {{ (totalPoints / 1000) | number_format(1) }}K
-                            {% elseif totalPoints > 1000000 %}
-                                {{ (totalPoints / 1000000) | number_format(1) }}M
-                            {% endif %}
-                            ]</a> ,   
-                        <a href="/mynotifications"><i class="fas fa-bell"></i> ({{unseen|length}})</a> 
-                        Hello, {{app.user.email}} - <a href="/logout">Logout</a>
+                        <div class="pointsNotifications">
+                            <a href="/mypoints">Points [
+                                {% if totalPoints < 1000 %}
+                                    {{totalPoints}}
+                                {% elseif totalPoints > 1000 %}
+                                    {{ (totalPoints / 1000) | number_format(1) }}K
+                                {% elseif totalPoints > 1000000 %}
+                                    {{ (totalPoints / 1000000) | number_format(1) }}M
+                                {% endif %}
+                                ]</a> <span>, </span>  
+                            <a href="/mynotifications"><i class="fas fa-bell"></i> ({{unseen|length}})</a>
+                        </div>
+                        <span> 
+                            Hello, {{app.user.email}} - <a href="/logout">Logout</a>
+                        </span>
                     {% else %}
-                        <a href="/register">Register</a> or <a href="/login">Login</a>
+                        <span>
+                            <a href="/register">Register</a> or <a href="/login">Login</a>
+                        </span>
                     {% endif %}
                 </div>
             </div>
@@ -57,6 +64,12 @@
                     <a href="/adminpage">Admin Page</a>
                 {% endif %}
             </nav>
+            <div class="menu">
+                <div class="menu-btn">
+                    <div class="menu-btn__burger"></div>
+                </div>
+            </div>
+            
         </header>
 
         {% block body %}{% endblock %}
@@ -86,6 +99,7 @@
 
         <script src="https://kit.fontawesome.com/3ec96a9d80.js" crossorigin="anonymous"></script>
         <script src="/js/disableLinks.js"></script>
+        <script src="/js/burgermenu.js"></script>
         {% block javascripts %}
             {#{{ encore_entry_script_tags('app') }}#}
         {% endblock %}

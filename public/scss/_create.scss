@@ -29,10 +29,13 @@ main {
                     grid-auto-rows: 1fr;
                     grid-auto-flow: column;
                     margin-bottom: 10px;
-                    #tournament_startDate {
+                    #tournament_startDate, #tournament_no_places_startDate {
                         display: grid;
                         grid-auto-rows: 1fr;
                         grid-auto-flow: row;
+                    }
+                    input, textarea {
+                        width: 100%;
                     }
                 }
                 
@@ -72,3 +75,27 @@ main {
     }
 }
 
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 850px) {
+}
+
+@media screen and (max-width: 768px) {
+}
+
+@media screen and (max-width: 600px) {
+    .createButton {
+        button, a {
+            transform: scale(1.1) !important;
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    
+}

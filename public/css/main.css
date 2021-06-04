@@ -25,9 +25,11 @@ header {
   width: 100%;
   top: 0;
   z-index: 99999;
+  /* MENU BURGER */
+  /* MENU BURGER ANIMATION */
 }
 
-header div.top {
+header .top {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -37,6 +39,23 @@ header div.top {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+header .top .topData .pointsNotifications {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  margin-right: 5px;
+}
+
+header .top .topData .pointsNotifications *:not(:last-child) {
+  margin-right: 5px;
 }
 
 header nav {
@@ -73,6 +92,112 @@ header nav a:hover {
 header #logo {
   color: #ffffff;
   text-decoration: none;
+}
+
+header .menu-btn {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  display: none;
+}
+
+header .menu-btn .menu-btn__burger {
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+header .menu-btn .menu-btn__burger::before, header .menu-btn .menu-btn__burger::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 4px;
+  background: #fff;
+  border-radius: 4px;
+}
+
+header .menu-btn .menu-btn__burger::before {
+  -webkit-transform: translateY(-10px);
+          transform: translateY(-10px);
+}
+
+header .menu-btn .menu-btn__burger::after {
+  -webkit-transform: translateY(10px);
+          transform: translateY(10px);
+}
+
+header .menu-btn.open .menu-btn__burger::before {
+  -webkit-transform: rotate(45deg) translate(20px, -20px);
+          transform: rotate(45deg) translate(20px, -20px);
+}
+
+header .menu-btn.open .menu-btn__burger::after {
+  -webkit-transform: rotate(-45deg) translate(20px, 20px);
+          transform: rotate(-45deg) translate(20px, 20px);
+}
+
+header .menu-btn.open .menu-btn__burger {
+  -webkit-transform: translateX(-30px);
+          transform: translateX(-30px);
+  background: transparent;
+}
+
+header .menu {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (max-width: 992px) {
+  #logo {
+    font-size: 0.9rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #logo {
+    font-size: 0.75rem !important;
+  }
+  .menu-btn {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+  }
+  header nav {
+    position: absolute;
+    top: -1000px;
+    background-color: #2b2b2b;
+    grid-auto-columns: none !important;
+    grid-auto-flow: row !important;
+    grid-auto-rows: 1fr !important;
+    width: 100%;
+    opacity: 0;
+    z-index: -1;
+  }
+  header nav.open {
+    top: 100%;
+    opacity: 1;
+    z-index: 99;
+    height: 60vh;
+  }
 }
 
 .fakelink:hover {
@@ -131,6 +256,42 @@ header #logo {
   height: 200px;
 }
 
+@media screen and (max-width: 992px) {
+  .slider .sliderText {
+    font-size: 1.75rem !important;
+  }
+  .slider .sliderText .playNow {
+    font-size: 1.75rem !important;
+  }
+  .slider .sliderText .playNow:hover {
+    font-size: 2.15rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .slider .sliderText {
+    font-size: 1.5rem !important;
+  }
+  .slider .sliderText .playNow {
+    font-size: 1.5rem !important;
+  }
+  .slider .sliderText .playNow:hover {
+    font-size: 1.8rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .slider .sliderText {
+    font-size: 1.25rem !important;
+  }
+  .slider .sliderText .playNow {
+    font-size: 1.25rem !important;
+  }
+  .slider .sliderText .playNow:hover {
+    font-size: 1.5rem !important;
+  }
+}
+
 .about {
   display: -ms-grid;
   display: grid;
@@ -138,7 +299,7 @@ header #logo {
   grid-auto-flow: column;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#2b2b2b), to(#424242));
   background-image: linear-gradient(to bottom right, #2b2b2b, #424242);
-  height: 500px;
+  min-height: 550px;
 }
 
 .about .aboutText {
@@ -202,6 +363,39 @@ header #logo {
   position: absolute;
 }
 
+@media screen and (max-width: 768px) {
+  .about {
+    grid-auto-columns: none !important;
+    grid-auto-flow: row;
+    grid-auto-rows: 1fr;
+    height: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+  .about .aboutImage {
+    padding: 30px 0 0px 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about {
+    padding-top: 0 !important;
+  }
+  .about .aboutImage {
+    padding: 30px 0 15px 0 !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about .aboutImage {
+    padding: 30px 0 15px 0 !important;
+  }
+  .about .aboutImage div {
+    width: 300px !important;
+    height: 300px !important;
+  }
+}
+
 .services {
   display: -ms-grid;
   display: grid;
@@ -209,7 +403,7 @@ header #logo {
   grid-auto-flow: column;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#ececec), to(#e7e7e7));
   background-image: linear-gradient(to bottom right, #ececec, #e7e7e7);
-  height: 500px;
+  min-height: 550px;
 }
 
 .services .servicesText {
@@ -298,6 +492,32 @@ header #logo {
 .services .servicesImage div img {
   position: absolute;
   width: 600px;
+}
+
+@media screen and (max-width: 768px) {
+  .services {
+    grid-auto-columns: none !important;
+    grid-auto-flow: row;
+    grid-auto-rows: 1fr;
+    height: auto;
+    padding-bottom: 30px;
+    padding-top: 30px;
+  }
+  .services .servicesImage {
+    padding: 30px 0 0px 0;
+    -ms-grid-row: 1;
+    grid-row: 1;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .services .servicesImage {
+    padding: 30px 0 15px 0 !important;
+  }
+  .services .servicesImage div {
+    width: 300px !important;
+    height: 300px !important;
+  }
 }
 
 main .mainHeader {
@@ -393,6 +613,7 @@ main .mainTournaments .tournamentItem .tournamentItemImage div a {
 main .mainTournaments .tournamentItem .tournamentItemImage div a img {
   position: absolute;
   width: 100%;
+  min-height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
@@ -414,6 +635,7 @@ main .mainTournaments .tournamentItem .tournamentItemTitle {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  text-align: center;
 }
 
 main .mainTournaments .tournamentItem .tournamentItemTitle h3 a {
@@ -439,7 +661,7 @@ main .mainTournaments .tournamentItem .tournamentItemDescription {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  text-align: justify;
+  text-align: center;
   padding-right: 5px;
 }
 
@@ -599,6 +821,83 @@ main .viewAll a:hover {
   font-size: 2.5rem;
 }
 
+@media screen and (max-width: 1200px) {
+  .tournamentItemImage div a img {
+    width: 125% !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .tournamentItemImage div a img {
+    width: 150% !important;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .tournamentItemImage div a img {
+    width: 175% !important;
+  }
+  .tournamentItemSignUp a {
+    -webkit-transform: scale(1.15) !important;
+            transform: scale(1.15) !important;
+  }
+  .viewAll a {
+    font-size: 1.5rem !important;
+  }
+  .viewAll a:hover {
+    font-size: 1.75rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainHeader {
+    margin-bottom: 30px !important;
+  }
+  .mainTournaments {
+    grid-auto-rows: 1fr !important;
+  }
+  .mainTournaments .tournamentItem {
+    -ms-grid-columns: none !important;
+        grid-template-columns: none !important;
+    -ms-grid-rows: 3fr 1fr 1fr 1fr 1.5fr !important;
+        grid-template-rows: 3fr 1fr 1fr 1fr 1.5fr !important;
+    margin-bottom: 30px !important;
+  }
+  .tournamentItemImage div a img {
+    width: 100% !important;
+  }
+  .tournamentItemSignUp a {
+    -webkit-transform: scale(1.5) !important;
+            transform: scale(1.5) !important;
+  }
+  .viewAll a {
+    font-size: 2rem !important;
+  }
+  .viewAll a:hover {
+    font-size: 2.5rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .tournamentItemImage div a img {
+    width: 125% !important;
+  }
+  .mainHeader {
+    grid-auto-columns: none !important;
+    grid-auto-rows: 1fr !important;
+    grid-auto-flow: row !important;
+  }
+  .mainHeader .mainHeaderTitle {
+    margin-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .tournamentItemImage div a img {
+    width: 150% !important;
+  }
+}
+
 main .mainOneTournament .oneTournamentItem {
   display: -ms-grid;
   display: grid;
@@ -644,7 +943,8 @@ main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a {
 
 main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a img {
   position: absolute;
-  width: 125%;
+  width: 175%;
+  min-height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
@@ -659,9 +959,11 @@ main .mainOneTournament .oneTournamentItem .oneTournamentItemImage div a img:hov
 main .mainOneTournament .oneTournamentItem .sidebar {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 1fr 3fr 1fr 2fr;
-      grid-template-rows: 1fr 3fr 1fr 2fr;
+  -ms-grid-rows: 1fr 2fr 1fr 1.5fr;
+      grid-template-rows: 1fr 2fr 1fr 1.5fr;
   grid-auto-flow: row;
+  padding: 10px;
+  width: 100%;
 }
 
 main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle {
@@ -674,6 +976,10 @@ main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle h3 {
+  text-align: center;
 }
 
 main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemTitle h3 a {
@@ -694,7 +1000,6 @@ main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescriptio
   display: -ms-grid;
   display: grid;
   grid-auto-rows: 1fr;
-  padding: 20px 0;
 }
 
 main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .desc {
@@ -726,6 +1031,10 @@ main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescriptio
 main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .points p {
   background-color: #56f156;
   padding: 5px;
+  text-align: center;
+}
+
+main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemDescription .points p:not(:first-child) {
   margin-left: 5px;
 }
 
@@ -838,6 +1147,51 @@ main .mainOneTournament .oneTournamentItem .sidebar .oneTournamentItemSignUp a:h
   background: linear-gradient(to left, #ffd700, #ffec83);
 }
 
+@media screen and (max-width: 1200px) {
+  .oneTournamentItemImage div a img {
+    width: 200% !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .oneTournamentItem {
+    grid-auto-columns: none !important;
+    grid-auto-flow: row !important;
+    -ms-grid-rows: 3fr 6fr !important;
+        grid-template-rows: 3fr 6fr !important;
+  }
+  .oneTournamentItemImage div a img {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .oneTournamentItemImage div a img {
+    width: 125% !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .oneTournamentItem {
+    -ms-grid-rows: 1.5fr 5fr !important;
+        grid-template-rows: 1.5fr 5fr !important;
+  }
+  .oneTournamentItemImage div a img {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .oneTournamentItem {
+    -ms-grid-rows: 1fr 4fr !important;
+        grid-template-rows: 1fr 4fr !important;
+    margin: 0 30px 0 30px !important;
+  }
+  .oneTournamentItemImage div a img {
+    width: 125% !important;
+  }
+}
+
 footer {
   height: 300px;
   padding: 5px;
@@ -906,6 +1260,43 @@ footer .footerSocial a i {
   margin-left: 5px;
 }
 
+@media screen and (max-width: 1200px) {
+  .footerTitle div {
+    -webkit-transform: scale(1.3) !important;
+            transform: scale(1.3) !important;
+  }
+  .footerNav nav {
+    -webkit-transform: scale(1.1) !important;
+            transform: scale(1.1) !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .footerTitle div {
+    -webkit-transform: scale(1.15) !important;
+            transform: scale(1.15) !important;
+  }
+  .footerNav nav {
+    -webkit-transform: scale(1) !important;
+            transform: scale(1) !important;
+  }
+  .footerSocial {
+    font-size: 1.75rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  footer {
+    grid-auto-columns: none !important;
+    grid-auto-rows: 1fr !important;
+    grid-auto-flow: row;
+    height: auto;
+  }
+  footer .footerTitle, footer .footerNav, footer .footerSocial {
+    margin-bottom: 20px;
+  }
+}
+
 .loginRegister {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.3)), to(rgba(0, 0, 0, 0.3))), url("/img/slider4.jpg");
   background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("/img/slider4.jpg");
@@ -959,6 +1350,10 @@ footer .footerSocial a i {
   grid-auto-rows: 1fr;
   grid-auto-flow: column;
   margin-bottom: 10px;
+}
+
+.loginRegister .form form div input {
+  width: 100%;
 }
 
 .loginRegister .form form .loginButton {
@@ -1059,7 +1454,8 @@ main .mainVideogames .videogameItem .videogameItemImage div a {
 
 main .mainVideogames .videogameItem .videogameItemImage div a img {
   position: absolute;
-  width: 110%;
+  width: 150%;
+  min-height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
@@ -1134,6 +1530,48 @@ main .mainVideogames .videogameItem .videogameItemData .ageRating {
   padding: 5px;
 }
 
+@media screen and (max-width: 1200px) {
+  .mainVideogames {
+    -ms-grid-columns: (1fr)[3] !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+  }
+  .videogameItemImage div a img {
+    width: 140% !important;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .mainVideogames {
+    -ms-grid-columns: (1fr)[2] !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .videogameItemImage div a img {
+    width: 125% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainVideogames {
+    -ms-grid-columns: (1fr)[1] !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+  }
+  .videogameItemImage div a img {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .videogameItemImage div a img {
+    width: 150% !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .videogameItemImage div a img {
+    width: 175% !important;
+  }
+}
+
 main .create {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1180,11 +1618,15 @@ main .create .form form div {
   margin-bottom: 10px;
 }
 
-main .create .form form div #tournament_startDate {
+main .create .form form div #tournament_startDate, main .create .form form div #tournament_no_places_startDate {
   display: -ms-grid;
   display: grid;
   grid-auto-rows: 1fr;
   grid-auto-flow: row;
+}
+
+main .create .form form div input, main .create .form form div textarea {
+  width: 100%;
 }
 
 main .create .form form .createButton {
@@ -1229,6 +1671,13 @@ main .create .form form .createButton button:hover, main .create .form form .cre
   font-size: 1.3rem;
   background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
   background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+@media screen and (max-width: 600px) {
+  .createButton button, .createButton a {
+    -webkit-transform: scale(1.1) !important;
+            transform: scale(1.1) !important;
+  }
 }
 
 main .mainSearch {
@@ -1377,6 +1826,7 @@ main .mainRanking .rankingItem .rankingItemImage div {
 main .mainRanking .rankingItem .rankingItemImage div img {
   position: absolute;
   width: 100%;
+  min-height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
@@ -1386,6 +1836,57 @@ main .mainRanking .rankingItem .rankingItemImage div img:hover {
           transform: scale(1.05);
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
+}
+
+@media screen and (max-width: 992px) {
+  .rankingItemImage div img {
+    width: 125% !important;
+  }
+  .rankingItemPoints, .rankingItemPosition, .rankingItemUser {
+    font-size: 1.1rem !important;
+  }
+  .rankingItemPosition h3 {
+    font-size: 1.1rem !important;
+  }
+  .rankingItemPosition h3:hover {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .rankingItemImage div img {
+    width: 150% !important;
+  }
+  .rankingItemPoints, .rankingItemPosition, .rankingItemUser {
+    font-size: 1rem !important;
+  }
+  .mainSearch {
+    grid-auto-columns: none !important;
+    grid-auto-flow: row !important;
+    grid-auto-rows: 1fr !important;
+    padding: 0px 50px;
+  }
+  .mainSearch .mainSearchSelect div span {
+    text-align: left !important;
+  }
+  .rankingItemPosition h3 {
+    font-size: 1rem !important;
+  }
+  .rankingItemPosition h3:hover {
+    font-size: 1.15rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainRanking {
+    grid-auto-rows: 150px !important;
+  }
+  .mainRanking .rankingItem {
+    -ms-grid-columns: none !important;
+        grid-template-columns: none !important;
+    -ms-grid-rows: 1fr 1fr 1fr 1.5fr;
+        grid-template-rows: 1fr 1fr 1fr 1.5fr;
+  }
 }
 
 main .mainProfile {
@@ -1439,6 +1940,7 @@ main .mainProfile .mainProfileInfo .mainProfileInfoImage div {
 main .mainProfile .mainProfileInfo .mainProfileInfoImage div img {
   position: absolute;
   width: 100%;
+  min-height: 100%;
   -webkit-transition: all 1s ease;
   transition: all 1s ease;
 }
@@ -1481,8 +1983,8 @@ main .mainProfile .mainProfileInfo .mainProfileInfoDNI .left, main .mainProfile 
 main .mainProfile .mainProfileForm {
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: 200px 150px 150px;
-      grid-template-rows: 200px 150px 150px;
+  -ms-grid-rows: 2fr 1.5fr 1.5fr;
+      grid-template-rows: 2fr 1.5fr 1.5fr;
   padding: 10px;
   background-image: -webkit-gradient(linear, left top, right bottom, from(#d1fff9), to(#e4fffb));
   background-image: linear-gradient(to bottom right, #d1fff9, #e4fffb);
@@ -1507,6 +2009,10 @@ main .mainProfile .mainProfileForm .profile form .inputs div, main .mainProfile 
   display: grid;
   grid-auto-columns: 1fr;
   grid-auto-flow: column;
+}
+
+main .mainProfile .mainProfileForm .profile form .inputs div input, main .mainProfile .mainProfileForm .email form .inputs div input, main .mainProfile .mainProfileForm .password form .inputs div input {
+  width: 100%;
 }
 
 main .mainProfile .mainProfileForm .profile form .saveButton, main .mainProfile .mainProfileForm .email form .saveButton, main .mainProfile .mainProfileForm .password form .saveButton {
@@ -1550,6 +2056,53 @@ main .mainProfile .mainProfileForm .profile form .saveButton button:hover, main 
   font-size: 1.3rem;
   background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
   background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+@media screen and (max-width: 992px) {
+  .mainProfileInfoImage div img {
+    width: 125% !important;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .mainProfile {
+    grid-auto-columns: none !important;
+    grid-auto-rows: 1fr !important;
+    grid-auto-flow: row !important;
+  }
+  .mainProfile .mainProfileInfo {
+    margin-right: 0 !important;
+    margin-bottom: 30px;
+  }
+  .mainProfile .mainProfileForm {
+    margin-left: 0 !important;
+  }
+  .mainProfileInfoImage div img {
+    width: 100% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .saveButton button {
+    -webkit-transform: scale(1.15) !important;
+            transform: scale(1.15) !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainProfileInfoImage div img {
+    width: 125% !important;
+  }
+  .saveButton button {
+    -webkit-transform: scale(1.05) !important;
+            transform: scale(1.05) !important;
+  }
+  .mainProfileInfoImage, .mainProfileInfoName, .mainProfileInfoVerified, .mainProfileInfoDNI, .mainProfileInfoProvince, .mainProfileInfoEmail {
+    font-size: 1rem !important;
+  }
+  .mainProfileInfoName h3:hover {
+    font-size: 1.25rem !important;
+  }
 }
 
 main .mainHeader .mainHeaderPoints {
@@ -1710,6 +2263,54 @@ main .mainPoints .pointsItem .pointsItemTournament h3 a:hover {
   font-size: 1.3rem;
 }
 
+@media screen and (max-width: 992px) {
+  .pointsItemAmount h3 {
+    font-size: 1.1rem !important;
+  }
+  .pointsItemAmount h3:hover {
+    font-size: 1.25rem !important;
+  }
+  .pointsItemDate {
+    font-size: 1.1rem !important;
+  }
+  .pointsItemTournament h3 {
+    font-size: 1.1rem !important;
+  }
+  .pointsItemTournament h3 a:hover {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .pointsItemAmount h3 {
+    font-size: 1rem !important;
+  }
+  .pointsItemAmount h3:hover {
+    font-size: 1.15rem !important;
+  }
+  .pointsItemDate {
+    font-size: 1rem !important;
+  }
+  .pointsItemTournament h3 {
+    font-size: 1rem !important;
+  }
+  .pointsItemTournament h3 a:hover {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainPoints {
+    grid-auto-rows: 150px !important;
+  }
+  .mainPoints .pointsItem {
+    -ms-grid-columns: none !important;
+        grid-template-columns: none !important;
+    -ms-grid-rows: 1fr 1fr 2fr;
+        grid-template-rows: 1fr 1fr 2fr;
+  }
+}
+
 main .mainNotifications {
   display: -ms-grid;
   display: grid;
@@ -1747,10 +2348,35 @@ main .mainNotifications .notificationItem .notificationItemDate {
 
 main .mainNotifications .notificationItem .notificationItemContent {
   font-size: 1.2rem;
+  padding: 5px;
 }
 
 main .mainNotifications .notificationItem .notificationItemContent > *:not(:last-child) {
   margin-right: 5px;
+}
+
+@media screen and (max-width: 992px) {
+  .notificationItemDate, .notificationItemContent {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .notificationItemDate, .notificationItemContent {
+    font-size: 1rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainNotifications {
+    grid-auto-rows: 150px !important;
+  }
+  .mainNotifications .notificationItem {
+    -ms-grid-columns: none !important;
+        grid-template-columns: none !important;
+    -ms-grid-rows: 1fr 2fr;
+        grid-template-rows: 1fr 2fr;
+  }
 }
 
 main .mainAdminButtons {
@@ -1795,10 +2421,42 @@ main .mainAdminButtons .adminButtonItem .button:hover {
   background-color: #00ffdd;
 }
 
+@media screen and (max-width: 992px) {
+  .mainAdminButtons .adminButtonItem .button {
+    -webkit-transform: scale(1.15) !important;
+            transform: scale(1.15) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mainAdminButtons {
+    -ms-grid-columns: (1fr)[3] !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .mainAdminButtons {
+    -ms-grid-columns: (1fr)[2] !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .mainAdminButtons .adminButtonItem .button {
+    -webkit-transform: scale(1.05) !important;
+            transform: scale(1.05) !important;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .mainAdminButtons {
+    -ms-grid-columns: (1fr)[1] !important;
+        grid-template-columns: repeat(1, 1fr) !important;
+  }
+}
+
 main .mainAdminVerify {
   display: -ms-grid;
   display: grid;
-  grid-auto-rows: 75px;
+  grid-auto-rows: 1fr;
   grid-auto-flow: row;
 }
 
@@ -1823,6 +2481,7 @@ main .mainAdminVerify .adminVerifyItem .adminVerifyItemUser, main .mainAdminVeri
       -ms-flex-align: center;
           align-items: center;
   text-align: center;
+  padding: 10px;
 }
 
 main .mainAdminVerify .adminVerifyItem .adminVerifyItemUser {
@@ -1871,6 +2530,26 @@ main .mainAdminVerify .adminVerifyItem .adminVerifyItemVerify a:hover {
   font-size: 1.3rem;
   background: -webkit-gradient(linear, right top, left top, from(#ffd700), to(#ffec83));
   background: linear-gradient(to left, #ffd700, #ffec83);
+}
+
+@media screen and (max-width: 992px) {
+  .adminVerifyItemUser {
+    font-size: 1.1rem !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .adminVerifyItemUser {
+    font-size: 1rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .adminVerifyItem {
+    -ms-grid-columns: none !important;
+        grid-template-columns: none !important;
+    grid-auto-rows: 1fr;
+  }
 }
 
 main .finishTournament {
@@ -1960,11 +2639,23 @@ main .finishTournament .finishForm .finishButton button:hover, main .finishTourn
   background: linear-gradient(to left, #ffd700, #ffec83);
 }
 
+@media screen and (max-width: 600px) {
+  .finishButton button, .finishButton a {
+    -webkit-transform: scale(1.1) !important;
+            transform: scale(1.1) !important;
+  }
+}
+
 main {
   padding: 5px;
 }
 
 .body {
   min-height: 300px;
+}
+
+* {
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 /*# sourceMappingURL=main.css.map */

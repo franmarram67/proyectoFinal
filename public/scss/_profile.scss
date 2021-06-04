@@ -20,7 +20,7 @@ main {
                 justify-content: center;
                 align-items: center;
                 text-align: center;
-                font-size: 1.1rem
+                font-size: 1.1rem;
             }
             .mainProfileInfoImage {
                 div {
@@ -39,6 +39,7 @@ main {
                     img {
                         position: absolute;
                         width: 100%;
+                        min-height: 100%;
                         transition: all 1s ease;
                         &:hover {
                             transform: scale(1.05);
@@ -86,7 +87,7 @@ main {
         }
         .mainProfileForm {
             display: grid;
-            grid-template-rows: 200px 150px 150px;
+            grid-template-rows: 2fr 1.5fr 1.5fr;
             padding: 10px;
             background-image: linear-gradient(to bottom right, $fifthTextColor, $fifthTextColorDimmed); 
             margin-left: 10px; 
@@ -103,6 +104,9 @@ main {
                             display: grid;
                             grid-auto-columns: 1fr;
                             grid-auto-flow: column;
+                            input {
+                                width: 100%;
+                            }
                         }
                     }
 
@@ -150,4 +154,77 @@ main {
             // }
         }
     }
+}
+
+@media screen and (max-width: 1200px) {
+    
+}
+
+@media screen and (max-width: 992px) {
+    .mainProfileInfoImage {
+        div {
+            img {
+                width: 125% !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .mainProfile {
+        grid-auto-columns: none !important;
+        grid-auto-rows: 1fr !important;
+        grid-auto-flow: row !important;
+        .mainProfileInfo {
+            margin-right: 0 !important;
+            margin-bottom: 30px;
+        }
+        .mainProfileForm {
+            margin-left: 0 !important;
+        }
+    }
+    .mainProfileInfoImage {
+        div {
+            img {
+                width: 100% !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .saveButton {
+        button {
+            transform: scale(1.15) !important;
+        }
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .mainProfileInfoImage {
+        div {
+            img {
+                width: 125% !important;
+            }
+        }
+    }
+    .saveButton {
+        button {
+            transform: scale(1.05) !important;
+        }
+    }
+    .mainProfileInfoImage, .mainProfileInfoName, .mainProfileInfoVerified, .mainProfileInfoDNI, .mainProfileInfoProvince, .mainProfileInfoEmail {
+        font-size: 1rem !important;
+    }
+    .mainProfileInfoName {
+        h3 {
+            &:hover {
+                font-size: 1.25rem !important;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px) {
+    
 }
